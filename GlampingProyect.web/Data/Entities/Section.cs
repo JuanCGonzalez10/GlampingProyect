@@ -4,7 +4,7 @@ namespace GlampingProyect.web.Data.Entities
 {
     public class Section
     {
-        [key]
+        
         public int Id { get; set; }
 
         [Display(Name = "seccion")]

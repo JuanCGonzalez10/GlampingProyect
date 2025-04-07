@@ -6,7 +6,7 @@ namespace GlampingProyect.web
 {
     public static class CustomConfiguration
     {
-        public static WebApplicationBuilder addCustomConfiguration(this WebApplicationBuilder builder)
+        public static WebApplicationBuilder AddCustomConfiguration(this WebApplicationBuilder builder)
         {
             //Datacontext 
             builder.Services.AddDbContext<DataContext>(options =>
