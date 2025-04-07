@@ -4,7 +4,7 @@
 
         <li class="nav-item">
             <a class="nav-link  @(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "" : "collapsed")"
-               asp-controller="Home"
+               asp-controller="Home" 
                asp-action="Index">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
@@ -12,8 +12,8 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() ==  "Sections" ? "" : "collapsed")"
-               asp-controller="Sections"
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() ==  "Sections" ? "" : "collapsed")" 
+               asp-controller="Sections" 
                asp-action="Index">
                 <i class="bi bi-book"></i>
                 <span>Secciones</span>
