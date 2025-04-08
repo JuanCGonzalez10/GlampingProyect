@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PrivateBlog.Web.Data.Entities;
+using GlampingProyect.Web.Data.Entities;
+using GlampingProyect.web.Data.Entities;
 
-namespace PrivateBlog.Web.Data.Seeders
+namespace GlampingProyect.Web.Data.Seeders
 {
     public class BlogsSeeder
     {

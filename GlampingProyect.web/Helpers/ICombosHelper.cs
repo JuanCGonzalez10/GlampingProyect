@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using PrivateBlog.Web.Data;
+using GlampingProyect.Web.Data;
 
-namespace PrivateBlog.Web.Helpers
+namespace GlampingProyect.Web.Helpers
 {
     public interface ICombosHelper
     {

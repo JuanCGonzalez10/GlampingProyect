@@ -1,4 +1,4 @@
-﻿namespace PrivateBlog.Web.Data.Seeders
+﻿namespace GlampingProyect.Web.Data.Seeders
 {
     public class SeedDb
     {

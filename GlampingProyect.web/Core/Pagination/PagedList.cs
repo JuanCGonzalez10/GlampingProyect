@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PrivateBlog.Web.Core.Extensions;
+using GlampingProyect.Web.Core.Extensions;
 
-namespace PrivateBlog.Web.Core.Pagination
+namespace GlampingProyect.Web.Core.Pagination
 {
     public class PagedList<T> : List<T>
     {

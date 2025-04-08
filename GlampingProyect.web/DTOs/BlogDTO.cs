@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using PrivateBlog.Web.Data.Entities;
+using GlampingProyect.Web.Data.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using GlampingProyect.web.Data.Entities;
 
-namespace PrivateBlog.Web.DTOs
+namespace GlampingProyect.Web.DTOs
 {
     public class BlogDTO
     {

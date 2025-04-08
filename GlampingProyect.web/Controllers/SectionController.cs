@@ -1,16 +1,16 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Azure;
 using Microsoft.AspNetCore.Mvc;
-using PrivateBlog.Web.Core;
-using PrivateBlog.Web.Core.Pagination;
-using PrivateBlog.Web.DTOs;
-using PrivateBlog.Web.Services;
+using GlampingProyect.Web.Core;
+using GlampingProyect.Web.Core.Pagination;
+using GlampingProyect.Web.DTOs;
+using GlampingProyect.Web.Services;
 using System.Threading.Tasks;
 using Library1.Cor;
 using Humanizer;
 
 
-namespace PrivateBlog.Web.Controllers
+namespace GlampingProyect.Web.Controllers
 {
     public class SectionsController : Controller
     {

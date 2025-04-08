@@ -1,30 +1,32 @@
-﻿using PrivateBlog.Web.Core;
+﻿using GlampingProyect.Web.Core;
+using Library1.Cor;
 
-namespace PrivateBlog.Web.Helpers
+
+namespace GlampingProyect.Web.Helpers
 {
     public static class ResponseHelper<T>
     {
-        public static Response<T> MakeResponseSuccess(T model, string message = "tarea realizada con éxito")
+        public static Res<T> MakeResponseSuccess(T model, string message = "tarea realizada con éxito")
         {
-            return new Response<T>
+            return new Res<T>
             {
                 IsSuccess = true,
                 Message = message,
-                Result = model,
+                MyProperty = model,
             };
         }
-        public static Response<T> MakeResponseSuccess(string message = "Tarea realizada con éxito")
+        public static Res<T> MakeResponseSuccess(string message = "Tarea realizada con éxito")
         {
-            return new Response<T>
+            return new Res<T>
             {
                 IsSuccess = true,
                 Message = message,
             };
         }
 
-        public static Response<T> MakeResponseFail(Exception ex, string message = "Ha ocurrido un error al generar la solicitud.")
+        public static Res<T> MakeResponseFail(Exception ex, string message = "Ha ocurrido un error al generar la solicitud.")
         {
-            return new Response<T> 
+            return new Res<T> 
             {
                 IsSuccess = false,
                 Message = message,
@@ -35,9 +37,9 @@ namespace PrivateBlog.Web.Helpers
                 }
             };
         }
-        public static Response<T> MakeResponseFail(string message = "Ha ocurrido un error al generar la solicitud.")
+        public static Res<T> MakeResponseFail(string message = "Ha ocurrido un error al generar la solicitud.")
         {
-            return new Response<T>
+            return new Res<T>
             {
                 IsSuccess = false,
                 Message = message,

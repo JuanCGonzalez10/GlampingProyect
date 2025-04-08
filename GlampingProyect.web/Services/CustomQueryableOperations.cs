@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Library1.Cor;
 using Microsoft.EntityFrameworkCore;
-using PrivateBlog.Web.Core;
-using PrivateBlog.Web.Core.Pagination;
-using PrivateBlog.Web.Data;
-using PrivateBlog.Web.Data.Entities;
-using PrivateBlog.Web.DTOs;
-using PrivateBlog.Web.Helpers;
+using GlampingProyect.Web.Core;
+using GlampingProyect.Web.Core.Pagination;
+using GlampingProyect.Web.Data;
+using GlampingProyect.Web.Data.Entities;
+using GlampingProyect.Web.DTOs;
+using GlampingProyect.Web.Helpers;
 
-namespace PrivateBlog.Web.Services
+namespace GlampingProyect.Web.Services
 {
     public class CustomQueryableOperations
     {

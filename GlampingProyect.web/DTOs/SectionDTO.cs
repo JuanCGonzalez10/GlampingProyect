@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PrivateBlog.Web.DTOs
+namespace GlampingProyect.Web.DTOs
 {
     public class SectionDTO
 
@@ -9,7 +9,7 @@ namespace PrivateBlog.Web.DTOs
 
         [Display(Name = "Sección")]
         [Required(ErrorMessage = "El campo '{0}' es requerido.")]
-        public string Section { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
         [Display(Name = "Descripción")]
         public string? Description { get; set; }

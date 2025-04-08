@@ -1,4 +1,4 @@
-﻿namespace PrivateBlog.Web.DTOs
+﻿namespace GlampingProyect.Web.DTOs
 {
     public class ToggleSectionStatusDTO
     {

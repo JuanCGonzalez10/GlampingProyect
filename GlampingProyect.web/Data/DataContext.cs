@@ -1,10 +1,10 @@
 ﻿using GlampingProyect.web.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using PrivateBlog.Web.Data.Entities;
-using PrivateBlog.Web.DTOs;
+using GlampingProyect.Web.Data.Entities;
+using GlampingProyect.Web.DTOs;
 
 
-namespace PrivateBlog.Web.Data
+namespace GlampingProyect.Web.Data
 {
     public class DataContext : DbContext
     {

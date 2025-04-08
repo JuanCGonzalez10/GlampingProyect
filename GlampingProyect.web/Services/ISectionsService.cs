@@ -1,29 +1,29 @@
 ﻿using AutoMapper;
-using GlampingProyect.web.Data.Entities;
-using Humanizer;
+using GlampingProyect.Web.Core;
+using GlampingProyect.Web.Core.Pagination;
+using GlampingProyect.Web.Data;
+using GlampingProyect.Web.Data.Entities;
+using GlampingProyect.Web.DTOs;
+using GlampingProyect.Web.Helpers;
 using Library1.Cor;
 using Microsoft.EntityFrameworkCore;
-using PrivateBlog.Web.Core;
-using PrivateBlog.Web.Core.Pagination;
-using PrivateBlog.Web.Data;
-using PrivateBlog.Web.Data.Entities;
-using PrivateBlog.Web.DTOs;
-using PrivateBlog.Web.Helpers;
-using System.Xml.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using GlampingProyect.web.Data.Entities;
 
-
-
-namespace PrivateBlog.Web.Services
+namespace GlampingProyect.Web.Services
 {
     public interface ISectionsService
     {
-        public Task<Res<SectionDTO>> CreateAsync(SectionDTO dto);
-        public Task<Res<object>> DeleteAsync(int id);
-        public Task<Res<SectionDTO>> EditAsync(SectionDTO dto);
-        public Task<Res<List<SectionDTO>>> GetListAsync();
-        public Task<Res<SectionDTO>> GetOneAsync(int id);
-        public Task<Res<PaginationResponse<SectionDTO>>> GetPaginationAsync(PaginationRequest request);
-        public Task<Res<object>> ToggleAsync(ToggleSectionStatusDTO dto);
+        Task<Res<SectionDTO>> CreateAsync(SectionDTO dto);
+        Task<Res<object>> DeleteAsync(int id);
+        Task<Res<SectionDTO>> EditAsync(SectionDTO dto);
+        Task<Res<List<SectionDTO>>> GetListAsync();
+        Task<Res<SectionDTO>> GetOneAsync(int id);
+        Task<Res<PaginationResponse<SectionDTO>>> GetPaginationAsync(PaginationRequest request);
+        Task<Res<object>> ToggleAsync(ToggleSectionStatusDTO dto);
     }
 
     public class SectionsService : CustomQueryableOperations, ISectionsService
@@ -31,7 +31,7 @@ namespace PrivateBlog.Web.Services
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public SectionsService(DataContext context, IMapper mapper) : base (context, mapper)
+        public SectionsService(DataContext context, IMapper mapper) : base(context, mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -39,57 +39,45 @@ namespace PrivateBlog.Web.Services
 
         public async Task<Res<SectionDTO>> CreateAsync(SectionDTO dto)
         {
-           
-
             return await CreateAsync<Section, SectionDTO>(dto);
         }
 
-        public async Task<Res<object>> deleteasync(int id)
+        public async Task<Res<object>> DeleteAsync(int id)
         {
             try
             {
-                Section? sectionInstance = await _context.Sections.FirstOrDefaultAsync(s => s.id == id);
+                Section? sectionInstance = await _context.Sections.FirstOrDefaultAsync(s => s.Id == id);
 
                 if (sectionInstance is null)
                 {
-                    return ResponseHelper<object>.MakeResponseFail($"no existe sección con id {id}");
+                    return ResponseHelper<object>.MakeResponseFail($"No existe sección con id {id}");
                 }
 
                 _context.Sections.Remove(sectionInstance);
                 await _context.SaveChangesAsync();
 
-                return ResponseHelper<object>.MakeResponseSuccess("sección eliminada con éxito");
-
+                return ResponseHelper<object>.MakeResponseSuccess("Sección eliminada con éxito");
             }
             catch (Exception ex)
             {
                 return ResponseHelper<object>.MakeResponseFail(ex);
             }
-
-            Res<object> Response = await DeleteAsync<Section>(id);
-            Response.Message = !Response.IsSuccess ? $"La sección con id: {id} no existe" : Response.Message;
-            return Response;
-        }
-
-        public Task<Res<object>> DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<Res<SectionDTO>> EditAsync(SectionDTO dto)
         {
             try
             {
-                Section? Section = await _context.Sections.AsNoTracking()
+                Section? section = await _context.Sections.AsNoTracking()
                                                           .FirstOrDefaultAsync(s => s.Id == dto.Id);
 
-                if (Section is null)
+                if (section is null)
                 {
-                    return ResponseHelper<Section>.MakeResponseFail($"No existe sección con id {dto.Id}");
+                    return ResponseHelper<SectionDTO>.MakeResponseFail($"No existe sección con id {dto.Id}");
                 }
 
-                Section = _mapper.Map<Section>(dto);
-                _context.Update(Section);
+                section = _mapper.Map<Section>(dto);
+                _context.Update(section);
                 await _context.SaveChangesAsync();
 
                 return ResponseHelper<SectionDTO>.MakeResponseSuccess(dto, "Sección actualizada con éxito");
@@ -98,53 +86,41 @@ namespace PrivateBlog.Web.Services
             {
                 return ResponseHelper<SectionDTO>.MakeResponseFail(ex);
             }
-
-            
         }
 
         public async Task<Res<List<SectionDTO>>> GetListAsync()
         {
             try
             {
-                List<Section> Sections = await _context.Sections.ToListAsync();
-
-                List<SectionDTO> list = _mapper.Map<List<SectionDTO>>(Sections);
+                List<Section> sections = await _context.Sections.ToListAsync();
+                List<SectionDTO> list = _mapper.Map<List<SectionDTO>>(sections);
 
                 return ResponseHelper<List<SectionDTO>>.MakeResponseSuccess(list);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ResponseHelper<List<SectionDTO>>.MakeResponseFail(ex);
             }
         }
 
-        public async Task<Res<SectionDTO>> getoneasync(int id)
+        public async Task<Res<SectionDTO>> GetOneAsync(int id)
         {
             try
             {
-                Section? section = await _context.Sections.FirstOrDefaultAsync(s => s.id == id);
+                Section? section = await _context.Sections.FirstOrDefaultAsync(s => s.Id == id);
 
                 if (section is null)
                 {
-                    return ResponseHelper<SectionDTO>.MakeResponseFail($"no existe sección con id {id}");
+                    return ResponseHelper<SectionDTO>.MakeResponseFail($"No existe sección con id {id}");
                 }
 
                 SectionDTO dto = _mapper.Map<SectionDTO>(section);
-
-                //_context.entry(section).state = entitystate.unchanged;
-
-                return ResponseHelper<SectionDTO>.MakeResponseSuccess(dto, "sección obtenida con éxito");
+                return ResponseHelper<SectionDTO>.MakeResponseSuccess(dto, "Sección obtenida con éxito");
             }
             catch (Exception ex)
             {
                 return ResponseHelper<SectionDTO>.MakeResponseFail(ex);
             }
-
-        }
-
-        public Task<Res<SectionDTO>> GetOneAsync(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<Res<PaginationResponse<SectionDTO>>> GetPaginationAsync(PaginationRequest request)
@@ -153,59 +129,41 @@ namespace PrivateBlog.Web.Services
             {
                 IQueryable<Section> query = _context.Sections.AsQueryable();
 
-                PagedList<Section> list = await PagedList<Section>.ToPagedListAsync(query, request);
-
-                PaginationResponse<SectionDTO> response = new PaginationResponse<SectionDTO>
+                if (!string.IsNullOrEmpty(request.Filter))
                 {
-                    List = _mapper.Map<PagedList<SectionDTO>>(list),
-                    TotalCount = list.TotalCount,
-                    RecordsPerPage = list.RecordsPerPage,
-                    CurrentPage = list.CurrentPage,
-                    TotalPages = list.TotalPages,
-                };
+                    query = query.Where(b => b.Name.ToLower().Contains(request.Filter.ToLower())
+                                           || b.Descripcion.ToLower().Contains(request.Filter.ToLower()));
+                }
 
-                return ResponseHelper<PaginationResponse<SectionDTO>>.MakeResponseSuccess(response);
+                return await GetPaginationAsync<Section, SectionDTO>(request, query);
             }
             catch (Exception ex)
             {
                 return ResponseHelper<PaginationResponse<SectionDTO>>.MakeResponseFail(ex);
             }
-
-
-            IQueryable<Section> query = _context.Sections.AsQueryable();
-
-            if (!string.IsNullOrEmpty(request.Filter))
-            {
-                query = query.Where(b => b.Name.ToLower().Contains(request.Filter.ToLower())
-                                      || b.Description.ToLower().Contains(request.Filter.ToLower()));
-            }
-
-            return await GetPaginationAsync<Section, SectionDTO>(request, query);
-
         }
 
         public async Task<Res<object>> ToggleAsync(ToggleSectionStatusDTO dto)
         {
             try
             {
-                SectionDTO? Section = await _context.Sections.FirstOrDefaultAsync(s => s.Id == dto.SectionId);
+                Section? section = await _context.Sections.FirstOrDefaultAsync(s => s.Id == dto.SectionId);
 
-                if (Section is null)
+                if (section is null)
                 {
                     return ResponseHelper<object>.MakeResponseFail($"No existe sección con id {dto.SectionId}");
                 }
 
-                Section.IsHidden = dto.Hide;
-                _context.Sections.Update(Section);
+                section.IsHidden = dto.Hide;
+                _context.Sections.Update(section);
                 await _context.SaveChangesAsync();
 
                 return ResponseHelper<object>.MakeResponseSuccess("Sección actualizada con éxito");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ResponseHelper<object>.MakeResponseFail(ex);
             }
         }
-
     }
 }

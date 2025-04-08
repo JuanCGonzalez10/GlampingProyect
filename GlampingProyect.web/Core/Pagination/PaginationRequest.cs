@@ -1,4 +1,4 @@
-﻿namespace PrivateBlog.Web.Core.Pagination
+﻿namespace GlampingProyect.Web.Core.Pagination
 {
     public class PaginationRequest
     {

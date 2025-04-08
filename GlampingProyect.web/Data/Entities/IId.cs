@@ -1,4 +1,4 @@
-﻿namespace PrivateBlog.Web.Data.Entities
+﻿namespace GlampingProyect.Web.Data.Entities
 {
     public interface IId
     {

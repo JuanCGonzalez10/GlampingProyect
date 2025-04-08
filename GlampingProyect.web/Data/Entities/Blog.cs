@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using GlampingProyect.web.Data.Entities;
 
-namespace PrivateBlog.Web.Data.Entities
+namespace GlampingProyect.Web.Data.Entities
 {
     public class Blog : IId
     {

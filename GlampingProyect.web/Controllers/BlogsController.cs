@@ -2,13 +2,13 @@
 using Azure;
 using Library1.Cor;
 using Microsoft.AspNetCore.Mvc;
-using PrivateBlog.Web.Core;
-using PrivateBlog.Web.Core.Pagination;
-using PrivateBlog.Web.DTOs;
-using PrivateBlog.Web.Helpers;
-using PrivateBlog.Web.Services;
+using GlampingProyect.Web.Core;
+using GlampingProyect.Web.Core.Pagination;
+using GlampingProyect.Web.DTOs;
+using GlampingProyect.Web.Helpers;
+using GlampingProyect.Web.Services;
 
-namespace PrivateBlog.Web.Controllers
+namespace GlampingProyect.Web.Controllers
 {
     public class BlogsController : Controller
     {

@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PrivateBlog.Web.Data.Entities;
+using GlampingProyect.Web.Data.Entities;
+using GlampingProyect.web.Data.Entities;
 
-namespace PrivateBlog.Web.Data.Seeders
+
+namespace GlampingProyect.Web.Data.Seeders
 {
     public class SectionsSeeder
     {
@@ -16,7 +18,7 @@ namespace PrivateBlog.Web.Data.Seeders
         {
             List<Section> sections = new List<Section>
             {
-                new Section { Name  = "General", Description = "Información basica de la compañia" },
+                new Section { Name  = "General", Descripcion = "Información basica de la compañia" },
                 new Section { Name  = "Telecomunicaciones" },
                 new Section { Name  = "Hacking" },
                 new Section { Name  = "Clases", IsHidden = true },
