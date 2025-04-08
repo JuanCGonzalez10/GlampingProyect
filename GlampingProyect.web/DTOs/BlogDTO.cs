@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using GlampingProyect.Web.Data.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using GlampingProyect.web.Data.Entities;
@@ -10,7 +9,7 @@ namespace GlampingProyect.Web.DTOs
     {
         public int Id { get; set; }
 
-        [Display(Name = "Título")]
+        [Display(Name = "Blog")]
         [Required(ErrorMessage = "El campo '{0}' es requerido.")]
         [MaxLength(64, ErrorMessage = "El campo {0} es requerido.")]
         public string Name { get; set; } = null!;

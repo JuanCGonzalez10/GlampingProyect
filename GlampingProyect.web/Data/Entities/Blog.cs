@@ -9,7 +9,7 @@ namespace GlampingProyect.Web.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Sección")]
+        [Display(Name = "Blog")]
         [Required(ErrorMessage = "El campo '{0}' es requerido.")]
         [MaxLength(64, ErrorMessage = "El campo {0} es requerido.")]
         public string Name { get; set; } = null!;

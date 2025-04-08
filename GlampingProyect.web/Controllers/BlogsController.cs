@@ -28,6 +28,13 @@ namespace GlampingProyect.Web.Controllers
         public async Task<IActionResult> Index([FromQuery] PaginationRequest request)
         {
             Res<PaginationResponse<BlogDTO>> response = await _blogsService.GetPaginationAsync(request);
+
+            if (!response.IsSuccess || response.MyProperty == null)
+            {
+                _notifyService.Error(response.Message ?? "No se pudo cargar la lista de blogs.");
+                return View(new PaginationResponse<BlogDTO>()); 
+            }
+
             return View(response.MyProperty);
         }
 
