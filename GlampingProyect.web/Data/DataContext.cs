@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GlampingProyect.web.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using PrivateBlog.Web.Data.Entities;
+using PrivateBlog.Web.DTOs;
+
 
 namespace PrivateBlog.Web.Data
 {

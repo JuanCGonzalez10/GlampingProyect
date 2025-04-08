@@ -9,7 +9,7 @@ namespace PrivateBlog.Web.DTOs
 
         [Display(Name = "Sección")]
         [Required(ErrorMessage = "El campo '{0}' es requerido.")]
-        public string Name { get; set; } = null!;
+        public string Section { get; set; } = null!;
 
         [Display(Name = "Descripción")]
         public string? Description { get; set; }

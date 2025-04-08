@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Library1.Cor;
 using Microsoft.EntityFrameworkCore;
 using PrivateBlog.Web.Core;
 using PrivateBlog.Web.Core.Pagination;
@@ -20,7 +21,7 @@ namespace PrivateBlog.Web.Services
             _mapper = mapper;
         }
 
-        public async Task<Response<TDTO>> CreateAsync<TEntity, TDTO>(TDTO dto)
+        public async Task<Res<TDTO>> CreateAsync<TEntity, TDTO>(TDTO dto)
         {
             try
             {
@@ -37,7 +38,7 @@ namespace PrivateBlog.Web.Services
             }
         }
 
-        public async Task<Response<object>> DeleteAsync<TEntity>(int id) where TEntity : class, IId
+        public async Task<Res<object>> DeleteAsync<TEntity>(int id) where TEntity : class, IId
         {
             try
             {
@@ -61,7 +62,7 @@ namespace PrivateBlog.Web.Services
             }
         }
 
-        public async Task<Response<TDTO>> EditAsync<TEntity, TDTO>(TDTO dto, int id) where TEntity : class, IId
+        public async Task<Res<TDTO>> EditAsync<TEntity, TDTO>(TDTO dto, int id) where TEntity : class, IId
         {
             try
             {
@@ -79,7 +80,7 @@ namespace PrivateBlog.Web.Services
             }
         }
 
-        public async Task<Response<TDTO>> GetOneAsync<TEntity, TDTO>(int id) 
+        public async Task<Res<TDTO>> GetOneAsync<TEntity, TDTO>(int id) 
         where TEntity : class, IId
         where TDTO : class
         {
@@ -102,7 +103,7 @@ namespace PrivateBlog.Web.Services
                 return ResponseHelper<TDTO>.MakeResponseFail(ex);
             }
         }
-        public async Task<Response<PaginationResponse<TDTO>>> GetPaginationAsync<TEntity, TDTO>(PaginationRequest request, IQueryable<TEntity> query = null)
+        public async Task<Res<PaginationResponse<TDTO>>> GetPaginationAsync<TEntity, TDTO>(PaginationRequest request, IQueryable<TEntity> query = null)
         where TEntity : class
         where TDTO : class
         {

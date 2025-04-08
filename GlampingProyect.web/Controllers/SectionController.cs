@@ -1,12 +1,14 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Azure;
-using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using PrivateBlog.Web.Core;
 using PrivateBlog.Web.Core.Pagination;
 using PrivateBlog.Web.DTOs;
 using PrivateBlog.Web.Services;
 using System.Threading.Tasks;
+using Library1.Cor;
+using Humanizer;
+
 
 namespace PrivateBlog.Web.Controllers
 {
@@ -24,8 +26,8 @@ namespace PrivateBlog.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] PaginationRequest request)
         {
-            Response<PaginationResponse<SectionDTO>> response = await _sectionsService.GetPaginationAsync(request);
-            return View(response.Result);
+            Res<PaginationResponse<SectionDTO>> response = await _sectionsService.GetPaginationAsync(request);
+            return View(response.MyProperty);
         }
 
         [HttpGet]
@@ -43,7 +45,7 @@ namespace PrivateBlog.Web.Controllers
                 return View(dto);
             }
 
-            Response<SectionDTO> response = await _sectionsService.CreateAsync(dto);
+            Res<SectionDTO> response = await _sectionsService.CreateAsync(dto);
 
             if (response.IsSuccess)
             {
@@ -58,11 +60,11 @@ namespace PrivateBlog.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            Response<SectionDTO> response = await _sectionsService.GetOneAsync(id);
+            Res<SectionDTO> response = await _sectionsService.GetOneAsync(id);
 
             if (response.IsSuccess)
             {
-                return View(response.Result);
+                return View(response.MyProperty);
             }
 
             _notifyService.Error(response.Message);
@@ -78,7 +80,7 @@ namespace PrivateBlog.Web.Controllers
                 return View(dto);
             }
 
-            Response<SectionDTO> response = await _sectionsService.EditAsync(dto);
+            Res<SectionDTO> response = await _sectionsService.EditAsync(dto);
 
             if (response.IsSuccess)
             {
@@ -93,7 +95,7 @@ namespace PrivateBlog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            Response<object> response = await _sectionsService.DeleteAsync(id);
+            Res<object> response = await _sectionsService.DeleteAsync(id);
 
             if (response.IsSuccess)
             {
@@ -110,7 +112,7 @@ namespace PrivateBlog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Toggle([FromForm] ToggleSectionStatusDTO dto)
         {
-            Response<object> response = await _sectionsService.ToggleAsync(dto);
+            Res<object> response = await _sectionsService.ToggleAsync(dto);
 
             if (response.IsSuccess)
             {

@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Azure;
+using Library1.Cor;
 using Microsoft.AspNetCore.Mvc;
 using PrivateBlog.Web.Core;
 using PrivateBlog.Web.Core.Pagination;
@@ -26,8 +27,8 @@ namespace PrivateBlog.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] PaginationRequest request)
         {
-            Response<PaginationResponse<BlogDTO>> response = await _blogsService.GetPaginationAsync(request);
-            return View(response.Result);
+            Res<PaginationResponse<BlogDTO>> response = await _blogsService.GetPaginationAsync(request);
+            return View(response.MyProperty);
         }
 
         [HttpGet]
@@ -47,7 +48,7 @@ namespace PrivateBlog.Web.Controllers
                 return View(dto);
             }
 
-            Response<BlogDTO> response = await _blogsService.CreateAsync(dto);
+            Res<BlogDTO> response = await _blogsService.CreateAsync(dto);
 
             if (!response.IsSuccess)
             {
@@ -64,7 +65,7 @@ namespace PrivateBlog.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            Response<BlogDTO> response = await _blogsService.GetOneAsync(id);
+            Res<BlogDTO> response = await _blogsService.GetOneAsync(id);
 
             if (!response.IsSuccess)
             {
@@ -72,8 +73,8 @@ namespace PrivateBlog.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            response.Result.Sections = await _combosHelper.GetComboSections();
-            return View(response.Result);
+            response.MyProperty.Sections = await _combosHelper.GetComboSections();
+            return View(response.MyProperty);
         }
 
         [HttpPost]
@@ -86,7 +87,7 @@ namespace PrivateBlog.Web.Controllers
                 return View(dto);
             }
 
-            Response<BlogDTO> response = await _blogsService.EditAsync(dto);
+            Res<BlogDTO> response = await _blogsService.EditAsync(dto);
 
             if (!response.IsSuccess)
             {
@@ -102,7 +103,7 @@ namespace PrivateBlog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            Response<object> response = await _blogsService.DeleteAsync(id);
+            Res<object> response = await _blogsService.DeleteAsync(id);
 
             if (!response.IsSuccess)
             {
