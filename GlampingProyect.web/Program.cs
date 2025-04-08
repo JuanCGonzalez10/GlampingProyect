@@ -1,21 +1,41 @@
 using GlampingProyect.web;
+using GlampingProyect.Web.Services;
+using GlampingProyect.Web.Helpers;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Notyf;
+using AutoMapper;
+using AspNetCoreHero.ToastNotification.Extensions;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddControllersWithViews();
 
+// ✅ Notificaciones (AspNetCoreHero.ToastNotification)
+builder.Services.AddNotyf(config =>
+{
+    config.DurationInSeconds = 5;
+    config.IsDismissable = true;
+    config.Position = NotyfPosition.TopRight;
+});
+
+// ✅ AutoMapper
+builder.Services.AddAutoMapper(typeof(Program));
+
+// ✅ Servicios personalizados
+builder.Services.AddScoped<ISectionsService, SectionsService>();
+builder.Services.AddScoped<IBlogsService, BlogsService>();
+builder.Services.AddScoped<ICombosHelper, CombosHelper>();
+
+// ✅ Configuración personalizada (base de datos, etc.)
 builder.AddCustomConfiguration();
 
-WebApplication app = builder.Build();
+var app = builder.Build();
 
-
-
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -23,6 +43,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// ✅ Middleware para notificaciones toast
+app.UseNotyf();
 
 app.UseAuthorization();
 
