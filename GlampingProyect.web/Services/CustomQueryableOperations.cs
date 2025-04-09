@@ -32,9 +32,20 @@ namespace GlampingProyect.Web.Services
 
                 return ResponseHelper<TDTO>.MakeResponseSuccess(dto, "Registro creado con éxito");
             }
+            catch (DbUpdateException dbEx)
+            {
+                var detailedMessage = $"Error al guardar en la base de datos: {dbEx.InnerException?.Message ?? dbEx.Message}";
+                return ResponseHelper<TDTO>.MakeResponseFail(new Exception(detailedMessage));
+            }
+            catch (AutoMapperMappingException mapEx)
+            {
+                var detailedMessage = $"Error al mapear el DTO a la entidad: {mapEx.InnerException?.Message ?? mapEx.Message}";
+                return ResponseHelper<TDTO>.MakeResponseFail(new Exception(detailedMessage));
+            }
             catch (Exception ex)
             {
-                return ResponseHelper<TDTO>.MakeResponseFail(ex);
+                var detailedMessage = $"Error inesperado: {ex.InnerException?.Message ?? ex.Message}";
+                return ResponseHelper<TDTO>.MakeResponseFail(new Exception(detailedMessage));
             }
         }
 
