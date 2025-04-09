@@ -24,8 +24,15 @@ namespace GlampingProyect.Web.Controllers
         public async Task<IActionResult> Index([FromQuery] PaginationRequest request)
         {
             Res<PaginationResponse<CategoryDTO>> response = await _categoriesService.GetPaginationAsync(request);
+            if (!response.IsSuccess || response.MyProperty == null)
+            {
+                _notifyService.Error(response.Message ?? "No se pudo cargar la lista de glampings.");
+                return View(new PaginationResponse<CategoryDTO>());
+            }
             return View(response.MyProperty);
         }
+
+     
 
         [HttpGet]
         public IActionResult Create()

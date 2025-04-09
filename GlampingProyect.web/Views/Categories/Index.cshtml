@@ -5,7 +5,7 @@
 }
 
 <div class="pagetitle">
-    <h1>123</h1>
+    <h1>Categorías</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
@@ -15,7 +15,6 @@
 </div>
 
 <section class="section dashboard">
-
     <div class="card">
         <div class="card-header">
             <div class="row">
@@ -29,12 +28,10 @@
         <div class="card-body">
 
             <form asp-action="Index" class="navbar-search" method="GET">
-
                 <input type="hidden" name="Page" value="@Model.CurrentPage" />
 
                 <div class="row mt-3">
                     <div class="col-md-auto">
-
                         <select name="RecordsPerPage" class="form-select bg-light border-0 small" asp-for="RecordsPerPage">
                             <option value="2" selected="@(Model.RecordsPerPage == 2)">2</option>
                             <option value="10" selected="@(Model.RecordsPerPage == 10)">10</option>
@@ -42,7 +39,6 @@
                             <option value="30" selected="@(Model.RecordsPerPage == 30)">30</option>
                             <option value="50" selected="@(Model.RecordsPerPage == 50)">50</option>
                         </select>
-
                     </div>
 
                     <div class="col-md-10">
@@ -60,99 +56,91 @@
                             <button class="btn btn-primary"><i class="bi bi-search"></i></button>
                         </div>
                     </div>
-
                 </div>
-
             </form>
 
             <table class="table table-bordered">
-
                 <thead>
-                <th>Id</th>
-                <th>Categoría</th>
-                <th>Descripción</th>
-                <th></th>
-                </thead>
-
-                <div class="card-body">
-                    @foreach (CategoryDTO item in Model.List)
-                    {
                     <tr>
-                        <td>@item.Id</td>
-                        <td>@item.Name</td>
-                        <td>@item.Description</td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill"></i></a>
-
-                                @if (item.IsHidden)
-                                {
-                                <form asp-action="Toggle" style="display: contents;" method="POST">
-                                    <input type="hidden" value="@item.Id" name="CategoryId" />
-                                    <input type="hidden" value="false" name="Hide" />
-                                    <button class="btn btn-sm btn-secondary">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                </form>
-                                }
-                                else
-                                {
-                                <form asp-action="Toggle" style="display: contents;" method="POST">
-                                    <input type="hidden" value="@item.Id" name="CategoryId" />
-                                    <input type="hidden" value="true" name="Hide" />
-                                    <button class="btn btn-sm btn-info">
-                                        <i class="bi bi-eye-slash-fill"></i>
-                                    </button>
-                                </form>
-                                }
-
-                            <form asp-action="Delete" asp-route-id="@item.Id" style="display: contents;">
-                                <button class="btn btn-sm btn-danger btnDelete"><i class="bi bi-trash-fill"></i></button>
-                            </form>
-                        </td>
+                        <th>Id</th>
+                        <th>Categoría</th>
+                        <th>Descripción</th>
+                        <th></th>
                     </tr>
-                    }
-        </div>
+                </thead>
+                <tbody>
+                    @if (Model?.List != null && Model.List.Any())
+                    {
+                        foreach (CategoryDTO item in Model.List)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill"></i></a>
 
-        </table>
+                                    @if (item.IsHidden)
+                                    {
+                                        <form asp-action="Toggle" style="display: contents;" method="POST">
+                                            <input type="hidden" value="@item.Id" name="CategoryId" />
+                                            <input type="hidden" value="false" name="Hide" />
+                                            <button class="btn btn-sm btn-secondary">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-action="Toggle" style="display: contents;" method="POST">
+                                            <input type="hidden" value="@item.Id" name="CategoryId" />
+                                            <input type="hidden" value="true" name="Hide" />
+                                            <button class="btn btn-sm btn-info">
+                                                <i class="bi bi-eye-slash-fill"></i>
+                                            </button>
+                                        </form>
+                                    }
+
+                                    <form asp-action="Delete" asp-route-id="@item.Id" style="display: contents;" method="POST">
+                                        <button class="btn btn-sm btn-danger btnDelete"><i class="bi bi-trash-fill"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center">No se encontraron categorías.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
             @await Html.PartialAsync("_PaginationComponent", Model)
 
+        </div>
     </div>
-    </div>
-
 </section>
 
 @section Scripts {
-
     <script>
-
-        $(document).ready(function() {
-
-            $('.btnDelete').click(function(event) {
-
+        $(document).ready(function () {
+            $('.btnDelete').click(function (event) {
                 event.preventDefault();
 
                 Swal.fire({
-
                     title: "¿Desea eliminar la categoría?",
                     text: "No podrá revertirlo",
                     icon: "question",
                     showCancelButton: true
-
                 }).then((result) => {
-
                     if (result.isConfirmed) {
-
                         const form = $(this).closest('form');
-
                         form.submit();
                     }
-
                 });
             });
-
         });
-
     </script>
-
 }
