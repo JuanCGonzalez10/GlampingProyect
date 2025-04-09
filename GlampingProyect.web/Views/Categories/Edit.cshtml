@@ -1,7 +1,7 @@
-﻿@model SectionDTO
+﻿@model CategoryDTO
 
 @{
-    ViewData["Title"] = "Editar sección";
+    ViewData["Title"] = "Editar categoría";
 }
 
 <div class="pagetitle">
@@ -9,8 +9,8 @@
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
-            <li class="breadcrumb-item active"><a asp-action="Index">Secciones</a></li>
-            <li class="breadcrumb-item active">Editar sección</li>
+            <li class="breadcrumb-item active"><a asp-action="Index">Categorías</a></li>
+            <li class="breadcrumb-item active">Editar categoría</li>
         </ol>
     </nav>
 </div>
@@ -20,7 +20,7 @@
     <div class="card">
 
         <div class="card-body">
-            <h5 class="card-title text.primary">Editar Sección</h5>
+            <h5 class="card-title text.primary">Editar Categoría</h5>
 
             <form asp-action="Edit" method="POST" class="row g-3">
 

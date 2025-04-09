@@ -1,17 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using GlampingProyect.web.Data.Entities;
 
 namespace GlampingProyect.Web.Data.Entities
 {
-    public class Blog : IId
+    public class Glamping : IId
     {
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Blog")]
+        [Display(Name = "Glamping")]
         [Required(ErrorMessage = "El campo '{0}' es requerido.")]
-        [MaxLength(64, ErrorMessage = "El campo {0} es requerido.")]
+        [MaxLength(64, ErrorMessage = "El campo '{0}' no debe tener más de 64 caracteres.")]
         public string Name { get; set; } = null!;
 
         [Column(TypeName = "VARCHAR(MAX)")]
@@ -22,8 +21,10 @@ namespace GlampingProyect.Web.Data.Entities
         [Display(Name = "¿Está publicado?")]
         public bool IsPublished { get; set; }
 
-        public Section Section { get; set; }
+        [Display(Name = "Categoría")]
+        public Category Category { get; set; } = null!;
 
-        public int SectionId { get; set; }
+        [Display(Name = "Categoría")]
+        public int CategoryId { get; set; }
     }
 }

@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using GlampingProyect.web.Data.Entities;
+using GlampingProyect.Web.Data.Entities;
 
 namespace GlampingProyect.Web.DTOs
 {
-    public class BlogDTO
+    public class GlampingDTO
     {
         public int Id { get; set; }
 
-        [Display(Name = "Blog")]
+        [Display(Name = "Glamping")]
         [Required(ErrorMessage = "El campo '{0}' es requerido.")]
         [MaxLength(64, ErrorMessage = "El campo {0} es requerido.")]
         public string Name { get; set; } = null!;
@@ -22,13 +22,14 @@ namespace GlampingProyect.Web.DTOs
         [Display(Name = "¿Está publicado?")]
         public bool IsPublished { get; set; }
 
-        public Section? Section { get; set; }
-
-        [Display(Name = "Sección")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar una sección")]
-        [Required(ErrorMessage = "El campo '{0}' es requerido.")]
-        public int SectionId { get; set; }
         
-        public IEnumerable<SelectListItem>? Sections { get; set; }
+        public Category? Category { get; set; }
+
+        [Display(Name = "Categoría")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar una categoría")]
+        [Required(ErrorMessage = "El campo '{0}' es requerido.")]
+        public int CategoryId { get; set; }
+
+        public IEnumerable<SelectListItem>? Categories { get; set; }
     }
 }

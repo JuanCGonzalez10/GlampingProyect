@@ -1,10 +1,10 @@
-﻿@model BlogDTO
+﻿@model GlampingDTO
 
 @{
-    ViewData["Title"] = "Nuevo blog";
+    ViewData["Title"] = "Editar Glamping";
 }
 
-@section Styles{
+@section Styles {
     <link href="~/lib/summernote/summernote-bs5.min.css" rel="stylesheet" />
 }
 
@@ -13,8 +13,8 @@
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
-            <li class="breadcrumb-item active"><a asp-action="Index">Blogs</a></li>
-            <li class="breadcrumb-item active">Nuevo Blog</li>
+            <li class="breadcrumb-item active"><a asp-action="Index">Glampings</a></li>
+            <li class="breadcrumb-item active">Editar Glamping</li>
         </ol>
     </nav>
 </div>
@@ -22,11 +22,11 @@
 <section class="section dashboard">
 
     <div class="card">
-
         <div class="card-body">
-            <h5 class="card-title text.primary">Nuevo blog</h5>
+            <h5 class="card-title text.primary">Editar Glamping</h5>
 
-            <form asp-action="Create" method="POST" class="row g-3">
+            <form asp-action="Edit" method="POST" class="row g-3">
+                <input type="hidden" asp-for="Id" />
 
                 <div class="col-md-12">
                     <div class="form-floating">
@@ -38,9 +38,9 @@
 
                 <div class="col-md-12">
                     <div class="form-floating">
-                        <select asp-for="SectionId" asp-items="Model.Sections" class="form-control"></select>
-                        <label asp-for="SectionId"></label>
-                        <span asp-validation-for="SectionId" class="text-danger"></span>
+                        <select asp-for="CategoryId" asp-items="Model.Categories" class="form-control"></select>
+                        <label asp-for="CategoryId"></label>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -55,11 +55,8 @@
                     <a asp-action="Index" class="btn btn-secondary">Volver</a>
                 </div>
             </form>
-
         </div>
-
     </div>
-
 </section>
 
 @section Scripts {
@@ -70,16 +67,11 @@
     <script src="~/lib/summernote/summernote-bs5.min.js"></script>
     <script src="~/lib/summernote/lang/summernote-es-ES.min.js"></script>
     <script>
-
         $(document).ready(function(){
-
             $('#Content').summernote({
-
-                placeholder: 'Cree el blog...',
+                placeholder: 'Edita el contenido del Glamping...',
                 lang: 'es-ES',
             });
-
         });
-
     </script>
 }

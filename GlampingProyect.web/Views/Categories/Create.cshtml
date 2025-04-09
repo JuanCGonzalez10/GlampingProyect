@@ -1,7 +1,7 @@
-﻿@model SectionDTO
+﻿@model CategoryDTO
 
 @{
-    ViewData["Title"] = "Nueva sección";
+    ViewData["Title"] = "Nueva categoría";
 }
 
 <div class="pagetitle">
@@ -9,8 +9,8 @@
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
-            <li class="breadcrumb-item active"><a asp-action="Index">Secciones</a></li>
-            <li class="breadcrumb-item active">Nueva sección</li>
+            <li class="breadcrumb-item active"><a asp-action="Index">Categorías</a></li>
+            <li class="breadcrumb-item active">Nueva categoría</li>
         </ol>
     </nav>
 </div>
@@ -20,7 +20,7 @@
     <div class="card">
 
         <div class="card-body">
-            <h5 class="card-title text.primary">Nueva Sección</h5>
+            <h5 class="card-title text.primary">Nueva Categoría</h5>
 
             <form asp-action="Create" method="POST" class="row g-3">
                 <div class="col-md-12">
@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="text-center mt-3">
-                    <button type="submit" class="btn btn-primary" >Guardar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                     <a asp-action="Index" class="btn btn-secondary">Volver</a>
                 </div>
             </form>
@@ -43,8 +43,8 @@
 
 </section>
 
-@section Scripts{
+@section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial"); 
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using Azure;
 using Library1.Cor;
 using Microsoft.AspNetCore.Mvc;
 using GlampingProyect.Web.Core;
@@ -10,29 +9,28 @@ using GlampingProyect.Web.Services;
 
 namespace GlampingProyect.Web.Controllers
 {
-    public class BlogsController : Controller
+    public class GlampingsController : Controller
     {
-        private readonly IBlogsService _blogsService;
+        private readonly IGlampingsService _glampingsService;
         private readonly INotyfService _notifyService;
         private readonly ICombosHelper _combosHelper;
 
-        public BlogsController(INotyfService notifyService, IBlogsService blogsService, ICombosHelper combosHelper)
+        public GlampingsController(INotyfService notifyService, IGlampingsService glampingsService, ICombosHelper combosHelper)
         {
             _notifyService = notifyService;
-            _blogsService = blogsService;
+            _glampingsService = glampingsService;
             _combosHelper = combosHelper;
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] PaginationRequest request)
         {
-            Res<PaginationResponse<BlogDTO>> response = await _blogsService.GetPaginationAsync(request);
+            Res<PaginationResponse<GlampingDTO>> response = await _glampingsService.GetPaginationAsync(request);
 
             if (!response.IsSuccess || response.MyProperty == null)
             {
-                _notifyService.Error(response.Message ?? "No se pudo cargar la lista de blogs.");
-                return View(new PaginationResponse<BlogDTO>()); 
+                _notifyService.Error(response.Message ?? "No se pudo cargar la lista de glampings.");
+                return View(new PaginationResponse<GlampingDTO>());
             }
 
             return View(response.MyProperty);
@@ -41,26 +39,26 @@ namespace GlampingProyect.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            BlogDTO dto = new BlogDTO { Sections = await _combosHelper.GetComboSections() };
+            GlampingDTO dto = new GlampingDTO { Categories = await _combosHelper.GetComboCategories() };
             return View(dto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BlogDTO dto)
+        public async Task<IActionResult> Create(GlampingDTO dto)
         {
             if (!ModelState.IsValid)
             {
                 _notifyService.Error("Debe ajustar los errores de validación");
-                dto.Sections = await _combosHelper.GetComboSections();
+                dto.Categories = await _combosHelper.GetComboCategories();
                 return View(dto);
             }
 
-            Res<BlogDTO> response = await _blogsService.CreateAsync(dto);
+            Res<GlampingDTO> response = await _glampingsService.CreateAsync(dto);
 
             if (!response.IsSuccess)
             {
                 _notifyService.Error(response.Message);
-                dto.Sections = await _combosHelper.GetComboSections();
+                dto.Categories = await _combosHelper.GetComboCategories();
                 return View(dto);
             }
 
@@ -68,11 +66,10 @@ namespace GlampingProyect.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            Res<BlogDTO> response = await _blogsService.GetOneAsync(id);
+            Res<GlampingDTO> response = await _glampingsService.GetOneAsync(id);
 
             if (!response.IsSuccess)
             {
@@ -80,26 +77,26 @@ namespace GlampingProyect.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            response.MyProperty.Sections = await _combosHelper.GetComboSections();
+            response.MyProperty.Categories = await _combosHelper.GetComboCategories();
             return View(response.MyProperty);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(BlogDTO dto)
+        public async Task<IActionResult> Edit(GlampingDTO dto)
         {
             if (!ModelState.IsValid)
             {
                 _notifyService.Error("Debe ajustar los errores de validación");
-                dto.Sections = await _combosHelper.GetComboSections();
+                dto.Categories = await _combosHelper.GetComboCategories();
                 return View(dto);
             }
 
-            Res<BlogDTO> response = await _blogsService.EditAsync(dto);
+            Res<GlampingDTO> response = await _glampingsService.EditAsync(dto);
 
             if (!response.IsSuccess)
             {
                 _notifyService.Error(response.Message);
-                dto.Sections = await _combosHelper.GetComboSections();
+                dto.Categories = await _combosHelper.GetComboCategories();
                 return View(dto);
             }
 
@@ -110,7 +107,7 @@ namespace GlampingProyect.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            Res<object> response = await _blogsService.DeleteAsync(id);
+            Res<object> response = await _glampingsService.DeleteAsync(id);
 
             if (!response.IsSuccess)
             {

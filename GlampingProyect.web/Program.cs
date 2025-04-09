@@ -23,8 +23,8 @@ builder.Services.AddNotyf(config =>
 builder.Services.AddAutoMapper(typeof(Program));
 
 // ✅ Servicios personalizados
-builder.Services.AddScoped<ISectionsService, SectionsService>();
-builder.Services.AddScoped<IBlogsService, BlogsService>();
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+builder.Services.AddScoped<IGlampingsService, GlampingsService>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 
 // ✅ Configuración personalizada (base de datos, etc.)

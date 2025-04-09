@@ -6,7 +6,7 @@ namespace GlampingProyect.Web.Helpers
 {
     public interface ICombosHelper
     {
-        public Task<IEnumerable<SelectListItem>> GetComboSections();
+        public Task<IEnumerable<SelectListItem>> GetComboCategories();
     }
 
     public class CombosHelper : ICombosHelper
@@ -18,17 +18,17 @@ namespace GlampingProyect.Web.Helpers
             _context = context;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetComboSections()
+        public async Task<IEnumerable<SelectListItem>> GetComboCategories()
         {
-            List<SelectListItem> list = await _context.Sections.Select(s => new SelectListItem
+            List<SelectListItem> list = await _context.Categories.Select(c => new SelectListItem
             {
-                Text = s.Name,
-                Value = s.Id.ToString()
+                Text = c.Name,
+                Value = c.Id.ToString()
             }).ToListAsync();
 
             list.Insert(0, new SelectListItem
             {
-                Text = "[Seleccione una sección..]",
+                Text = "[Seleccione una categoría...]",
                 Value = "0"
             });
 

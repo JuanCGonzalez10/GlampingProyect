@@ -7,25 +7,25 @@
                asp-controller="Home" 
                asp-action="Index">
                 <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
+                <span>Home</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() ==  "Sections" ? "" : "collapsed")" 
-               asp-controller="Sections" 
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() ==  "Categories" ? "" : "collapsed")" 
+               asp-controller="Categories" 
                asp-action="Index">
                 <i class="bi bi-book"></i>
-                <span>Secciones</span>
+                <span>Categorias</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Blogs" ? "" : "collapsed")"
-               asp-controller="Blogs"
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Glampings" ? "" : "collapsed")"
+               asp-controller="Glampings"
                asp-action="Index">
                 <i class="bi bi-file-earmark-post"></i>
-                <span>Blogs</span>
+                <span>Glampings</span>
             </a>
         </li>
 

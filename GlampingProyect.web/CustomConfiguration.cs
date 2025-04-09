@@ -1,4 +1,4 @@
-﻿using GlampingProyect.web.Data;
+﻿using GlampingProyect.Web.Data;
 using GlampingProyect.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;

@@ -1,8 +1,6 @@
-﻿using GlampingProyect.web.Data.Entities;
+﻿using GlampingProyect.Web.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using GlampingProyect.Web.Data.Entities;
-using GlampingProyect.Web.DTOs;
-
 
 namespace GlampingProyect.Web.Data
 {
@@ -12,7 +10,7 @@ namespace GlampingProyect.Web.Data
         {
         }
 
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Section> Sections { get; set; }
+        public DbSet<Glamping> Glampings { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

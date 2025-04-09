@@ -1,32 +1,29 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using Azure;
 using Microsoft.AspNetCore.Mvc;
 using GlampingProyect.Web.Core;
 using GlampingProyect.Web.Core.Pagination;
 using GlampingProyect.Web.DTOs;
 using GlampingProyect.Web.Services;
-using System.Threading.Tasks;
 using Library1.Cor;
-using Humanizer;
-
+using System.Threading.Tasks;
 
 namespace GlampingProyect.Web.Controllers
 {
-    public class SectionsController : Controller
+    public class CategoriesController : Controller
     {
-        private readonly ISectionsService _sectionsService;
+        private readonly ICategoriesService _categoriesService;
         private readonly INotyfService _notifyService;
 
-        public SectionsController(ISectionsService sectionsService, INotyfService notifyService)
+        public CategoriesController(ICategoriesService categoriesService, INotyfService notifyService)
         {
-            _sectionsService = sectionsService;
+            _categoriesService = categoriesService;
             _notifyService = notifyService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] PaginationRequest request)
         {
-            Res<PaginationResponse<SectionDTO>> response = await _sectionsService.GetPaginationAsync(request);
+            Res<PaginationResponse<CategoryDTO>> response = await _categoriesService.GetPaginationAsync(request);
             return View(response.MyProperty);
         }
 
@@ -37,7 +34,7 @@ namespace GlampingProyect.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] SectionDTO dto)
+        public async Task<IActionResult> Create([FromForm] CategoryDTO dto)
         {
             if (!ModelState.IsValid)
             {
@@ -45,7 +42,7 @@ namespace GlampingProyect.Web.Controllers
                 return View(dto);
             }
 
-            Res<SectionDTO> response = await _sectionsService.CreateAsync(dto);
+            Res<CategoryDTO> response = await _categoriesService.CreateAsync(dto);
 
             if (response.IsSuccess)
             {
@@ -60,7 +57,7 @@ namespace GlampingProyect.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            Res<SectionDTO> response = await _sectionsService.GetOneAsync(id);
+            Res<CategoryDTO> response = await _categoriesService.GetOneAsync(id);
 
             if (response.IsSuccess)
             {
@@ -72,7 +69,7 @@ namespace GlampingProyect.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(SectionDTO dto)
+        public async Task<IActionResult> Edit(CategoryDTO dto)
         {
             if (!ModelState.IsValid)
             {
@@ -80,7 +77,7 @@ namespace GlampingProyect.Web.Controllers
                 return View(dto);
             }
 
-            Res<SectionDTO> response = await _sectionsService.EditAsync(dto);
+            Res<CategoryDTO> response = await _categoriesService.EditAsync(dto);
 
             if (response.IsSuccess)
             {
@@ -95,7 +92,7 @@ namespace GlampingProyect.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            Res<object> response = await _sectionsService.DeleteAsync(id);
+            Res<object> response = await _categoriesService.DeleteAsync(id);
 
             if (response.IsSuccess)
             {
@@ -110,9 +107,9 @@ namespace GlampingProyect.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Toggle([FromForm] ToggleSectionStatusDTO dto)
+        public async Task<IActionResult> Toggle([FromForm] ToggleCategoryStatusDTO dto)
         {
-            Res<object> response = await _sectionsService.ToggleAsync(dto);
+            Res<object> response = await _categoriesService.ToggleAsync(dto);
 
             if (response.IsSuccess)
             {

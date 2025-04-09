@@ -1,8 +1,8 @@
 ﻿namespace GlampingProyect.Web.DTOs
 {
-    public class ToggleSectionStatusDTO
+    public class ToggleCategoryStatusDTO
     {
-        public int SectionId { get; set; }
+        public int CategoryId { get; set; }
         public bool Hide { get; set; }
     }
 }

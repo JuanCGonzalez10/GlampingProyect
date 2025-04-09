@@ -11,8 +11,8 @@
 
         public async Task SeedAsync()
         {
-            await new SectionsSeeder(_context).SeedAsync();
-            await new BlogsSeeder(_context).SeedAsync();
+            await new CategoriesSeeder(_context).SeedAsync();
+            await new GlampingsSeeder(_context).SeedAsync();
         }
     }
 }

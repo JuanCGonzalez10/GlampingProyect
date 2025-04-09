@@ -1,7 +1,7 @@
-﻿@model BlogDTO
+﻿@model GlampingDTO
 
 @{
-    ViewData["Title"] = "Editar blog";
+    ViewData["Title"] = "Nuevo glamping";
 }
 
 @section Styles {
@@ -13,8 +13,8 @@
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
-            <li class="breadcrumb-item active"><a asp-action="Index">Blogs</a></li>
-            <li class="breadcrumb-item active">Editar Blog</li>
+            <li class="breadcrumb-item active"><a asp-action="Index">Glampings</a></li>
+            <li class="breadcrumb-item active">Nuevo Glamping</li>
         </ol>
     </nav>
 </div>
@@ -24,11 +24,9 @@
     <div class="card">
 
         <div class="card-body">
-            <h5 class="card-title text.primary">Editar blog</h5>
+            <h5 class="card-title text.primary">Nuevo glamping</h5>
 
-            <form asp-action="Edit" method="POST" class="row g-3">
-
-                <input type="hidden" asp-for="Id" />
+            <form asp-action="Create" method="POST" class="row g-3">
 
                 <div class="col-md-12">
                     <div class="form-floating">
@@ -40,9 +38,9 @@
 
                 <div class="col-md-12">
                     <div class="form-floating">
-                        <select asp-for="SectionId" asp-items="Model.Sections" class="form-control"></select>
-                        <label asp-for="SectionId"></label>
-                        <span asp-validation-for="SectionId" class="text-danger"></span>
+                        <select asp-for="CategoryId" asp-items="Model.Categories" class="form-control"></select>
+                        <label asp-for="CategoryId"></label>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -77,7 +75,7 @@
 
             $('#Content').summernote({
 
-                placeholder: 'Cree el blog...',
+                placeholder: 'Describe el glamping...',
                 lang: 'es-ES',
             });
 

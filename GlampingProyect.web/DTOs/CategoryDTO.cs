@@ -2,12 +2,11 @@
 
 namespace GlampingProyect.Web.DTOs
 {
-    public class SectionDTO
-
+    public class CategoryDTO
     {
         public int Id { get; set; }
 
-        [Display(Name = "Sección")]
+        [Display(Name = "Categorias")]
         [Required(ErrorMessage = "El campo '{0}' es requerido.")]
         public string Name { get; set; } = null!;
 
