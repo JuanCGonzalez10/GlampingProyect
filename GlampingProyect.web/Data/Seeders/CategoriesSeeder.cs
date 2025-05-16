@@ -15,14 +15,14 @@ namespace GlampingProyect.Web.Data.Seeders
         public async Task SeedAsync()
         {
             List<Category> categories = new List<Category>
-            {
-                new Category { Name = "General", Description = "Información básica de la compañía" },
-                new Category { Name = "Telecomunicaciones" },
-                new Category { Name = "Hacking" },
-                new Category { Name = "Clases", IsHidden = true },
-                new Category { Name = "Informática" },
-                new Category { Name = "Pentesting" },
-            };
+    {
+            new Category { Name = "Alojamiento", Description = "Tipos de alojamiento disponibles: cabañas, domos, casas en árboles" },
+            new Category { Name = "Gastronomía", Description = "Menús disponibles, cocina local, opciones vegetarianas" },
+            new Category { Name = "Bienestar", Description = "Spa, yoga, masajes y experiencias relajantes" },
+            new Category { Name = "Reservas", Description = "Información relacionada con reservas y disponibilidad" },
+            new Category { Name = "Normas del lugar", Description = "Reglas de comportamiento y convivencia" },
+            new Category { Name = "Servicios adicionales", Description = "Wi-Fi, transporte, estacionamiento, etc." }
+    };
 
             foreach (Category category in categories)
             {
@@ -36,5 +36,6 @@ namespace GlampingProyect.Web.Data.Seeders
 
             await _context.SaveChangesAsync();
         }
+
     }
 }

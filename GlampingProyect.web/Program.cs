@@ -5,13 +5,15 @@ using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Notyf;
 using AutoMapper;
 using AspNetCoreHero.ToastNotification.Extensions;
+using Serilog;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 builder.Services.AddControllersWithViews();
 
-// ✅ Notificaciones (AspNetCoreHero.ToastNotification)
+// Configuración de notificaciones
 builder.Services.AddNotyf(config =>
 {
     config.DurationInSeconds = 5;
@@ -19,16 +21,18 @@ builder.Services.AddNotyf(config =>
     config.Position = NotyfPosition.TopRight;
 });
 
-// ✅ AutoMapper
+// AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
 
-// ✅ Servicios personalizados
+// Servicios personalizados
 builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 builder.Services.AddScoped<IGlampingsService, GlampingsService>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 
-// ✅ Configuración personalizada (base de datos, etc.)
+// Configuración personalizada (base de datos, etc.)
 builder.AddCustomConfiguration();
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 
@@ -44,9 +48,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// ✅ Middleware para notificaciones toast
+// Middleware para notificaciones toast
 app.UseNotyf();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
