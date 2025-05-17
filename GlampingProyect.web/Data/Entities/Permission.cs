@@ -7,7 +7,7 @@ namespace GlampingProyect.web.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Rol")]
+        [Display(Name = "Permiso")]
         [MaxLength(64, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         public string Name { get; set; } = null!;
@@ -22,6 +22,7 @@ namespace GlampingProyect.web.Data.Entities
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         public string Module { get; set; } = null!;
 
-        public ICollection<RolePermission>? RolePermissions { get; set; }
+        // Relaciones
+        public ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
     }
 }

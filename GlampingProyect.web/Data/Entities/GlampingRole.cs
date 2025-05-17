@@ -12,7 +12,8 @@ namespace GlampingProyect.web.Data.Entities
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         public string Name { get; set; } = null!;
 
-        public ICollection<RolePermission>? RolePermissions { get; set; }
-        public ICollection<RoleSection>? RoleSections { get; set; }
+        // Relaciones
+        public ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
+        public ICollection<RoleSection> RoleSections { get; set; } = new List<RoleSection>();
     }
 }

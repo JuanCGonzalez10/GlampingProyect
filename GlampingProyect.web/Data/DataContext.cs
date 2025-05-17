@@ -12,7 +12,7 @@ namespace GlampingProyect.Web.Data
         }
 
         public DbSet<Glamping> Glampings { get; set; }
-        public DbSet<Permission> Permission { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
         public DbSet<GlampingRole> GlampingRole { get; set; }
         public DbSet<RolePermission> RolePermission { get; set; }
         public DbSet<RoleSection> RoleSections { get; set; }

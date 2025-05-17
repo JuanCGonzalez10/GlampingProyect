@@ -1,4 +1,4 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
+﻿                                using AspNetCoreHero.ToastNotification.Abstractions;
 using Library1.Cor;
 using Microsoft.AspNetCore.Mvc;
 using GlampingProyect.Web.Core;
@@ -6,9 +6,11 @@ using GlampingProyect.Web.Core.Pagination;
 using GlampingProyect.Web.DTOs;
 using GlampingProyect.Web.Helpers;
 using GlampingProyect.Web.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GlampingProyect.Web.Controllers
 {
+    [Authorize]
     public class GlampingsController : Controller
     {
         private readonly IGlampingsService _glampingsService;
@@ -37,6 +39,7 @@ namespace GlampingProyect.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             GlampingDTO dto = new GlampingDTO { Categories = await _combosHelper.GetComboCategories() };

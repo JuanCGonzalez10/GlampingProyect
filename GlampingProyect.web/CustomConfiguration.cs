@@ -1,6 +1,10 @@
 ﻿using AspNetCoreHero.ToastNotification;
 using GlampingProyect.web.Data.Entities;
+using GlampingProyect.web.Services;
 using GlampingProyect.Web.Data;
+using GlampingProyect.Web.Data.Seeders;
+using GlampingProyect.Web.Helpers;
+using GlampingProyect.Web.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -64,7 +68,7 @@ namespace GlampingProyect.web
                 conf.Cookie.Name = "Auth";
                 conf.ExpireTimeSpan = TimeSpan.FromDays(100);
                 conf.LoginPath = "/Account/Login";
-                conf.AccessDeniedPath = "/Account/NotAuthorized";
+                conf.AccessDeniedPath = "/Errors/403";
             });
         }
 
@@ -81,7 +85,14 @@ namespace GlampingProyect.web
         private static void AddServices(WebApplicationBuilder builder)
         {
             //Servicios
-            builder.Services.AddScoped<IBlogsService, BlogsService>();
+            builder.Services.AddScoped<IGlampingsService, GlampingsService>();
+            //builder.Services.AddScoped<IReadLogsService, ReadPlainTexLogstService>();
+            builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+            builder.Services.AddTransient<SeedDb>();
+            builder.Services.AddScoped<IUserService, UserService>();
+
+            // Helpers
+            builder.Services.AddScoped<ICombosHelper, CombosHelper>();
         }
     }
 }

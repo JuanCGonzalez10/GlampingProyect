@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GlampingProyect.web.Data.Entities
 {
-    public class User :IdentityUser
+    public class User : IdentityUser
     {
         [Display(Name = "Documento")]
         [MaxLength(32, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres.")]
@@ -13,16 +13,19 @@ namespace GlampingProyect.web.Data.Entities
         [Display(Name = "Nombres")]
         [MaxLength(32, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es requerido.")]
-        public string FirstName {  get; set; } = null!;
+        public string FirstName { get; set; } = null!;
 
         [Display(Name = "Apellidos")]
         [MaxLength(32, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres.")]
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         public string LastName { get; set; } = null!;
 
+        [Display(Name = "Rol")]
         public int GlampingRoleId { get; set; }
-        public GlampingRole GlampingRole { get; set; }
 
+        public GlampingRole GlampingRole { get; set; } = null!;
+
+        [Display(Name = "Nombre completo")]
         public string FullName => $"{FirstName} {LastName}";
     }
 }
