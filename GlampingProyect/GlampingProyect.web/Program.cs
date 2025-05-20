@@ -16,7 +16,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 1) DbContext ------------------------------------------------------------
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
+
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<DataContext>()
+    .AddDefaultTokenProviders();
+
 
 // 2) Identity -------------------------------------------------------------
 // Si solo necesitas autenticación por cookies de Identity, 

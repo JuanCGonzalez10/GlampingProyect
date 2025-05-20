@@ -121,7 +121,7 @@ namespace GlampingProyect.web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permission");
+                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("GlampingProyect.web.Data.Entities.RolePermission", b =>

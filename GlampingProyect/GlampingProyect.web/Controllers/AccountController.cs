@@ -2,38 +2,96 @@
 using GlampingProyect.Web.DTOs;
 using GlampingProyect.web.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using GlampingProyect.web.Data.Entities;
 using System.Threading.Tasks;
-using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace GlampingProyect.Web.Controllers
 {
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
-        public AccountController(IUserService userService)
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+
+        public AccountController(
+            IUserService userService,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             _userService = userService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-        // === Login ===
+        // === Register ===
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginDTO dto)
+        public async Task<IActionResult> Register(RegisterDTO dto)
         {
-            if (ModelState.IsValid)
-            {
-                var result = await _userService.LoginAsync(dto);
-                if (result.Succeeded)
-                    return RedirectToAction("Index", "Home");
+            if (!ModelState.IsValid)
+                return View(dto);
 
-                ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos");
+            var user = new User
+            {
+                UserName = dto.Email,
+                Email = dto.Email,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                Document = dto.Document,
+                GlampingRoleId = dto.GlampingRoleId,
+                EmailConfirmed = true
+            };
+
+            var result = await _userManager.CreateAsync(user, dto.Password);
+
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return RedirectToAction("Index", "Home");
             }
+
+            foreach (var error in result.Errors)
+                ModelState.AddModelError(string.Empty, error.Description);
+
+            return View(dto);
+        }
+
+        // === Login ===
+        [HttpGet]
+        public IActionResult Login(string? returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginDTO dto, string? returnUrl = null)
+        {
+            if (!ModelState.IsValid)
+                return View(dto);
+
+            var result = await _userService.LoginAsync(dto);
+
+            if (result.Succeeded)
+            {
+                Console.WriteLine("✅ Login correcto");
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            Console.WriteLine("❌ Login fallido");
+            ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos");
             return View(dto);
         }
 
@@ -58,6 +116,7 @@ namespace GlampingProyect.Web.Controllers
                 StatusCodes.Status404NotFound => "La página que estás intentando acceder no existe",
                 _ => "Ha ocurrido un error"
             };
+
             ViewBag.ErrorMessage = errorMessage;
             return View(statusCode);
         }
@@ -84,7 +143,7 @@ namespace GlampingProyect.Web.Controllers
                 return View(model);
 
             var user = await _userService.FindByEmailAsync(model.Email);
-            // No revelar si el usuario existe
+
             if (user == null)
             {
                 ViewBag.Message = "Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.";

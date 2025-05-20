@@ -1,0 +1,105 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\BGinvestments\\Documents\\GitHub\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{37AEC4F7-B24F-47DD-B6E1-A647669EB575}|GlampingProyect.web\\GlampingProyect.web.csproj|c:\\users\\bginvestments\\documents\\github\\glampingproyect.web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{37AEC4F7-B24F-47DD-B6E1-A647669EB575}|GlampingProyect.web\\GlampingProyect.web.csproj|solutionrelative:glampingproyect.web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37AEC4F7-B24F-47DD-B6E1-A647669EB575}|GlampingProyect.web\\GlampingProyect.web.csproj|c:\\users\\bginvestments\\documents\\github\\glampingproyect.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37AEC4F7-B24F-47DD-B6E1-A647669EB575}|GlampingProyect.web\\GlampingProyect.web.csproj|solutionrelative:glampingproyect.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37AEC4F7-B24F-47DD-B6E1-A647669EB575}|GlampingProyect.web\\GlampingProyect.web.csproj|c:\\users\\bginvestments\\documents\\github\\glampingproyect.web\\data\\seeders\\userrolesseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37AEC4F7-B24F-47DD-B6E1-A647669EB575}|GlampingProyect.web\\GlampingProyect.web.csproj|solutionrelative:glampingproyect.web\\data\\seeders\\userrolesseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37AEC4F7-B24F-47DD-B6E1-A647669EB575}|GlampingProyect.web\\GlampingProyect.web.csproj|c:\\users\\bginvestments\\documents\\github\\glampingproyect.web\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37AEC4F7-B24F-47DD-B6E1-A647669EB575}|GlampingProyect.web\\GlampingProyect.web.csproj|solutionrelative:glampingproyect.web\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37AEC4F7-B24F-47DD-B6E1-A647669EB575}|GlampingProyect.web\\GlampingProyect.web.csproj|c:\\users\\bginvestments\\documents\\github\\glampingproyect.web\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{37AEC4F7-B24F-47DD-B6E1-A647669EB575}|GlampingProyect.web\\GlampingProyect.web.csproj|solutionrelative:glampingproyect.web\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\BGinvestments\\Documents\\GitHub\\GlampingProyect.web\\Program.cs",
+              "RelativeDocumentMoniker": "GlampingProyect.web\\Program.cs",
+              "ToolTip": "C:\\Users\\BGinvestments\\Documents\\GitHub\\GlampingProyect.web\\Program.cs",
+              "RelativeToolTip": "GlampingProyect.web\\Program.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T02:03:17.673Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserRolesSeeder.cs",
+              "DocumentMoniker": "C:\\Users\\BGinvestments\\Documents\\GitHub\\GlampingProyect.web\\Data\\Seeders\\UserRolesSeeder.cs",
+              "RelativeDocumentMoniker": "GlampingProyect.web\\Data\\Seeders\\UserRolesSeeder.cs",
+              "ToolTip": "C:\\Users\\BGinvestments\\Documents\\GitHub\\GlampingProyect.web\\Data\\Seeders\\UserRolesSeeder.cs",
+              "RelativeToolTip": "GlampingProyect.web\\Data\\Seeders\\UserRolesSeeder.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAgwB0AAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T01:58:33.207Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\BGinvestments\\Documents\\GitHub\\GlampingProyect.web\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "GlampingProyect.web\\Views\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\BGinvestments\\Documents\\GitHub\\GlampingProyect.web\\Views\\Account\\Login.cshtml",
+              "RelativeToolTip": "GlampingProyect.web\\Views\\Account\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-20T01:39:07.931Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LoginDTO.cs",
+              "DocumentMoniker": "C:\\Users\\BGinvestments\\Documents\\GitHub\\GlampingProyect.web\\DTOs\\LoginDTO.cs",
+              "RelativeDocumentMoniker": "GlampingProyect.web\\DTOs\\LoginDTO.cs",
+              "ToolTip": "C:\\Users\\BGinvestments\\Documents\\GitHub\\GlampingProyect.web\\DTOs\\LoginDTO.cs",
+              "RelativeToolTip": "GlampingProyect.web\\DTOs\\LoginDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T01:38:59.843Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\BGinvestments\\Documents\\GitHub\\GlampingProyect.web\\appsettings.json",
+              "RelativeDocumentMoniker": "GlampingProyect.web\\appsettings.json",
+              "ToolTip": "C:\\Users\\BGinvestments\\Documents\\GitHub\\GlampingProyect.web\\appsettings.json",
+              "RelativeToolTip": "GlampingProyect.web\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-20T01:27:50.502Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
