@@ -7,6 +7,7 @@ namespace GlampingProyect.Web.Helpers
     public interface ICombosHelper
     {
         public Task<IEnumerable<SelectListItem>> GetComboCategories();
+        public Task<IEnumerable<SelectListItem>> GetComboRoles();
     }
 
     public class CombosHelper : ICombosHelper
@@ -29,6 +30,22 @@ namespace GlampingProyect.Web.Helpers
             list.Insert(0, new SelectListItem
             {
                 Text = "[Seleccione una categoría...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+        public async Task<IEnumerable<SelectListItem>> GetComboRoles()
+        {
+            List<SelectListItem> list = await _context.GlampingRoles.Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
+            }).ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione un rol..]",
                 Value = "0"
             });
 

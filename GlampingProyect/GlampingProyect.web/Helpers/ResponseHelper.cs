@@ -7,25 +7,25 @@ namespace GlampingProyect.Web.Helpers
 {
     public static class ResponseHelper<T>
     {
-        public static Res<T> MakeResponseSuccess(T model, string message = "tarea realizada con éxito")
+        public static Response<T> MakeResponseSuccess(T model, string message = "tarea realizada con éxito")
         {
-            return new Res<T>
+            return new Response<T>
             {
                 IsSuccess = true,
                 Message = message,
-                MyProperty = model,
+                Result = model,
             };
         }
-        public static Res<T> MakeResponseSuccess(string message = "Tarea realizada con éxito")
+        public static Response<T> MakeResponseSuccess(string message = "Tarea realizada con éxito")
         {
-            return new Res<T>
+            return new Response<T>
             {
                 IsSuccess = true,
                 Message = message,
             };
         }
 
-        public static Res<T> MakeResponseFail(Exception ex, string message = "Ha ocurrido un error al generar la solicitud.")
+        public static Response<T> MakeResponseFail(Exception ex, string message = "Ha ocurrido un error al generar la solicitud.")
         {
             string detailedMessage;
 
@@ -39,7 +39,7 @@ namespace GlampingProyect.Web.Helpers
                 detailedMessage = ex.Message;
             }
 
-            return new Res<T>
+            return new Response<T>
             {
                 IsSuccess = false,
                 Message = $"{message}: {detailedMessage}",
@@ -50,9 +50,9 @@ namespace GlampingProyect.Web.Helpers
             };
         }
 
-        public static Res<T> MakeResponseFail(string message = "Ha ocurrido un error al generar la solicitud.")
+        public static Response<T> MakeResponseFail(string message = "Ha ocurrido un error al generar la solicitud.")
         {
-            return new Res<T>
+            return new Response<T>
             {
                 IsSuccess = false,
                 Message = message,

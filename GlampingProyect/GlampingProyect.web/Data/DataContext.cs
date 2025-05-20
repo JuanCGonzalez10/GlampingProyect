@@ -14,11 +14,11 @@ namespace GlampingProyect.Web.Data
         // DbSets personalizados
         public DbSet<Glamping> Glampings { get; set; }
         public DbSet<Permission> Permissions { get; set; }
-        public DbSet<GlampingRole> GlampingRole { get; set; }
-        public DbSet<RolePermission> RolePermission { get; set; }
-        public DbSet<RoleSection> RoleSections { get; set; }
+        public DbSet<GlampingRole> GlampingRoles { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<RoleCategory> RoleCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Section> Sections { get; set; } // ← Añadido para RoleSection
+        //public DbSet<Section> Sections { get; set; } // ← Añadido para RoleSection
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,7 +34,7 @@ namespace GlampingProyect.Web.Data
             builder.Entity<GlampingRole>().HasIndex(r => r.Name).IsUnique();
 
             // Sections
-            builder.Entity<Section>().HasIndex(s => s.Name).IsUnique();
+            builder.Entity<Category>().HasIndex(s => s.Name).IsUnique();
 
             // Users
             builder.Entity<User>().HasIndex(u => u.Document).IsUnique();
@@ -56,17 +56,17 @@ namespace GlampingProyect.Web.Data
                 .HasForeignKey(rp => rp.PermissionId);
 
             // Role-Section (many-to-many)
-            builder.Entity<RoleSection>().HasKey(rs => new { rs.RoleId, rs.SectionId });
+            builder.Entity<RoleCategory>().HasKey(rs => new { rs.RoleId, rs.CategoryId });
 
-            builder.Entity<RoleSection>()
+            builder.Entity<RoleCategory>()
                 .HasOne(rs => rs.Role)
                 .WithMany(r => r.RoleSections)
                 .HasForeignKey(rs => rs.RoleId);
 
-            builder.Entity<RoleSection>()
-                .HasOne(rs => rs.Section)
+            builder.Entity<RoleCategory>()
+                .HasOne(rs => rs.Category)
                 .WithMany(s => s.RoleSections)
-                .HasForeignKey(rs => rs.SectionId);
+                .HasForeignKey(rs => rs.CategoryId);
         }
     }
 }
