@@ -1,10 +1,11 @@
 ﻿using GlampingProyect.web.DTOs;
+using GlampingProyect.Web.DTOs;
 using GlampingProyect.web.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
-namespace GlampingProyect.web.Controllers
+namespace GlampingProyect.Web.Controllers
 {
     public class AccountController : Controller
     {

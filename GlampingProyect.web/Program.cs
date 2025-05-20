@@ -21,7 +21,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 // 2) Identity -------------------------------------------------------------
 // Si solo necesitas autenticación por cookies de Identity, 
 // AddDefaultIdentity es suficiente y registra el esquema una sola vez.
-builder.Services.AddDefaultIdentity<User>(options =>
+/*builder.Services.AddDefaultIdentity<User>(options =>
 {
     options.Password.RequireDigit = false;
     options.Password.RequiredLength = 6;
@@ -31,7 +31,7 @@ builder.Services.AddDefaultIdentity<User>(options =>
 })
 .AddRoles<IdentityRole>()                   // ← mantén roles si los usas
 .AddEntityFrameworkStores<DataContext>()
-.AddDefaultTokenProviders();
+.AddDefaultTokenProviders();*/
 
 // 3) Cookie path settings --------------------------------------------------
 builder.Services.ConfigureApplicationCookie(options =>

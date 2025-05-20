@@ -2,7 +2,7 @@ using System.Diagnostics;
 using GlampingProyect.web.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GlampingProyect.web.Controllers
+namespace GlampingProyect.Web.Controllers
 {
     public class HomeController : Controller
     {
