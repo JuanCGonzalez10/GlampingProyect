@@ -1,3 +1,4 @@
+
 using GlampingProyect.Web.Data;                 // DataContext
 using GlampingProyect.Web.Data.Entities;        // User
 using GlampingProyect.Web.Helpers;              // AddCustomConfiguration extension

@@ -1,4 +1,4 @@
-﻿                                using AspNetCoreHero.ToastNotification.Abstractions;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Library1.Cor;
 using Microsoft.AspNetCore.Mvc;
 using GlampingProyect.Web.Core;
