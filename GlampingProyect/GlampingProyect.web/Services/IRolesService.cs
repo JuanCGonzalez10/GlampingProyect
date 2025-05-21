@@ -10,7 +10,7 @@ using GlampingProyect.Web.DTOs;
 using GlampingProyect.Web.Helpers;
 using GlampingProyect.web.Data.Entities;
 using GlampingProyect.web.Core;
-using PrivateBlog.Web.Services;
+using GlampingProyect.Web.Services;
 
 namespace GlampingProyect.Web.Services
 {
@@ -21,7 +21,7 @@ namespace GlampingProyect.Web.Services
         public Task<Response<List<PermissionDTO>>> GetPermissionsAsync();
         public Task<Response<List<CategoryDTO>>> GetCategoriesAsync();
         public Task<Response<GlampingRoleDTO>> CreateAsync(GlampingRoleDTO dto);
-        public Task<Response<GlampingRoleDTO>> EditAsync(GlampingDTO dto);
+        public Task<Response<GlampingRoleDTO>> EditAsync(GlampingRoleDTO dto);
         public Task<Response<List<PermissionForRoleDTO>>> GetPermissionsByRoleAsync(int id);
         public Task<Response<List<CategoryForRoleDTO>>> GetCategoriesByRoleAsync(int id);
     }
@@ -282,6 +282,11 @@ namespace GlampingProyect.Web.Services
             {
                 return ResponseHelper<List<CategoryForRoleDTO>>.MakeResponseFail(ex);
             }
+        }
+
+        public Task<Response<List<CategoryDTO>>> GetCategoriesAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

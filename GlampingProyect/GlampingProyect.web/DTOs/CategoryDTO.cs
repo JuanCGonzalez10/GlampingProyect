@@ -17,6 +17,6 @@ namespace GlampingProyect.Web.DTOs
 
         [Display(Name = "¿Está oculta?")]
         public bool IsHidden { get; set; }
-        public PaginationResponse<GlampingDTO>? PaginatedBlogs { get; set; }
+        public PaginationResponse<GlampingDTO>? PaginatedGlampings { get; set; }
     }
 }

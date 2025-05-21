@@ -146,7 +146,7 @@ using GlampingProyect.Web.Helpers;
 //        }
 //    }
 //}
-namespace PrivateBlog.Web.Services
+namespace GlampingProyect.Web.Services
 {
     public class CustomQueryableOperations
     {

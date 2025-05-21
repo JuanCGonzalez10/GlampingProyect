@@ -16,13 +16,13 @@ namespace GlampingProyect.Web.Services
 {
     public interface ICategoriesService
     {
-        Task<Res<CategoryDTO>> CreateAsync(CategoryDTO dto);
-        Task<Res<object>> DeleteAsync(int id);
-        Task<Res<CategoryDTO>> EditAsync(CategoryDTO dto);
-        Task<Res<List<CategoryDTO>>> GetListAsync();
-        Task<Res<CategoryDTO>> GetOneAsync(int id);
-        Task<Res<PaginationResponse<CategoryDTO>>> GetPaginationAsync(PaginationRequest request);
-        Task<Res<object>> ToggleAsync(ToggleCategoryStatusDTO dto);
+        Task<Response<CategoryDTO>> CreateAsync(CategoryDTO dto);
+        Task<Response<object>> DeleteAsync(int id);
+        Task<Response<CategoryDTO>> EditAsync(CategoryDTO dto);
+        Task<Response<List<CategoryDTO>>> GetListAsync();
+        Task<Response<CategoryDTO>> GetOneAsync(int id);
+        Task<Response<PaginationResponse<CategoryDTO>>> GetPaginationAsync(PaginationRequest request);
+        Task<Response<object>> ToggleAsync(ToggleCategoryStatusDTO dto);
     }
 
     public class CategoriesService : CustomQueryableOperations, ICategoriesService
@@ -36,12 +36,12 @@ namespace GlampingProyect.Web.Services
             _mapper = mapper;
         }
 
-        public async Task<Res<CategoryDTO>> CreateAsync(CategoryDTO dto)
+        public async Task<Response<CategoryDTO>> CreateAsync(CategoryDTO dto)
         {
             return await CreateAsync<Category, CategoryDTO>(dto);
         }
 
-        public async Task<Res<object>> DeleteAsync(int id)
+        public async Task<Response<object>> DeleteAsync(int id)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace GlampingProyect.Web.Services
             }
         }
 
-        public async Task<Res<CategoryDTO>> EditAsync(CategoryDTO dto)
+        public async Task<Response<CategoryDTO>> EditAsync(CategoryDTO dto)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace GlampingProyect.Web.Services
             }
         }
 
-        public async Task<Res<List<CategoryDTO>>> GetListAsync()
+        public async Task<Response<List<CategoryDTO>>> GetListAsync()
         {
             try
             {
@@ -102,7 +102,7 @@ namespace GlampingProyect.Web.Services
             }
         }
 
-        public async Task<Res<CategoryDTO>> GetOneAsync(int id)
+        public async Task<Response<CategoryDTO>> GetOneAsync(int id)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace GlampingProyect.Web.Services
             }
         }
 
-        public async Task<Res<PaginationResponse<CategoryDTO>>> GetPaginationAsync(PaginationRequest request)
+        public async Task<Response<PaginationResponse<CategoryDTO>>> GetPaginationAsync(PaginationRequest request)
         {
             try
             {
@@ -142,7 +142,7 @@ namespace GlampingProyect.Web.Services
             }
         }
 
-        public async Task<Res<object>> ToggleAsync(ToggleCategoryStatusDTO dto)
+        public async Task<Response<object>> ToggleAsync(ToggleCategoryStatusDTO dto)
         {
             try
             {

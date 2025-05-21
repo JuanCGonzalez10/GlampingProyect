@@ -14,6 +14,6 @@ namespace GlampingProyect.web.Data.Entities
 
         // Relaciones
         public ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
-        public ICollection<RoleCategory> RoleSections { get; set; } = new List<RoleCategory>();
+        public ICollection<RoleCategory> RoleCategories { get; set; } = new List<RoleCategory>();
     }
 }

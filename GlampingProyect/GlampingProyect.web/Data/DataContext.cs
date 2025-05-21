@@ -60,12 +60,12 @@ namespace GlampingProyect.Web.Data
 
             builder.Entity<RoleCategory>()
                 .HasOne(rs => rs.Role)
-                .WithMany(r => r.RoleSections)
+                .WithMany(r => r.RoleCategories)
                 .HasForeignKey(rs => rs.RoleId);
 
             builder.Entity<RoleCategory>()
                 .HasOne(rs => rs.Category)
-                .WithMany(s => s.RoleSections)
+                .WithMany(s => s.RoleCategories)
                 .HasForeignKey(rs => rs.CategoryId);
         }
     }

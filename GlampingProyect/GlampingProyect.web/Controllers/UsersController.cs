@@ -9,6 +9,7 @@ using GlampingProyect.Web.Data.Entities;
 using GlampingProyect.Web.DTOs;
 using GlampingProyect.Web.Helpers;
 using GlampingProyect.Web.Services;
+using GlampingProyect.web.Data.Entities;
 
 namespace GlampingProyect.Web.Controllers
 {

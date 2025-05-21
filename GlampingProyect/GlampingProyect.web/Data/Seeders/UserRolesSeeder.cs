@@ -1,6 +1,7 @@
 ﻿using DotLiquid.Util;
 using GlampingProyect.web.Core;
 using GlampingProyect.web.Data.Entities;
+using GlampingProyect.Web.Data.Entities;
 using GlampingProyect.web.Services;
 using GlampingProyect.Web.Data;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,7 @@ namespace GlampingProyect.web.Data.Seeders
             User? user = await _userService.FindByEmailAsync("andreacgonzalezl9@gmail.com");
             if (user is null)
             {
-                GlampingRole adminRole = await _context.GlampingRole.FirstOrDefaultAsync(r => r.Name == Env.SUPER_ADMIN_ROL_NAME);
+                GlampingRole adminRole = await _context.GlampingRoles.FirstOrDefaultAsync(r => r.Name == Env.SUPER_ADMIN_ROL_NAME);
 
                 user = new User
                 {
@@ -52,7 +53,7 @@ namespace GlampingProyect.web.Data.Seeders
             user = await _userService.FindByEmailAsync("juancamilogonzalezh11.1@gmail.com");
             if (user is null)
             {
-                GlampingRole contentManagerRole = await _context.GlampingRole.FirstOrDefaultAsync(r => r.Name == "Gestor de contenido");
+                GlampingRole contentManagerRole = await _context.GlampingRoles.FirstOrDefaultAsync(r => r.Name == "Gestor de contenido");
 
                 user = new User
                 {
@@ -80,19 +81,19 @@ namespace GlampingProyect.web.Data.Seeders
 
         private async Task ContentManager()
         {
-            bool exists = await _context.GlampingRole.AnyAsync(r => r.Name == "Gestor de contenido");
+            bool exists = await _context.GlampingRoles.AnyAsync(r => r.Name == "Gestor de contenido");
 
             if (!exists)
             {
                 GlampingRole role = new GlampingRole { Name = "Gestor de contenido" };
-                await _context.GlampingRole.AddAsync(role);
+                await _context.GlampingRoles.AddAsync(role);
 
                 List<Permission> permissions = await _context.Permissions.Where(p => p.Module == "Categories" || p.Module == "Glampings")
                                                                          .ToListAsync();
 
                 foreach (Permission permission in permissions)
                 {
-                    await _context.RolePermission.AddAsync(new RolePermission { Permission = permission, Role = role });
+                    await _context.RolePermissions.AddAsync(new RolePermission { Permission = permission, Role = role });
                 }
 
                 await _context.SaveChangesAsync();
@@ -101,12 +102,12 @@ namespace GlampingProyect.web.Data.Seeders
 
         private async Task AdminRolesAsync()
         {
-            bool exists = await _context.GlampingRole.AnyAsync(r => r.Name == Env.SUPER_ADMIN_ROL_NAME);
+            bool exists = await _context.GlampingRoles.AnyAsync(r => r.Name == Env.SUPER_ADMIN_ROL_NAME);
 
             if (!exists)
             {
                 GlampingRole role = new GlampingRole { Name = Env.SUPER_ADMIN_ROL_NAME };
-                await _context.GlampingRole.AddAsync(role);
+                await _context.GlampingRoles.AddAsync(role);
                 await _context.SaveChangesAsync();
             }
         }

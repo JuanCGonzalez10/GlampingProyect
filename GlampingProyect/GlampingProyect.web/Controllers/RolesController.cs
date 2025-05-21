@@ -45,7 +45,7 @@ namespace GlampingProyect.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            Response<List<CategoryDTO>> CategoryResponse = await _rolesService.GetSectionsAsync();
+            Response<List<CategoryDTO>> CategoryResponse = await _rolesService.GetCategoriesAsync();
 
             if (!CategoryResponse.IsSuccess)
             {
@@ -64,7 +64,7 @@ namespace GlampingProyect.Web.Controllers
                     Selected = false
                 }).ToList(),
 
-                Sections = CategoryResponse.Result.Select(p => new CategoryForRoleDTO
+                Categories = CategoryResponse.Result.Select(p => new CategoryForRoleDTO
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -87,7 +87,7 @@ namespace GlampingProyect.Web.Controllers
                 _notifyService.Error("Debe ajustar los errores de validación");
 
                 Response<List<PermissionDTO>> permissionResponse1 = await _rolesService.GetPermissionsAsync();
-                Response<List<CategoryDTO>> sectionsResponse1 = await _rolesService.GetSectionsAsync();
+                Response<List<CategoryDTO>> sectionsResponse1 = await _rolesService.GetCategoriesAsync();
 
                 dto.Permissions = permissionResponse1.Result.Select(p => new PermissionForRoleDTO
                 {
@@ -98,7 +98,7 @@ namespace GlampingProyect.Web.Controllers
                     Selected = false,
                 }).ToList();
 
-                dto.Sections = sectionsResponse1.Result.Select(p => new CategoryForRoleDTO
+                dto.Categories = sectionsResponse1.Result.Select(p => new CategoryForRoleDTO
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -118,7 +118,7 @@ namespace GlampingProyect.Web.Controllers
             _notifyService.Error(createResponse.Message);
 
             Response<List<PermissionDTO>> pemrissionResponse2 = await _rolesService.GetPermissionsAsync();
-            Response<List<CategoryDTO>> sectionsResponse2 = await _rolesService.GetSectionsAsync();
+            Response<List<CategoryDTO>> sectionsResponse2 = await _rolesService.GetCategoriesAsync();
 
             dto.Permissions = pemrissionResponse2.Result.Select(p => new PermissionForRoleDTO
             {
@@ -128,7 +128,7 @@ namespace GlampingProyect.Web.Controllers
                 Module = p.Module,
             }).ToList();
 
-            dto.Sections = sectionsResponse2.Result.Select(p => new CategoryForRoleDTO
+            dto.Categories = sectionsResponse2.Result.Select(p => new CategoryForRoleDTO
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -147,9 +147,9 @@ namespace GlampingProyect.Web.Controllers
                 _notifyService.Error("Debe ajustar los errores de validación");
 
                 Response<List<PermissionForRoleDTO>> permissionsByRoleResponse = await _rolesService.GetPermissionsByRoleAsync(dto.Id);
-                Response<List<CategoryForRoleDTO>> sectionsByRoleResponse = await _rolesService.GetSectionsByRoleAsync(dto.Id);
+                Response<List<CategoryForRoleDTO>> categoriesByRoleResponse = await _rolesService.GetCategoriesByRoleAsync(dto.Id);
                 dto.Permissions = permissionsByRoleResponse.Result.ToList();
-                dto.Sections = sectionsByRoleResponse.Result.ToList();
+                dto.Categories = categoriesByRoleResponse.Result.ToList();
 
                 return View(dto);
             }
@@ -165,9 +165,9 @@ namespace GlampingProyect.Web.Controllers
             _notifyService.Error(editResponse.Message);
 
             Response<List<PermissionForRoleDTO>> permissionsByRoleResponse2 = await _rolesService.GetPermissionsByRoleAsync(dto.Id);
-            Response<List<CategoryForRoleDTO>> sectionsByRoleResponse2 = await _rolesService.GetSectionsByRoleAsync(dto.Id);
+            Response<List<CategoryForRoleDTO>> sectionsByRoleResponse2 = await _rolesService.GetCategoriesByRoleAsync(dto.Id);
             dto.Permissions = permissionsByRoleResponse2.Result.ToList();
-            dto.Sections = sectionsByRoleResponse2.Result.ToList();
+            dto.Categories = sectionsByRoleResponse2.Result.ToList();
 
             return View(dto);
         }

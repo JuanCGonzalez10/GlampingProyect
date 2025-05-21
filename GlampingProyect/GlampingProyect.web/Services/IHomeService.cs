@@ -7,6 +7,7 @@ using GlampingProyect.Web.Data.Entities;
 using GlampingProyect.Web.DTOs;
 using GlampingProyect.Web.Helpers;
 using ClaimsUser = System.Security.Claims.ClaimsPrincipal;
+using GlampingProyect.web.Data.Entities;
 
 namespace GlampingProyect.Web.Services
 {
@@ -71,7 +72,7 @@ namespace GlampingProyect.Web.Services
                 bool isAuthorized = true;
                 if (!await _usersService.CurrentUserIsSuperAdmin())
                 {
-                    isAuthorized = category.RoleCategory.Any(rs => rs.RoleId == user.GlampingRoleId);
+                    isAuthorized = category.RoleCategories.Any(rs => rs.RoleId == user.GlampingRoleId);
                 }
 
                 if (!isAuthorized)
@@ -79,7 +80,7 @@ namespace GlampingProyect.Web.Services
                     return ResponseHelper<CategoryDTO>.MakeResponseFail("No tiene autorización para consultar esta sección");
                 }
 
-                IQueryable<Glamping> query = _context.G.Where(b => b.CategoryId == category.Id);
+                IQueryable<Glamping> query = _context.Glampings.Where(b => b.CategoryId == category.Id);
 
                 if (!string.IsNullOrWhiteSpace(request.Filter))
                 {
@@ -94,7 +95,7 @@ namespace GlampingProyect.Web.Services
 
                 PagedList<Glamping> list = await PagedList<Glamping>.ToPagedListAsync(query, request);
 
-                PaginationResponse<GlampingDTO> paginatedResponse = new PaginationResponse<GlampingDTO>
+                PaginationResponse<GlampingDTO> paginatedGlampingsResponse = new PaginationResponse<GlampingDTO>
                 {
                     List = _mapper.Map<PagedList<GlampingDTO>>(list),
                     TotalCount = list.TotalCount,

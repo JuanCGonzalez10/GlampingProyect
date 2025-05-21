@@ -13,11 +13,11 @@ namespace GlampingProyect.Web.Services
 {
     public interface IGlampingsService
     {
-        Task<Res<GlampingDTO>> CreateAsync(GlampingDTO dto);
-        Task<Res<object>> DeleteAsync(int id);
-        Task<Res<GlampingDTO>> EditAsync(GlampingDTO dto);
-        Task<Res<GlampingDTO>> GetOneAsync(int id);
-        Task<Res<PaginationResponse<GlampingDTO>>> GetPaginationAsync(PaginationRequest request);
+        Task<Response<GlampingDTO>> CreateAsync(GlampingDTO dto);
+        Task<Response<object>> DeleteAsync(int id);
+        Task<Response<GlampingDTO>> EditAsync(GlampingDTO dto);
+        Task<Response<GlampingDTO>> GetOneAsync(int id);
+        Task<Response<PaginationResponse<GlampingDTO>>> GetPaginationAsync(PaginationRequest request);
     }
 
     public class GlampingsService : CustomQueryableOperations, IGlampingsService
@@ -31,29 +31,29 @@ namespace GlampingProyect.Web.Services
             _mapper = mapper;
         }
 
-        public async Task<Res<GlampingDTO>> CreateAsync(GlampingDTO dto)
+        public async Task<Response<GlampingDTO>> CreateAsync(GlampingDTO dto)
         {
             return await CreateAsync<Glamping, GlampingDTO>(dto);
         }
 
-        public async Task<Res<object>> DeleteAsync(int id)
+        public async Task<Response<object>> DeleteAsync(int id)
         {
             var response = await DeleteAsync<Glamping>(id);
             response.Message = !response.IsSuccess ? $"El glamping con id: {id} no existe" : response.Message;
             return response;
         }
 
-        public async Task<Res<GlampingDTO>> EditAsync(GlampingDTO dto)
+        public async Task<Response<GlampingDTO>> EditAsync(GlampingDTO dto)
         {
             return await EditAsync<Glamping, GlampingDTO>(dto, dto.Id);
         }
 
-        public async Task<Res<GlampingDTO>> GetOneAsync(int id)
+        public async Task<Response<GlampingDTO>> GetOneAsync(int id)
         {
             return await GetOneAsync<Glamping, GlampingDTO>(id);
         }
 
-        public async Task<Res<PaginationResponse<GlampingDTO>>> GetPaginationAsync(PaginationRequest request)
+        public async Task<Response<PaginationResponse<GlampingDTO>>> GetPaginationAsync(PaginationRequest request)
         {
             IQueryable<Glamping> query = _context.Glampings.Include(g => g.Category)
                 .Select(g => new Glamping
