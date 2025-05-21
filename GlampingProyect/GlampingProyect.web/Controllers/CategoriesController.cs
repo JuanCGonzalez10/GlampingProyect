@@ -23,13 +23,13 @@ namespace GlampingProyect.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] PaginationRequest request)
         {
-            Res<PaginationResponse<CategoryDTO>> response = await _categoriesService.GetPaginationAsync(request);
-            if (!response.IsSuccess || response.MyProperty == null)
+            Response<PaginationResponse<CategoryDTO>> response = await _categoriesService.GetPaginationAsync(request);
+            if (!response.IsSuccess || response.Result == null)
             {
                 _notifyService.Error(response.Message ?? "No se pudo cargar la lista de glampings.");
                 return View(new PaginationResponse<CategoryDTO>());
             }
-            return View(response.MyProperty);
+            return View(response.Result);
         }
 
      
@@ -49,7 +49,7 @@ namespace GlampingProyect.Web.Controllers
                 return View(dto);
             }
 
-            Res<CategoryDTO> response = await _categoriesService.CreateAsync(dto);
+            Response<CategoryDTO> response = await _categoriesService.CreateAsync(dto);
 
             if (response.IsSuccess)
             {
@@ -64,11 +64,11 @@ namespace GlampingProyect.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit([FromRoute] int id)
         {
-            Res<CategoryDTO> response = await _categoriesService.GetOneAsync(id);
+            Response<CategoryDTO> response = await _categoriesService.GetOneAsync(id);
 
             if (response.IsSuccess)
             {
-                return View(response.MyProperty);
+                return View(response.Result);
             }
 
             _notifyService.Error(response.Message);
@@ -84,7 +84,7 @@ namespace GlampingProyect.Web.Controllers
                 return View(dto);
             }
 
-            Res<CategoryDTO> response = await _categoriesService.EditAsync(dto);
+            Response<CategoryDTO> response = await _categoriesService.EditAsync(dto);
 
             if (response.IsSuccess)
             {
@@ -99,7 +99,7 @@ namespace GlampingProyect.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            Res<object> response = await _categoriesService.DeleteAsync(id);
+            Response<object> response = await _categoriesService.DeleteAsync(id);
 
             if (response.IsSuccess)
             {
@@ -116,7 +116,7 @@ namespace GlampingProyect.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Toggle([FromForm] ToggleCategoryStatusDTO dto)
         {
-            Res<object> response = await _categoriesService.ToggleAsync(dto);
+            Response<object> response = await _categoriesService.ToggleAsync(dto);
 
             if (response.IsSuccess)
             {
