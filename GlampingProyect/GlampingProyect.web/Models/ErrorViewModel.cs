@@ -1,4 +1,4 @@
-namespace GlampingProyect.web.Models
+namespace  GlampingProyect.Web.Models
 {
     public class ErrorViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace GlampingProyect.web.Data.Entities
+namespace  GlampingProyect.Web.Data.Entities
 {
     public class RolePermission
     {

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace GlampingProyect.Web.Requests.Mailtrap
+namespace  GlampingProyect.Web.Requests.Mailtrap
 {
     public class SendEmailRequest
     {

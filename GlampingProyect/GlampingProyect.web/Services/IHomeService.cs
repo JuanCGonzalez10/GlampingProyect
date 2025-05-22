@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using GlampingProyect.Web.Core;
-using GlampingProyect.Web.Core.Pagination;
-using GlampingProyect.Web.Data;
-using GlampingProyect.Web.Data.Entities;
-using GlampingProyect.Web.DTOs;
-using GlampingProyect.Web.Helpers;
+using  GlampingProyect.Web.Core;
+using  GlampingProyect.Web.Core.Pagination;
+using  GlampingProyect.Web.Data;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.Helpers;
 using ClaimsUser = System.Security.Claims.ClaimsPrincipal;
-using GlampingProyect.web.Data.Entities;
+using  GlampingProyect.Web.Data.Entities;
 
-namespace GlampingProyect.Web.Services
+namespace  GlampingProyect.Web.Services
 {
     public interface IHomeService
     {

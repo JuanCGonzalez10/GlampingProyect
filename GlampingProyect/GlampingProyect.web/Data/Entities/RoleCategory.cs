@@ -1,7 +1,7 @@
-﻿using GlampingProyect.web.Data.Entities;
-using GlampingProyect.Web.Data.Entities;
+﻿using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Data.Entities;
 
-namespace GlampingProyect.web.Data.Entities;
+namespace  GlampingProyect.Web.Data.Entities;
 
 
 public class RoleCategory

@@ -1,10 +1,10 @@
-﻿using GlampingProyect.Web.Core;
-using GlampingProyect.Web.DTOs;
-using GlampingProyect.Web.Helpers;
-using GlampingProyect.Web.Requests.Mailtrap;
+﻿using  GlampingProyect.Web.Core;
+using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.Helpers;
+using  GlampingProyect.Web.Requests.Mailtrap;
 
 
-namespace GlampingProyect.Web.Services
+namespace  GlampingProyect.Web.Services
 {
     public class MailtrapService : IEmailService
     {

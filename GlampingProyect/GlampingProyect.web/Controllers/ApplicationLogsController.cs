@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using GlampingProyect.Web.DTOs;
-using GlampingProyect.Web.Services;
+using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.Services;
 
-namespace GlampingProyect.Web.Controllers
+namespace  GlampingProyect.Web.Controllers
 {
     public class ApplicationLogsController : Controller
     {

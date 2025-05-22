@@ -1,7 +1,7 @@
-﻿using GlampingProyect.Web.Core;
-using GlampingProyect.Web.DTOs;
+﻿using  GlampingProyect.Web.Core;
+using  GlampingProyect.Web.DTOs;
 
-namespace GlampingProyect.Web.Services
+namespace  GlampingProyect.Web.Services
 {
     public interface IEmailService
     {

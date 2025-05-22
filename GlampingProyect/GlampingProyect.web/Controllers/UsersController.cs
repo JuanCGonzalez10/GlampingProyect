@@ -2,16 +2,16 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using GlampingProyect.Web.Core;
-using GlampingProyect.Web.Core.Attributes;
-using GlampingProyect.Web.Core.Pagination;
-using GlampingProyect.Web.Data.Entities;
-using GlampingProyect.Web.DTOs;
-using GlampingProyect.Web.Helpers;
-using GlampingProyect.Web.Services;
-using GlampingProyect.web.Data.Entities;
+using  GlampingProyect.Web.Core;
+using  GlampingProyect.Web.Core.Attributes;
+using  GlampingProyect.Web.Core.Pagination;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.Helpers;
+using  GlampingProyect.Web.Services;
+using  GlampingProyect.Web.Data.Entities;
 
-namespace GlampingProyect.Web.Controllers
+namespace  GlampingProyect.Web.Controllers
 {
     public class UsersController : Controller
     {

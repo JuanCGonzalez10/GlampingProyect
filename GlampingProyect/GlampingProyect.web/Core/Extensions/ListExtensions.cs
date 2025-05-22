@@ -1,4 +1,4 @@
-﻿namespace GlampingProyect.Web.Core.Extensions
+﻿namespace  GlampingProyect.Web.Core.Extensions
 {
     public static class ListExtensions
     {

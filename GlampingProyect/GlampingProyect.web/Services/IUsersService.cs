@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using GlampingProyect.Web.Core;
-using GlampingProyect.Web.Core.Pagination;
-using GlampingProyect.Web.Data;
-using GlampingProyect.Web.Data.Entities;
-using GlampingProyect.Web.DTOs;
-using GlampingProyect.Web.Helpers;
+using  GlampingProyect.Web.Core;
+using  GlampingProyect.Web.Core.Pagination;
+using  GlampingProyect.Web.Data;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.Helpers;
 using Serilog;
 using ClaimsUser = System.Security.Claims.ClaimsPrincipal;
-using GlampingProyect.web.DTOs;
-using GlampingProyect.web.Data.Entities;
-using GlampingProyect.web.Core;
+using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Core;
 
-namespace GlampingProyect.Web.Services
+namespace  GlampingProyect.Web.Services
 {
     public interface IUsersService
     {
@@ -34,6 +34,7 @@ namespace GlampingProyect.Web.Services
         public Task<bool> CheckPasswordAsync(User user, string currentPassword);
         public Task<string> GeneratePasswordResetTokenAsync(User user);
         public Task<IdentityResult> ResetPasswordAsync(User user, string resetToken, string newPassword);
+        Task SendPasswordResetEmailAsync(string? email, string? resetLink);
     }
 
     public class UsersService : CustomQueryableOperations, IUsersService
@@ -44,7 +45,6 @@ namespace GlampingProyect.Web.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
         private readonly IStorageService _localStorageService;
-        private readonly IStorageService _azureStorageService;
         private readonly string _container = "users";
 
         public UsersService(DataContext context,
@@ -52,8 +52,7 @@ namespace GlampingProyect.Web.Services
                             SignInManager<User> signInManager,
                             IHttpContextAccessor httpContextAccessor,
                             IMapper mapper,
-                            [FromKeyedServices("local")] IStorageService localStorageService,
-                            [FromKeyedServices("azure")] IStorageService azureStorageService)
+                            IStorageService localStorageService)
             : base(context, mapper)
         {
             _context = context;
@@ -62,7 +61,6 @@ namespace GlampingProyect.Web.Services
             _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
             _localStorageService = localStorageService;
-            _azureStorageService = azureStorageService;
         }
 
         public async Task<IdentityResult> AddUserAsync(User user, string password)
@@ -211,6 +209,11 @@ namespace GlampingProyect.Web.Services
         public async Task<IdentityResult> ResetPasswordAsync(User user, string resetToken, string newPassword)
         {
             return await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
+        }
+
+        public Task SendPasswordResetEmailAsync(string? email, string? resetLink)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Response<UserDTO>> UpdateUserAsync(UserDTO dto)

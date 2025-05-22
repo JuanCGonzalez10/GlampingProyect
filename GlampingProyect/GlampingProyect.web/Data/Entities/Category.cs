@@ -1,9 +1,9 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
-using GlampingProyect.web.Data.Entities;
+using  GlampingProyect.Web.Data.Entities;
 
 
-namespace GlampingProyect.Web.Data.Entities
+namespace  GlampingProyect.Web.Data.Entities
 {
     public class Category : IId
     {

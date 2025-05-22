@@ -1,4 +1,4 @@
-﻿namespace GlampingProyect.web.Core
+﻿namespace  GlampingProyect.Web.Core
 {
     public  static class Env
     {

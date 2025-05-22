@@ -1,8 +1,8 @@
-﻿using GlampingProyect.web.Data.Entities;
-using GlampingProyect.Web.Data;
+﻿using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace GlampingProyect.web.Data.Seeders
+namespace  GlampingProyect.Web.Data.Seeders
 {
     public class PermissionsSeeder
     {

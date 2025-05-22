@@ -1,4 +1,4 @@
-﻿namespace GlampingProyect.Web.Core
+﻿namespace  GlampingProyect.Web.Core
 {
     public class Response<T>
     {

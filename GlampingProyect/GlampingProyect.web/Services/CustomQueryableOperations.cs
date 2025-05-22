@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Library1.Cor;
 using Microsoft.EntityFrameworkCore;
-using GlampingProyect.Web.Core;
-using GlampingProyect.Web.Core.Pagination;
-using GlampingProyect.Web.Data;
-using GlampingProyect.Web.Data.Entities;
-using GlampingProyect.Web.DTOs;
-using GlampingProyect.Web.Helpers;
+using  GlampingProyect.Web.Core;
+using  GlampingProyect.Web.Core.Pagination;
+using  GlampingProyect.Web.Data;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.Helpers;
 
-//namespace GlampingProyect.Web.Services
+//namespace  GlampingProyect.Web.Services
 //{
 //    public class CustomQueryableOperations
 //    {
@@ -146,7 +146,7 @@ using GlampingProyect.Web.Helpers;
 //        }
 //    }
 //}
-namespace GlampingProyect.Web.Services
+namespace  GlampingProyect.Web.Services
 {
     public class CustomQueryableOperations
     {

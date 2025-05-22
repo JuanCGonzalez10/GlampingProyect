@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Data.Entities;
 
-namespace GlampingProyect.Web.DTOs
+namespace  GlampingProyect.Web.DTOs
 {
     public class GlampingDTO
     {

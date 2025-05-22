@@ -1,4 +1,4 @@
-﻿namespace GlampingProyect.web
+﻿namespace  GlampingProyect.Web
 {
     internal class BlogsService
     {

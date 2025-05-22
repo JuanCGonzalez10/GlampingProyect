@@ -1,6 +1,6 @@
-﻿@using GlampingProyect.web.Data.Entities
+﻿@using  GlampingProyect.Web.Data.Entities
 
-@inject GlampingProyect.web.Services.IUserService _userService
+@inject  GlampingProyect.Web.Services.IUsersService _userService
 
 
 
@@ -8,7 +8,7 @@
     User? user;
     try
     {
-        user = await _userService.FindByEmailAsync(User.Identity.Name);
+        user = await _userService.GetUserAsync(User.Identity.Name);
     }
     catch
     {

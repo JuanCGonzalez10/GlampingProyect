@@ -1,4 +1,4 @@
-﻿namespace GlampingProyect.Web.Services
+﻿namespace  GlampingProyect.Web.Services
 {
     public interface IStorageService
     {

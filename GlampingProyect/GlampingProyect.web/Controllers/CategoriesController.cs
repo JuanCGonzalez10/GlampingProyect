@@ -1,13 +1,13 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using GlampingProyect.Web.Core;
-using GlampingProyect.Web.Core.Pagination;
-using GlampingProyect.Web.DTOs;
-using GlampingProyect.Web.Services;
+using  GlampingProyect.Web.Core;
+using  GlampingProyect.Web.Core.Pagination;
+using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.Services;
 using Library1.Cor;
 using System.Threading.Tasks;
 
-namespace GlampingProyect.Web.Controllers
+namespace  GlampingProyect.Web.Controllers
 {
     public class CategoriesController : Controller
     {

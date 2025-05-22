@@ -1,17 +1,17 @@
 
-using GlampingProyect.Web.Data;                 // DataContext
-using GlampingProyect.Web.Data.Entities;        // User
-using GlampingProyect.Web.Helpers;              // AddCustomConfiguration extension
-using GlampingProyect.Web.Services;             // IUserService, etc.
+using  GlampingProyect.Web.Data;                 // DataContext
+using  GlampingProyect.Web.Data.Entities;        // User
+using  GlampingProyect.Web.Helpers;              // AddCustomConfiguration extension
+using  GlampingProyect.Web.Services;             // IUserService, etc.
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services; // IEmailSender
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using GlampingProyect.web.Data.Entities;
-using GlampingProyect.web.Services;
-using GlampingProyect.web;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Services;
+using  GlampingProyect.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,12 +59,6 @@ builder.Services.AddNotyf(config =>
 
 // 6) AutoMapper ------------------------------------------------------------
 builder.Services.AddAutoMapper(typeof(Program));
-
-// 7) Domain services -------------------------------------------------------
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ICategoriesService, CategoriesService>();
-builder.Services.AddScoped<IGlampingsService, GlampingsService>();
-builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 
 // 8) Email sender ----------------------------------------------------------
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();

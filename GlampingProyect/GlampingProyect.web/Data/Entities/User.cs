@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace GlampingProyect.web.Data.Entities
+namespace  GlampingProyect.Web.Data.Entities
 {
     public class User : IdentityUser
     {

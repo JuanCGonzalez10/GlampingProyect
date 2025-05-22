@@ -1,8 +1,8 @@
 using System.Diagnostics;
-using GlampingProyect.web.Models;
+using  GlampingProyect.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GlampingProyect.Web.Controllers
+namespace  GlampingProyect.Web.Controllers
 {
     public class HomeController : Controller
     {

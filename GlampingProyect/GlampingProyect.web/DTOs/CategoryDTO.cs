@@ -1,8 +1,8 @@
-﻿using GlampingProyect.Web.Core.Pagination;
+﻿using  GlampingProyect.Web.Core.Pagination;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations;
 
-namespace GlampingProyect.Web.DTOs
+namespace  GlampingProyect.Web.DTOs
 {
     public class CategoryDTO
     {

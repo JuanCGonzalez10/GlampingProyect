@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Data.Entities;
 using System.ComponentModel.DataAnnotations;
-using GlampingProyect.web.Data.Entities;
+using  GlampingProyect.Web.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace GlampingProyect.Web.DTOs
+namespace  GlampingProyect.Web.DTOs
 {
     public class UserDTO
     {

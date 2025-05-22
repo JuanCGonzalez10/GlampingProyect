@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
-using GlampingProyect.Web.Core;
-using GlampingProyect.Web.Helpers;
+using  GlampingProyect.Web.Core;
+using  GlampingProyect.Web.Helpers;
 using System.Text;
 
-namespace GlampingProyect.Web.Services
+namespace  GlampingProyect.Web.Services
 {
     public interface IApiService
     {

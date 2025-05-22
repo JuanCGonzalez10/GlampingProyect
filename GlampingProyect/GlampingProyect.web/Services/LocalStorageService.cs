@@ -1,5 +1,5 @@
 ﻿
-namespace GlampingProyect.Web.Services
+namespace  GlampingProyect.Web.Services
 {
     public class LocalStorageService : IStorageService
     {

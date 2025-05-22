@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GlampingProyect.Web.DTOs
+namespace  GlampingProyect.Web.DTOs
 {
     public class SendEmailDTO
     {

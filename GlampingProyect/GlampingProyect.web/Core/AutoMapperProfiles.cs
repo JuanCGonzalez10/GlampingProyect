@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using GlampingProyect.Web.Data.Entities;
-using GlampingProyect.Web.Data.Entities;
-using GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.DTOs;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace GlampingProyect.Web.Core
+namespace  GlampingProyect.Web.Core
 {
     public class AutoMapperProfiles : Profile
     {

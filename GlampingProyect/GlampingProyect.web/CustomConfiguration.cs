@@ -1,11 +1,11 @@
 ﻿
 using AspNetCoreHero.ToastNotification;
-using GlampingProyect.web.Data.Entities;
-using GlampingProyect.web.Services;
-using GlampingProyect.Web.Data;
-using GlampingProyect.Web.Data.Seeders;
-using GlampingProyect.Web.Helpers;
-using GlampingProyect.Web.Services;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Services;
+using  GlampingProyect.Web.Data;
+using  GlampingProyect.Web.Data.Seeders;
+using  GlampingProyect.Web.Helpers;
+using  GlampingProyect.Web.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -13,7 +13,7 @@ using Serilog.Events;
 using Serilog.Sinks.File;
 
 
-namespace GlampingProyect.web
+namespace  GlampingProyect.Web
 {
     public static class CustomConfiguration
     {
@@ -90,10 +90,11 @@ namespace GlampingProyect.web
             //builder.Services.AddScoped<IReadLogsService, ReadPlainTexLogstService>();
             builder.Services.AddScoped<ICategoriesService, CategoriesService>();
             builder.Services.AddTransient<SeedDb>();
-            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddTransient<IStorageService, AzureBlobStorageService>();
+            builder.Services.AddScoped<IUsersService, UsersService>();
 
             // Helpers
-            builder.Services.AddScoped<ICombosHelper, CombosHelper>();
+            builder.Services.AddTransient<ICombosHelper, CombosHelper>();
         }
     }
 }

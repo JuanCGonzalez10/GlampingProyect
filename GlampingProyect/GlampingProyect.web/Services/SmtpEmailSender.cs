@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace GlampingProyect.web.Services
+namespace  GlampingProyect.Web.Services
 {
     public class SmtpEmailSender : IEmailSender
     {

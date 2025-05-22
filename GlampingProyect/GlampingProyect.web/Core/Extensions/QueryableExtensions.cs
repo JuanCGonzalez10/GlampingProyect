@@ -1,6 +1,6 @@
-﻿using GlampingProyect.Web.Core.Pagination;
+﻿using  GlampingProyect.Web.Core.Pagination;
 
-namespace GlampingProyect.Web.Core.Extensions
+namespace  GlampingProyect.Web.Core.Extensions
 {
     public static class QueryableExtensions
     {

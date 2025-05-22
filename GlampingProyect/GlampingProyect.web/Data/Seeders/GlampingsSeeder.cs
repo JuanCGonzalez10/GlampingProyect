@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using GlampingProyect.Web.Data.Entities;
-using GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Data.Entities;
 
-namespace GlampingProyect.Web.Data.Seeders
+namespace  GlampingProyect.Web.Data.Seeders
 {
     public class GlampingsSeeder
     {

@@ -1,19 +1,20 @@
 ﻿using DotLiquid.Util;
-using GlampingProyect.web.Core;
-using GlampingProyect.web.Data.Entities;
-using GlampingProyect.Web.Data.Entities;
-using GlampingProyect.web.Services;
-using GlampingProyect.Web.Data;
+using  GlampingProyect.Web.Core;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Services;
+using  GlampingProyect.Web.Data;
 using Microsoft.EntityFrameworkCore;
+using  GlampingProyect.Web.Services;
 
-namespace GlampingProyect.web.Data.Seeders
+namespace  GlampingProyect.Web.Data.Seeders
 {
     public class UserRolesSeeder
     {
         private readonly DataContext _context;
-        private readonly IUserService _userService;
+        private readonly IUsersService _userService;
 
-        public UserRolesSeeder(DataContext context, IUserService userService)
+        public UserRolesSeeder(DataContext context, IUsersService userService)
         {
             _context = context;
             _userService = userService;
@@ -28,7 +29,7 @@ namespace GlampingProyect.web.Data.Seeders
         private async Task CheckUsers()
         {
             // Admin
-            User? user = await _userService.FindByEmailAsync("andreacgonzalezl9@gmail.com");
+            User? user = await _userService.GetUserAsync("andreacgonzalezl9@gmail.com");
             if (user is null)
             {
                 GlampingRole adminRole = await _context.GlampingRoles.FirstOrDefaultAsync(r => r.Name == Env.SUPER_ADMIN_ROL_NAME);
@@ -50,7 +51,7 @@ namespace GlampingProyect.web.Data.Seeders
                 await _userService.ConfirmEmailAsync(user, token);
             }
             // contentManager
-            user = await _userService.FindByEmailAsync("juancamilogonzalezh11.1@gmail.com");
+            user = await _userService.GetUserAsync("juancamilogonzalezh11.1@gmail.com");
             if (user is null)
             {
                 GlampingRole contentManagerRole = await _context.GlampingRoles.FirstOrDefaultAsync(r => r.Name == "Gestor de contenido");

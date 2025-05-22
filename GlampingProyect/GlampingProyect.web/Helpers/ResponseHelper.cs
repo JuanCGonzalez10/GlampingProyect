@@ -1,9 +1,9 @@
-﻿using GlampingProyect.Web.Core;
+﻿using  GlampingProyect.Web.Core;
 using Library1.Cor;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace GlampingProyect.Web.Helpers
+namespace  GlampingProyect.Web.Helpers
 {
     public static class ResponseHelper<T>
     {

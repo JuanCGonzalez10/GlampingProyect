@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace GlampingProyect.web.Migrations
+namespace  GlampingProyect.Web.Migrations
 {
     /// <inheritdoc />
     public partial class InitialIdentity : Migration

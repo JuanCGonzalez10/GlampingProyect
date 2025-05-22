@@ -1,22 +1,23 @@
-﻿using GlampingProyect.web.DTOs;
-using GlampingProyect.Web.DTOs;
-using GlampingProyect.web.Services;
+﻿using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using GlampingProyect.web.Data.Entities;
+using  GlampingProyect.Web.Data.Entities;
 using System.Threading.Tasks;
+using  GlampingProyect.Web.Services;
 
-namespace GlampingProyect.Web.Controllers
+namespace  GlampingProyect.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IUsersService _userService;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
         public AccountController(
-            IUserService userService,
+            IUsersService userService,
             UserManager<User> userManager,
             SignInManager<User> signInManager)
         {
@@ -142,7 +143,7 @@ namespace GlampingProyect.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = await _userService.FindByEmailAsync(model.Email);
+            var user = await _userService.GetUserAsync(model.Email);
 
             if (user == null)
             {
@@ -177,7 +178,7 @@ namespace GlampingProyect.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = await _userService.FindByEmailAsync(model.Email);
+            var user = await _userService.GetUserAsync(model.Email);
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "Error al restablecer la contraseña.");

@@ -1,9 +1,9 @@
-﻿using GlampingProyect.web.Data.Entities; // Tu clase User y entidades personalizadas
-using GlampingProyect.Web.Data.Entities;
+﻿using  GlampingProyect.Web.Data.Entities; // Tu clase User y entidades personalizadas
+using  GlampingProyect.Web.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace GlampingProyect.Web.Data
+namespace  GlampingProyect.Web.Data
 {
     public class DataContext : IdentityDbContext<User>
     {

@@ -2,17 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Newtonsoft.Json;
-using GlampingProyect.Web.Core;
-using GlampingProyect.Web.Core.Pagination;
-using GlampingProyect.Web.Data;
-using GlampingProyect.Web.Data.Entities;
-using GlampingProyect.Web.DTOs;
-using GlampingProyect.Web.Helpers;
-using GlampingProyect.web.Data.Entities;
-using GlampingProyect.web.Core;
-using GlampingProyect.Web.Services;
+using  GlampingProyect.Web.Core;
+using  GlampingProyect.Web.Core.Pagination;
+using  GlampingProyect.Web.Data;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.Helpers;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Core;
+using  GlampingProyect.Web.Services;
 
-namespace GlampingProyect.Web.Services
+namespace  GlampingProyect.Web.Services
 {
     public interface IRolesService
     {

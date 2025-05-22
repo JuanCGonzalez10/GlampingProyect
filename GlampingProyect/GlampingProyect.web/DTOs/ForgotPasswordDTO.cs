@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using GlampingProyect.Web.DTOs;
-using GlampingProyect.web.DTOs;
+using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.DTOs;
 
 
-namespace GlampingProyect.web.DTOs
+namespace  GlampingProyect.Web.DTOs
 {
     public class ForgotPasswordDTO
     {

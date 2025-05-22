@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GlampingProyect.web.DTOs
+namespace  GlampingProyect.Web.DTOs
 {
     public class LoginDTO
     {

@@ -1,7 +1,7 @@
-﻿using GlampingProyect.Web.DTOs;
+﻿using  GlampingProyect.Web.DTOs;
 using System.Text.RegularExpressions;
 
-namespace GlampingProyect.Web.Services
+namespace  GlampingProyect.Web.Services
 {
     public interface IReadLogsService
     {
