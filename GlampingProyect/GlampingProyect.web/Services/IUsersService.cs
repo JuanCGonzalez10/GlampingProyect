@@ -9,9 +9,6 @@ using  GlampingProyect.Web.DTOs;
 using  GlampingProyect.Web.Helpers;
 using Serilog;
 using ClaimsUser = System.Security.Claims.ClaimsPrincipal;
-using  GlampingProyect.Web.DTOs;
-using  GlampingProyect.Web.Data.Entities;
-using  GlampingProyect.Web.Core;
 
 namespace  GlampingProyect.Web.Services
 {

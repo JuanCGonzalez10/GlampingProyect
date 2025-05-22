@@ -1,12 +1,10 @@
 ﻿using  GlampingProyect.Web.DTOs;
-using  GlampingProyect.Web.DTOs;
 using  GlampingProyect.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using  GlampingProyect.Web.Data.Entities;
-using System.Threading.Tasks;
-using  GlampingProyect.Web.Services;
+
 
 namespace  GlampingProyect.Web.Controllers
 {

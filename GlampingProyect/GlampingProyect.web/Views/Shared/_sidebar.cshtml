@@ -1,4 +1,5 @@
-﻿<aside id="sidebar" class="sidebar">
+﻿@inject GlampingProyect.Web.Services.IUsersService _usersService
+<aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
@@ -38,14 +39,17 @@
             </a>
         </li>
 
+        
+
         <li class="nav-item">
-            <a class="nav-link  @(ViewContext.RouteData.Values["Controller"].ToString() == "Roles" ? "" : "collapsed")"
-               asp-controller="Roles"
-               asp-action="Index">
-                <i class="bi bi-file-earmark-post"></i>
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Roles" ? "" : "collapsed")"
+                asp-controller="Roles"
+                asp-action="Index">
+                <i class="bi bi-shield-lock"></i>
                 <span>Roles</span>
             </a>
         </li>
+        
 
         <li class="nav-item">
             <a class="nav-link  @(ViewContext.RouteData.Values["Controller"].ToString() == "Users" ? "" : "collapsed")"
@@ -53,6 +57,15 @@
                asp-action="Index">
                 <i class="bi bi-file-earmark-post"></i>
                 <span>Users</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() ==  "Categorias" ? "" : "collapsed")"
+               asp-controller="Categorias"
+               asp-action="Index">
+                <i class="bi bi-book"></i>
+                <span>Categorias</span>
             </a>
         </li>
 
