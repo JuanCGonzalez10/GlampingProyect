@@ -6,6 +6,7 @@ using  GlampingProyect.Web.Core.Pagination;
 using  GlampingProyect.Web.Data.Entities;
 using  GlampingProyect.Web.DTOs;
 using  GlampingProyect.Web.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace  GlampingProyect.Web.Controllers
 {
@@ -21,7 +22,8 @@ namespace  GlampingProyect.Web.Controllers
         }
 
         [HttpGet]
-        [CustomAuthorize(permission: "showRoles", module: "Roles")]
+        [AllowAnonymous]
+        //[CustomAuthorize(permission: "showRoles", module: "Roles")]
         public async Task<IActionResult> Index([FromQuery] PaginationRequest request)
         {
             Response<PaginationResponse<GlampingRoleDTO>> response = await _rolesService.GetPaginationAsync(request);
@@ -87,7 +89,7 @@ namespace  GlampingProyect.Web.Controllers
                 _notifyService.Error("Debe ajustar los errores de validación");
 
                 Response<List<PermissionDTO>> permissionResponse1 = await _rolesService.GetPermissionsAsync();
-                Response<List<CategoryDTO>> sectionsResponse1 = await _rolesService.GetCategoriesAsync();
+                Response<List<CategoryDTO>> categoriesResponse1 = await _rolesService.GetCategoriesAsync();
 
                 dto.Permissions = permissionResponse1.Result.Select(p => new PermissionForRoleDTO
                 {
@@ -98,7 +100,7 @@ namespace  GlampingProyect.Web.Controllers
                     Selected = false,
                 }).ToList();
 
-                dto.Categories = sectionsResponse1.Result.Select(p => new CategoryForRoleDTO
+                dto.Categories = categoriesResponse1.Result.Select(p => new CategoryForRoleDTO
                 {
                     Id = p.Id,
                     Name = p.Name,

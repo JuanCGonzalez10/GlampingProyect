@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace  GlampingProyect.Web.Controllers
 {
-    [Authorize]
+    
     public class GlampingsController : Controller
     {
         private readonly IGlampingsService _glampingsService;
