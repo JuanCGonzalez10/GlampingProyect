@@ -92,6 +92,7 @@ namespace  GlampingProyect.Web
             builder.Services.AddTransient<SeedDb>();
             builder.Services.AddTransient<IStorageService, AzureBlobStorageService>();
             builder.Services.AddScoped<IUsersService, UsersService>();
+            builder.Services.AddScoped<IRolesService, RolesService>();
 
             // Helpers
             builder.Services.AddTransient<ICombosHelper, CombosHelper>();

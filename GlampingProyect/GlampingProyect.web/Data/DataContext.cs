@@ -1,5 +1,4 @@
 ﻿using  GlampingProyect.Web.Data.Entities; // Tu clase User y entidades personalizadas
-using  GlampingProyect.Web.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

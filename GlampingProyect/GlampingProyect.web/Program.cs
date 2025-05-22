@@ -66,6 +66,7 @@ builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 // 9) Otras extensiones personalizadas -------------------------------------
 builder.AddCustomConfiguration();
 
+
 // 10) Serilog --------------------------------------------------------------
 builder.Host.UseSerilog();
 

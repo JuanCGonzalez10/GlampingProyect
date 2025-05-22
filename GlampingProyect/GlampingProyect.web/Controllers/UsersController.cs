@@ -9,7 +9,6 @@ using  GlampingProyect.Web.Data.Entities;
 using  GlampingProyect.Web.DTOs;
 using  GlampingProyect.Web.Helpers;
 using  GlampingProyect.Web.Services;
-using  GlampingProyect.Web.Data.Entities;
 
 namespace  GlampingProyect.Web.Controllers
 {
@@ -20,9 +19,9 @@ namespace  GlampingProyect.Web.Controllers
         private readonly ICombosHelper _combosHelper;
         private readonly IMapper _mapper;
 
-        public UsersController(IUsersService sectionsService, INotyfService notifyService, ICombosHelper combosHelper, IMapper mapper)
+        public UsersController(IUsersService categoriesService, INotyfService notifyService, ICombosHelper combosHelper, IMapper mapper)
         {
-            _usersService = sectionsService;
+            _usersService = categoriesService;
             _notifyService = notifyService;
             _combosHelper = combosHelper;
             _mapper = mapper;
