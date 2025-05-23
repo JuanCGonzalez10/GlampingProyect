@@ -20,6 +20,8 @@ namespace  GlampingProyect.Web.Data.Entities
         [Display(Name = "¿Está oculta?")]
         public bool IsHidden { get; set; }
 
+        [DataType(DataType.MultilineText)]
+
         public ICollection<RoleCategory>? RoleCategories { get; set; }
     }
 }

@@ -1,0 +1,33 @@
+﻿@model List<GlampingProyect.Web.Data.DTOs.ReservationDTO>
+
+<h2>Reservas</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Fecha inicio</th>
+            <th>Fecha fin</th>
+            <th>Personas</th>
+            <th>Estado</th>
+            <th>Pago</th>
+            <th>Unidad Glamping</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var res in Model)
+        {
+            <tr>
+                <td>@res.Id</td>
+                <td>@res.StartDate.ToShortDateString()</td>
+                <td>@res.EndDate.ToShortDateString()</td>
+                <td>@res.NumberOfPeople</td>
+                <td>@res.Status</td>
+                <td>@res.PaymentStatus</td>
+                <td>@res.GlampingUnitId</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create")" class="btn btn-primary">Nueva Reserva</a>
