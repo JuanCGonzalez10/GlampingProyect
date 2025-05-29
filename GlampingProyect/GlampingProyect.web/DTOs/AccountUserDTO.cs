@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using  GlampingProyect.Web.Data.Entities;
+using GlampingProyect.Web.Data.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace  GlampingProyect.Web.DTOs
+namespace GlampingProyect.Web.DTOs
 {
     public class AccountUserDTO
     {
@@ -27,11 +27,8 @@ namespace  GlampingProyect.Web.DTOs
         [MaxLength(32, ErrorMessage = "Elcampo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         public string PhoneNumber { get; set; } = null!;
-
         public string? Email { get; set; } = null!;
-
         public IFormFile? Photo { get; set; }
-
         public string? PhotoUrl { get; set; }
 
         public string FullName => $"{FirstName} {LastName}";

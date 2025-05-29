@@ -1,18 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using  GlampingProyect.Web.DTOs;
-using  GlampingProyect.Web.Services;
+﻿using GlampingProyect.Web.Core.Attributes;
+using GlampingProyect.Web.DTOs;
+using GlampingProyect.Web.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-namespace  GlampingProyect.Web.Controllers
+namespace GlampingProyect.Web.Controllers
 {
-    public class ApplicationLogsController : Controller
+    public class AplicationLogsController : Controller
     {
         private readonly IReadLogsService _readLogsService;
 
-        public ApplicationLogsController(IReadLogsService readLogsService)
+        public AplicationLogsController(IReadLogsService readLogsService)
         {
             _readLogsService = readLogsService;
         }
 
+        [HttpGet]
+        [CustomAuthorize(permission: "ShowLogs", module: "Logs")]
+        [Authorize]
         public IActionResult Index(DateTime? date)
         {
             LogViewerDTO dto = new LogViewerDTO
@@ -20,7 +25,6 @@ namespace  GlampingProyect.Web.Controllers
                 Logs = _readLogsService.GetLogs(date),
                 SelectedDate = date
             };
-
             return View(dto);
         }
     }

@@ -1,13 +1,15 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
+using GlampingProyect.Web.Core.Attributes;
+using GlampingProyect.Web.Core.Pagination;
+using GlampingProyect.Web.Data.Entities;
+using GlampingProyect.Web.DTOs;
+using GlampingProyect.Web.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using  GlampingProyect.Web.Core.Attributes;
-using  GlampingProyect.Web.Core;
-using  GlampingProyect.Web.Core.Pagination;
-using  GlampingProyect.Web.Data.Entities;
-using  GlampingProyect.Web.DTOs;
-using  GlampingProyect.Web.Services;
+using static GlampingProyect.Web.DTOs.PrivateURoleDTO;
 
-namespace  GlampingProyect.Web.Controllers
+namespace GlampingProyect.Web.Controllers
 {
     public class RolesController : Controller
     {
@@ -22,9 +24,11 @@ namespace  GlampingProyect.Web.Controllers
 
         [HttpGet]
         [CustomAuthorize(permission: "showRoles", module: "Roles")]
+        [Authorize]
         public async Task<IActionResult> Index([FromQuery] PaginationRequest request)
         {
-            Response<PaginationResponse<GlampingRoleDTO>> response = await _rolesService.GetPaginationAsync(request);
+
+            Response<PaginationResponse<PrivateURoleDTO>> response = await _rolesService.GetPaginationAsync(request);
             if (!response.IsSuccess)
             {
                 _notifyService.Error(response.Message);
@@ -35,6 +39,7 @@ namespace  GlampingProyect.Web.Controllers
 
         [HttpGet]
         [CustomAuthorize(permission: "createRoles", module: "Roles")]
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             Response<List<PermissionDTO>> permissionsResponse = await _rolesService.GetPermissionsAsync();
@@ -45,17 +50,11 @@ namespace  GlampingProyect.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            Response<List<CategoryDTO>> CategoryResponse = await _rolesService.GetCategoriesAsync();
 
-            if (!CategoryResponse.IsSuccess)
-            {
-                _notifyService.Error(CategoryResponse.Message);
-                return RedirectToAction(nameof(Index));
-            }
 
-            GlampingRoleDTO dto = new GlampingRoleDTO
+            PrivateURoleDTO dto = new PrivateURoleDTO
             {
-                Permissions = permissionsResponse.Result.Select(p => new PermissionForRoleDTO 
+                Permissions = permissionsResponse.Result.Select(p => new PermissionForRoleDTO
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -64,13 +63,7 @@ namespace  GlampingProyect.Web.Controllers
                     Selected = false
                 }).ToList(),
 
-                Categories = CategoryResponse.Result.Select(p => new CategoryForRoleDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Description = p.Description,
-                    Selected = false
-                }).ToList(),
+
             };
 
             return View(dto);
@@ -80,14 +73,14 @@ namespace  GlampingProyect.Web.Controllers
 
         [HttpPost]
         [CustomAuthorize(permission: "createRoles", module: "Roles")]
-        public async Task<IActionResult> Create(GlampingRoleDTO dto)
+        [Authorize]
+        public async Task<IActionResult> Create(PrivateURoleDTO dto)
         {
             if (!ModelState.IsValid)
             {
                 _notifyService.Error("Debe ajustar los errores de validación");
 
                 Response<List<PermissionDTO>> permissionResponse1 = await _rolesService.GetPermissionsAsync();
-                Response<List<CategoryDTO>> sectionsResponse1 = await _rolesService.GetCategoriesAsync();
 
                 dto.Permissions = permissionResponse1.Result.Select(p => new PermissionForRoleDTO
                 {
@@ -98,16 +91,12 @@ namespace  GlampingProyect.Web.Controllers
                     Selected = false,
                 }).ToList();
 
-                dto.Categories = sectionsResponse1.Result.Select(p => new CategoryForRoleDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                }).ToList();
+
 
                 return View(dto);
             }
 
-            Response<GlampingRoleDTO> createResponse = await _rolesService.CreateAsync(dto);
+            Response<PrivateURoleDTO> createResponse = await _rolesService.CreateAsync(dto);
 
             if (createResponse.IsSuccess)
             {
@@ -118,7 +107,6 @@ namespace  GlampingProyect.Web.Controllers
             _notifyService.Error(createResponse.Message);
 
             Response<List<PermissionDTO>> pemrissionResponse2 = await _rolesService.GetPermissionsAsync();
-            Response<List<CategoryDTO>> sectionsResponse2 = await _rolesService.GetCategoriesAsync();
 
             dto.Permissions = pemrissionResponse2.Result.Select(p => new PermissionForRoleDTO
             {
@@ -128,11 +116,7 @@ namespace  GlampingProyect.Web.Controllers
                 Module = p.Module,
             }).ToList();
 
-            dto.Categories = sectionsResponse2.Result.Select(p => new CategoryForRoleDTO
-            {
-                Id = p.Id,
-                Name = p.Name,
-            }).ToList();
+
 
             return View(dto);
         }
@@ -140,21 +124,20 @@ namespace  GlampingProyect.Web.Controllers
 
         [HttpPost]
         [CustomAuthorize(permission: "updateRoles", module: "Roles")]
-        public async Task<IActionResult> Edit(GlampingRoleDTO dto)
+        [Authorize]
+        public async Task<IActionResult> Edit(PrivateURoleDTO dto)
         {
             if (!ModelState.IsValid)
             {
                 _notifyService.Error("Debe ajustar los errores de validación");
 
                 Response<List<PermissionForRoleDTO>> permissionsByRoleResponse = await _rolesService.GetPermissionsByRoleAsync(dto.Id);
-                Response<List<CategoryForRoleDTO>> categoriesByRoleResponse = await _rolesService.GetCategoriesByRoleAsync(dto.Id);
                 dto.Permissions = permissionsByRoleResponse.Result.ToList();
-                dto.Categories = categoriesByRoleResponse.Result.ToList();
 
                 return View(dto);
             }
 
-            Response<GlampingRoleDTO> editResponse = await _rolesService.EditAsync(dto);
+            Response<PrivateURoleDTO> editResponse = await _rolesService.EditAsync(dto);
 
             if (editResponse.IsSuccess)
             {
@@ -165,18 +148,17 @@ namespace  GlampingProyect.Web.Controllers
             _notifyService.Error(editResponse.Message);
 
             Response<List<PermissionForRoleDTO>> permissionsByRoleResponse2 = await _rolesService.GetPermissionsByRoleAsync(dto.Id);
-            Response<List<CategoryForRoleDTO>> sectionsByRoleResponse2 = await _rolesService.GetCategoriesByRoleAsync(dto.Id);
             dto.Permissions = permissionsByRoleResponse2.Result.ToList();
-            dto.Categories = sectionsByRoleResponse2.Result.ToList();
 
             return View(dto);
         }
 
         [HttpGet]
         [CustomAuthorize(permission: "updateRoles", module: "Roles")]
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
-            Response<GlampingRoleDTO> response = await _rolesService.GetOneAsync(id);
+            Response<PrivateURoleDTO> response = await _rolesService.GetOneAsync(id);
 
             if (!response.IsSuccess)
             {
@@ -186,5 +168,27 @@ namespace  GlampingProyect.Web.Controllers
 
             return View(response.Result);
         }
+
+
+        [HttpPost]
+        [CustomAuthorize(permission: "DeleteRoles", module: "Roles")]
+        [Authorize]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            Response<object> response = await _rolesService.DeleteAsync(id);
+
+            if (response.IsSuccess)
+            {
+                _notifyService.Success(response.Message);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                _notifyService.Error(response.Message);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
