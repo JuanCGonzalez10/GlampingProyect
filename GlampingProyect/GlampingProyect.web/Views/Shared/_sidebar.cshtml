@@ -29,14 +29,6 @@
                 <span>Glampings</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Reservations" ? "" : "collapsed")"
-               asp-controller="Reservations"
-               asp-action="Index">
-                <i class="bi bi-file-earmark-post"></i>
-                <span>Reservaciones</span>
-            </a>
-        </li>
 
         <li class="nav-item">
             <a class="nav-link  @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" ? "" : "collapsed")"
