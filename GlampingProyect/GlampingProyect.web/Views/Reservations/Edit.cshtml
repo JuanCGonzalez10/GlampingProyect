@@ -1,7 +1,7 @@
 ﻿@model GlampingProyect.Web.Data.DTOs.ReservationDTO
 
 @{
-    ViewData["Title"] = "Nueva Reserva";
+    ViewData["Title"] = "Editar Reserva";
 }
 
 <div class="pagetitle">
@@ -10,7 +10,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
             <li class="breadcrumb-item"><a asp-action="Index">Reservas</a></li>
-            <li class="breadcrumb-item active">Nueva Reserva</li>
+            <li class="breadcrumb-item active">Editar Reserva</li>
         </ol>
     </nav>
 </div>
@@ -18,13 +18,14 @@
 <section class="section dashboard">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title text-primary">Nueva Reserva</h5>
+            <h5 class="card-title text-primary">Editar Reserva</h5>
 
-            <form asp-action="Create" method="post" class="row g-3">
+            <form asp-action="Edit" method="post" class="row g-3">
+                <input type="hidden" asp-for="Id" />
 
                 <div class="col-md-6">
                     <div class="form-floating">
-                        <input asp-for="StartDate" type="date" class="form-control" placeholder="Fecha de inicio" />
+                        <input asp-for="StartDate" type="date" class="form-control" />
                         <label asp-for="StartDate">Fecha de inicio</label>
                         <span asp-validation-for="StartDate" class="text-danger"></span>
                     </div>
@@ -32,7 +33,7 @@
 
                 <div class="col-md-6">
                     <div class="form-floating">
-                        <input asp-for="EndDate" type="date" class="form-control" placeholder="Fecha de fin" />
+                        <input asp-for="EndDate" type="date" class="form-control" />
                         <label asp-for="EndDate">Fecha de fin</label>
                         <span asp-validation-for="EndDate" class="text-danger"></span>
                     </div>
@@ -40,7 +41,7 @@
 
                 <div class="col-md-6">
                     <div class="form-floating">
-                        <input asp-for="NumberOfPeople" type="number" min="1" class="form-control" placeholder="Número de personas" />
+                        <input asp-for="NumberOfPeople" type="number" min="1" class="form-control" />
                         <label asp-for="NumberOfPeople">Número de personas</label>
                         <span asp-validation-for="NumberOfPeople" class="text-danger"></span>
                     </div>
@@ -48,8 +49,7 @@
 
                 <div class="col-md-6">
                     <div class="form-floating">
-                        <select asp-for="Status" class="form-select" aria-label="Estado de la reserva">
-                            <option value="" selected>Seleccione estado</option>
+                        <select asp-for="Status" class="form-select">
                             <option value="Pendiente">Pendiente</option>
                             <option value="Confirmada">Confirmada</option>
                             <option value="Cancelada">Cancelada</option>
@@ -61,8 +61,7 @@
 
                 <div class="col-md-6">
                     <div class="form-floating">
-                        <select asp-for="PaymentStatus" class="form-select" aria-label="Estado del pago">
-                            <option value="" selected>Seleccione estado de pago</option>
+                        <select asp-for="PaymentStatus" class="form-select">
                             <option value="Pendiente">Pendiente</option>
                             <option value="Pagado">Pagado</option>
                             <option value="Reembolsado">Reembolsado</option>
@@ -74,17 +73,16 @@
 
                 <div class="col-md-6">
                     <div class="form-floating">
-                        <input asp-for="GlampingUnitId" type="number" min="1" class="form-control" placeholder="ID unidad glamping" />
+                        <input asp-for="GlampingUnitId" type="number" min="1" class="form-control" />
                         <label asp-for="GlampingUnitId">Unidad Glamping</label>
                         <span asp-validation-for="GlampingUnitId" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                    <button type="submit" class="btn btn-primary px-4">Actualizar</button>
                     <a asp-action="Index" class="btn btn-secondary ms-2">Volver</a>
                 </div>
-
             </form>
         </div>
     </div>
