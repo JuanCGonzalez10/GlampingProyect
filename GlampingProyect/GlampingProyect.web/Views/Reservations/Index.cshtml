@@ -1,83 +1,33 @@
 ﻿@model List<GlampingProyect.Web.Data.DTOs.ReservationDTO>
 
-@{
-    ViewData["Title"] = "Reservas";
-}
+<h2>Reservas</h2>
 
-<div class="pagetitle">
-    <h1>Reservas</h1>
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
-            <li class="breadcrumb-item active">Reservas</li>
-        </ol>
-    </nav>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Fecha inicio</th>
+            <th>Fecha fin</th>
+            <th>Personas</th>
+            <th>Estado</th>
+            <th>Pago</th>
+            <th>Unidad Glamping</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var res in Model)
+        {
+            <tr>
+                <td>@res.Id</td>
+                <td>@res.StartDate.ToShortDateString()</td>
+                <td>@res.EndDate.ToShortDateString()</td>
+                <td>@res.NumberOfPeople</td>
+                <td>@res.Status</td>
+                <td>@res.PaymentStatus</td>
+                <td>@res.GlampingUnitId</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-<section class="section dashboard">
-    <div class="card shadow rounded-4 p-3">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2 class="text-primary fw-bold">Reservas</h2>
-            <a asp-action="Create" class="btn btn-primary rounded-3 d-flex align-items-center justify-content-center"
-               style="width: 42px; height: 42px;">
-                <i class="bi bi-plus-lg fs-5 text-white"></i>
-            </a>
-        </div>
-
-        <!-- Opcional: Control de cantidad y búsqueda si usas DataTables -->
-        <div class="d-flex mb-3 gap-2">
-            <select class="form-select w-auto">
-                <option>15</option>
-                <option>25</option>
-                <option>50</option>
-            </select>
-            <input type="text" class="form-control w-50" placeholder="Buscar..." />
-            <button class="btn btn-primary">
-                <i class="bi bi-search"></i>
-            </button>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover align-middle">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Fecha inicio</th>
-                        <th>Fecha fin</th>
-                        <th>Personas</th>
-                        <th>Estado</th>
-                        <th>Pago</th>
-                        <th>Numero de Glamping</th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    @foreach (var res in Model)
-                    {
-                        <tr>
-                            <td>@res.Id</td>
-                            <td>@res.StartDate.ToShortDateString()</td>
-                            <td>@res.EndDate.ToShortDateString()</td>
-                            <td>@res.NumberOfPeople</td>
-                            <td>@res.Status</td>
-                            <td>@res.PaymentStatus</td>
-                            <td>@res.GlampingUnitId</td>
-                            <td>
-                                <div class="d-flex justify-content-center gap-1">
-                                    <a asp-action="Edit" asp-route-id="@res.Id" class="btn btn-sm text-dark" style="background-color: #ffc107;">
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </a>
-                                   @*  <a asp-action="Details" asp-route-id="@res.Id" class="btn btn-sm text-white" style="background-color: #0dcaf0;">
-                                        <i class="bi bi-eye-slash-fill"></i>
-                                    </a> *@
-                                    <a asp-action="Delete" asp-route-id="@res.Id" class="btn btn-sm text-white" style="background-color: #dc3545;">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
+<a href="@Url.Action("Create")" class="btn btn-primary">Nueva Reserva</a>
