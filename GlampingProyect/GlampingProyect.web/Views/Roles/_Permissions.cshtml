@@ -1,5 +1,5 @@
-﻿@using GlampingProyect.Web.Core.Extensions
-@model PrivateURoleDTO
+﻿@using  GlampingProyect.Web.Core.Extensions
+@model GlampingRoleDTO
 
 <div class="card shadow mb-4">
     <div class="card-body">
@@ -21,7 +21,7 @@
                                    type="checkbox"
                                    data-permission-id="@permission.Id"
                                    id="permission_@permission.Id"
-                            @(permission.Selected ? "checked" : "") />
+                                   @(permission.Selected ? "checked" : "") />
 
                             <label class="form-check-label" for="permission_@permission.Id">@permission.Description</label>
 
