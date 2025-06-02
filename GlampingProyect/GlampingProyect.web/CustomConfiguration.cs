@@ -1,38 +1,40 @@
-﻿using AspNetCoreHero.ToastNotification;
-using AspNetCoreHero.ToastNotification.Extensions;
-using GlampingProyect.Data;
-using GlampingProyect.Web.Data.Entities;
-using GlampingProyect.Web.Data.Seeders;
-using GlampingProyect.Web.Helpers;
-using GlampingProyect.Web.Services;
+﻿
+using AspNetCoreHero.ToastNotification;
+using  GlampingProyect.Web.Data.Entities;
+using  GlampingProyect.Web.Services;
+using  GlampingProyect.Web.Data;
+using  GlampingProyect.Web.Data.Seeders;
+using  GlampingProyect.Web.Helpers;
+using  GlampingProyect.Web.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.File;
 
-namespace GlampingProyect.Web
+
+namespace  GlampingProyect.Web
 {
     public static class CustomConfiguration
     {
         public static WebApplicationBuilder AddCustomConfiguration(this WebApplicationBuilder builder)
         {
-            // Data Context
+            // Datacontext 
             builder.Services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection"));
             });
 
-            builder.Services.AddHttpContextAccessor();
-
-            //AutoMapper
+            // AutoMapper
             builder.Services.AddAutoMapper(typeof(Program));
 
-            //Services
+            // Servicios personalizados
             AddServices(builder);
 
-            //Identoty an Acces Managment
+            // Identity y acceso (¡llámalo aquí!)
             AddIAM(builder);
 
-            // Toast Notification SetUp
+            // Configuración de notificaciones Toast
             builder.Services.AddNotyf(config =>
             {
                 config.DurationInSeconds = 10;
@@ -40,81 +42,27 @@ namespace GlampingProyect.Web
                 config.Position = NotyfPosition.BottomRight;
             });
 
-            //Log setup
+            // Configuración de logs
             AddLogConfiguration(builder);
 
             return builder;
         }
 
-        private static void AddLogConfiguration(WebApplicationBuilder builder)
-        {
-            Log.Logger = new LoggerConfiguration().WriteTo.File("logs/log.log",
-                                                                rollingInterval: RollingInterval.Day,
-                                                                restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning)
-                                                  .WriteTo.Console(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information)
-                                                  .CreateLogger();
-            builder.Logging.ClearProviders();
-            builder.Logging.AddSerilog();
-        }
-
-        private static void AddServices(WebApplicationBuilder builder)
-        {
-            //Services
-            builder.Services.AddScoped<IApiService, ApiService>();
-            builder.Services.AddScoped<IClientsService, ClientsService>();
-            builder.Services.AddScoped<IEmailService, MailtrapService>();
-            builder.Services.AddScoped<IHomeService, HomeService>();
-            builder.Services.AddScoped<IInvoicesService, InvoicesService>();
-            builder.Services.AddScoped<IProductCategoriesService, ProductCategoriesService>();
-            builder.Services.AddScoped<IProductsService, ProductsService>();
-            builder.Services.AddTransient<IReadLogsService, ReadPlainTextLogsService>();
-            builder.Services.AddScoped<IRolesService, RolesService>();
-            builder.Services.AddScoped<ISalesService, SalesService>();
-            builder.Services.AddScoped<ISaleDetailService, SaleDetailService>();
-            builder.Services.AddTransient<SeedDb>();
-            builder.Services.AddScoped<IUsersService, UsersService>();
-
-            //Storage
-            builder.Services.AddKeyedScoped<IStorageService, LocalStorageService>("local");
-            builder.Services.AddKeyedScoped<IStorageService, AzureInvoiceStorageService>("azure");
-
-            //Helpers
-            builder.Services.AddScoped<ICombosHelper, CombosHelper>();
-        }
-
-        public static WebApplication AddCustomWebApplicationConfiguration(this WebApplication app)
-        {
-            app.UseNotyf();
-
-            SeedData(app);
-
-            return app;
-        }
-
-        private static void SeedData(WebApplication app)
-        {
-            IServiceScopeFactory scopeFactory = app.Services.GetService<IServiceScopeFactory>();
-
-            using (IServiceScope scope = scopeFactory.CreateScope())
-            {
-                SeedDb service = scope.ServiceProvider.GetService<SeedDb>();
-                service.SeedAsync().Wait();
-            }
-        }
-
         private static void AddIAM(WebApplicationBuilder builder)
         {
-            builder.Services.AddIdentity<Users, IdentityRole>(conf =>
-            {
-                conf.User.RequireUniqueEmail = true;
-                conf.Password.RequireDigit = false;
-                conf.Password.RequiredUniqueChars = 0;
-                conf.Password.RequireLowercase = false;
-                conf.Password.RequireUppercase = false;
-                conf.Password.RequireNonAlphanumeric = false;
-                conf.Password.RequiredLength = 4;
-            }).AddEntityFrameworkStores<DataContext>()
-              .AddDefaultTokenProviders();
+            //builder.Services.AddIdentity<User, IdentityRole>(conf =>
+            //{
+            //    conf.User.RequireUniqueEmail = true;
+
+            //    conf.Password.RequireDigit = false;
+            //    conf.Password.RequiredUniqueChars = 0;
+            //    conf.Password.RequireLowercase = false;
+            //    conf.Password.RequireUppercase = false;
+            //    conf.Password.RequireNonAlphanumeric = false;
+            //    conf.Password.RequiredLength = 4;
+            //})
+            //.AddEntityFrameworkStores<DataContext>()
+            //.AddDefaultTokenProviders();
 
             builder.Services.ConfigureApplicationCookie(conf =>
             {
@@ -122,10 +70,31 @@ namespace GlampingProyect.Web
                 conf.ExpireTimeSpan = TimeSpan.FromDays(100);
                 conf.LoginPath = "/Account/Login";
                 conf.AccessDeniedPath = "/Errors/403";
-
             });
-
         }
 
+        private static void AddLogConfiguration(WebApplicationBuilder builder)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("logs/log.log",
+                              rollingInterval: RollingInterval.Day,
+                              restrictedToMinimumLevel: LogEventLevel.Warning)
+                .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information)
+                .CreateLogger();
+        }
+
+        private static void AddServices(WebApplicationBuilder builder)
+        {
+            //Servicios
+            builder.Services.AddScoped<IGlampingsService, GlampingsService>();
+            //builder.Services.AddScoped<IReadLogsService, ReadPlainTexLogstService>();
+            builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+            builder.Services.AddTransient<SeedDb>();
+            builder.Services.AddTransient<IStorageService, AzureBlobStorageService>();
+            builder.Services.AddScoped<IUsersService, UsersService>();
+
+            // Helpers
+            builder.Services.AddTransient<ICombosHelper, CombosHelper>();
+        }
     }
 }
