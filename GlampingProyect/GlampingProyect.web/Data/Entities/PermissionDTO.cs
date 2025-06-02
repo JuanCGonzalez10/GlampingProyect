@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace  GlampingProyect.Web.Data.Entities
+namespace GlampingProyect.Web.Data.Entities
 {
     public class PermissionDTO
     {

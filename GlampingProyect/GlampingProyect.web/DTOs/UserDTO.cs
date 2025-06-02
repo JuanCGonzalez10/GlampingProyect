@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using  GlampingProyect.Web.Data.Entities;
+﻿using GlampingProyect.Web.Data.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
-using  GlampingProyect.Web.Data.Entities;
-using Microsoft.AspNetCore.Identity;
 
-namespace  GlampingProyect.Web.DTOs
+namespace GlampingProyect.Web.DTOs
 {
-    public class UserDTO
+    public class UsersDTO
     {
         public string? Id { get; set; }
 
@@ -37,11 +35,11 @@ namespace  GlampingProyect.Web.DTOs
         [Display(Name = "Rol")]
         [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar un rol")]
         [Required(ErrorMessage = "El campo '{0}' es requerido.")]
-        public int GlampingRoleId { get; set; }
+        public int PrivateURoleId { get; set; }
 
-        public GlampingRole? GlampingRole { get; set; }
+        public PrivateURole? privateURole { get; set; }
 
-        public IEnumerable<SelectListItem>? GlampingRoles { get; set; }
+        public IEnumerable<SelectListItem>? privateURoles { get; set; }
 
         public string FullName => $"{FirstName} {LastName}";
     }

@@ -1,198 +1,260 @@
-﻿using  GlampingProyect.Web.DTOs;
-using  GlampingProyect.Web.DTOs;
-using  GlampingProyect.Web.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Identity;
-using  GlampingProyect.Web.Data.Entities;
 using System.Threading.Tasks;
-using  GlampingProyect.Web.Services;
+using GlampingProyect.Web.Core;
+using GlampingProyect.Web.Data.Entities;
+using GlampingProyect.Web.DTOs;
+using GlampingProyect.Web.Services;
 
-namespace  GlampingProyect.Web.Controllers
+namespace GlampingProyect.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IUsersService _userService;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly IUsersService _usersService;
+        private readonly IMapper _mapper;
+        private readonly INotyfService _notyfService;
+        private readonly IEmailService _emailService;
 
-        public AccountController(
-            IUsersService userService,
-            UserManager<User> userManager,
-            SignInManager<User> signInManager)
+        public AccountController(IUsersService usersService, IMapper mapper, INotyfService notyfService, IEmailService emailService)
         {
-            _userService = userService;
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _usersService = usersService;
+            _mapper = mapper;
+            _notyfService = notyfService;
+            _emailService = emailService;
         }
 
-        // === Register ===
         [HttpGet]
-        public IActionResult Register()
+        public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterDTO dto)
+        public async Task<IActionResult> Login(LoginDTO dto)
         {
-            if (!ModelState.IsValid)
-                return View(dto);
-
-            var user = new User
+            if (ModelState.IsValid)
             {
-                UserName = dto.Email,
-                Email = dto.Email,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                Document = dto.Document,
-                GlampingRoleId = dto.GlampingRoleId,
-                EmailConfirmed = true
-            };
+                Microsoft.AspNetCore.Identity.SignInResult result = await _usersService.LoginAsync(dto);
 
-            var result = await _userManager.CreateAsync(user, dto.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
 
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("Index", "Home");
+                ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos");
             }
-
-            foreach (var error in result.Errors)
-                ModelState.AddModelError(string.Empty, error.Description);
 
             return View(dto);
         }
 
-        // === Login ===
-        [HttpGet]
-        public IActionResult Login(string? returnUrl = null)
-        {
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginDTO dto, string? returnUrl = null)
-        {
-            if (!ModelState.IsValid)
-                return View(dto);
-
-            var result = await _userService.LoginAsync(dto);
-
-            if (result.Succeeded)
-            {
-                Console.WriteLine("✅ Login correcto");
-                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                    return Redirect(returnUrl);
-
-                return RedirectToAction("Index", "Home");
-            }
-
-            Console.WriteLine("❌ Login fallido");
-            ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos");
-            return View(dto);
-        }
-
-        // === Logout ===
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
-        {
-            await _userService.LogoutAsync();
-            return RedirectToAction(nameof(Login));
-        }
-
-        // === Error handling ===
         [HttpGet]
         [Route("Errors/{statusCode:int}")]
         public IActionResult Error(int statusCode)
         {
-            string errorMessage = statusCode switch
+            string errorMessage = "Ha ocurrido un error";
+
+            switch (statusCode)
             {
-                StatusCodes.Status401Unauthorized => "Debes iniciar sesión.",
-                StatusCodes.Status403Forbidden => "No tienes permiso para estar aquí.",
-                StatusCodes.Status404NotFound => "La página que estás intentando acceder no existe",
-                _ => "Ha ocurrido un error"
-            };
+                case StatusCodes.Status401Unauthorized:
+                    errorMessage = "Debes iniciar sesión";
+                    break;
+
+                case StatusCodes.Status403Forbidden:
+                    errorMessage = "No tienes permiso para estar aquí";
+                    break;
+
+                case StatusCodes.Status404NotFound:
+                    errorMessage = "La página que estás intentando acceder no existe";
+                    break;
+            }
 
             ViewBag.ErrorMessage = errorMessage;
+
             return View(statusCode);
         }
 
-        // === Access Denied ===
+
         [HttpGet]
-        public IActionResult NoAuthorized()
+        [Authorize]
+        public async Task<IActionResult> Logout()
         {
-            return View();
+            await _usersService.LogoutAsync();
+            return RedirectToAction(nameof(Login));
         }
 
-        // === Forgot Password ===
         [HttpGet]
-        public IActionResult ForgotPassword()
+        [Authorize]
+        public async Task<IActionResult> UpdateUser()
+        {
+            Users user = await _usersService.GetUserAsync(User.Identity.Name);
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            return View(_mapper.Map<AccountUserDTO>(user));
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> UpdateUser(AccountUserDTO dto)
+        {
+            if (ModelState.IsValid)
+            {
+                int affectedRows = await _usersService.UpdateUserAsync(dto);
+
+                if (affectedRows > 0)
+                {
+                    _notyfService.Success("Datos de usuario actualizados con éxito");
+                }
+                else
+                {
+                    _notyfService.Error("Error al actualizar los datos de usuario");
+                }
+
+                return RedirectToAction("Index", "Home");
+
+            }
+
+            _notyfService.Error("Debe ajustar los errores de validación");
+            return View(dto);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult ChangePassword()
         {
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordDTO model)
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDTO dto)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var user = await _userService.GetUserAsync(model.Email);
-
-            if (user == null)
+            try
             {
-                ViewBag.Message = "Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.";
+                if (!ModelState.IsValid)
+                {
+                    _notyfService.Error("Debe ajustar los errores de validación");
+                    return View();
+                }
+
+                Users? user = await _usersService.GetUserAsync(User.Identity.Name);
+                if (user is null)
+                {
+                    _notyfService.Error("Ha ocurrido un error. Por favor intente mas tarde");
+                    return View();
+                }
+
+                bool isCorrectPassword = await _usersService.CheckPasswordAsync(user, dto.CurrentPassword);
+
+                if (!isCorrectPassword)
+                {
+                    _notyfService.Error("Credenciales incorrectas");
+                    return View();
+                }
+
+                string resetToken = await _usersService.GeneratePasswordResetTokenAsync(user);
+                IdentityResult result = await _usersService.ResetPasswordAsync(user, resetToken, dto.NewPassword);
+
+                if (!result.Succeeded)
+                {
+                    _notyfService.Error("Ha ocurrido un error al intantar actulizar la contraseña");
+                    ViewBag.Message = $"Error al actualizar la contraseña {result.Errors}";
+                    return View(dto);
+                }
+
+                _notyfService.Success("Contraseña actualizada con éxito");
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                _notyfService.Error("Ha ocurrido un error. Por favor intente mas tarde");
                 return View();
             }
+        }
 
-            var token = await _userService.GeneratePasswordResetTokenAsync(user);
-            var resetLink = Url.Action("ResetPassword", "Account", new { token, email = user.Email }, Request.Scheme);
-
-            await _userService.SendPasswordResetEmailAsync(user.Email, resetLink);
-
-            ViewBag.Message = "Hemos enviado un enlace a tu correo para restablecer tu contraseña.";
+        [HttpGet]
+        public IActionResult RecoveryPassword()
+        {
             return View();
         }
 
-        // === Reset Password ===
-        [HttpGet]
-        public IActionResult ResetPassword(string token, string email)
+        [HttpPost]
+        public async Task<IActionResult> RecoveryPassword(RecoveryPasswordDTO dto)
         {
-            if (token == null || email == null)
-                return RedirectToAction(nameof(Login));
+            if (!ModelState.IsValid)
+            {
+                _notyfService.Error("Debe ajustar los errores de validación");
+                return View(dto);
+            }
 
-            var model = new ResetPasswordDTO { Token = token, Email = email };
-            return View(model);
+            Users? user = await _usersService.GetUserAsync(dto.Email);
+            if (user is null)
+            {
+                _notyfService.Error("Ha ocurrido un error. Intente mas tarde");
+                return View(dto);
+            }
+
+            string resetToken = await _usersService.GeneratePasswordResetTokenAsync(user);
+            string url = Url.Action("ResetPassword", "Account", new { token = resetToken, email = user.Email }, protocol: HttpContext.Request.Scheme)!;
+
+            Response<object> response = await _emailService.SendResetPasswordEmailAsync(user.Email!, "Para restablecer la contraseña haga click en el siguiente enlace", url);
+
+            if (!response.IsSuccess)
+            {
+                _notyfService.Error("Ha ocurrido un error. Intente mas tarde");
+                return View(dto);
+            }
+
+            _notyfService.Success($"Se ha enviado un correo para restablecer la contraseña al email ({user.Email})");
+            return RedirectToAction(nameof(Login));
+
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword([FromQuery] string token, [FromQuery] string email)
+        {
+            ResetPasswordDTO dto = new()
+            {
+                Token = token,
+                Email = email
+            };
+            return View(dto);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword(ResetPasswordDTO model)
+        public async Task<IActionResult> ResetPassword(ResetPasswordDTO dto)
         {
             if (!ModelState.IsValid)
-                return View(model);
-
-            var user = await _userService.GetUserAsync(model.Email);
-            if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Error al restablecer la contraseña.");
-                return View(model);
+                _notyfService.Error("Debe ajustar los errores de validación");
+                return View(dto);
+            }
+            Users? user = await _usersService.GetUserAsync(dto.Email);
+            if (user is null)
+            {
+                _notyfService.Error("Ha ocurrido un error. Intente mas tarde");
+                return View(dto);
             }
 
-            var result = await _userService.ResetPasswordAsync(user, model.Token, model.NewPassword);
-            if (result.Succeeded)
-                return RedirectToAction(nameof(Login), new { Message = "Contraseña restablecida con éxito." });
+            IdentityResult result = await _usersService.ResetPasswordAsync(user, dto.Token, dto.Password);
 
-            foreach (var error in result.Errors)
-                ModelState.AddModelError(string.Empty, error.Description);
+            if (!result.Succeeded)
+            {
+                string errors = string.Join(", ", result.Errors.Select(e => e.Description).ToList());
+                errors = errors.Replace("Invalid token.", "El email ingresado no coincide.");
+                ViewBag.Message = errors;
+                _notyfService.Error("Ha ocurrido un error");
+                return View(dto);
+            }
 
-            return View(model);
+            _notyfService.Success("Contraseña actualizada con éxito");
+            return RedirectToAction(nameof(Login));
         }
     }
 }

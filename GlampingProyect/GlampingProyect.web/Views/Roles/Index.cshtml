@@ -1,7 +1,6 @@
-﻿@using  GlampingProyect.Web.Core
-@model PaginationResponse<GlampingRoleDTO>
+﻿@model PaginationResponse<PrivateURoleDTO>
 
-@inject  GlampingProyect.Web.Services.IUsersService _usersService
+@inject GlampingProyect.Web.Services.IUsersService _usersService
 
 @{
     ViewData["Title"] = "Roles";
@@ -90,7 +89,7 @@
 
                             <td>
 
-                                @if (item.Name != Env.SUPER_ADMIN_ROL_NAME)
+                                @if (item.Name != Env.SUPER_ADMIN_ROLE_NAME)
                                 {
                                     @if (await _usersService.CurrentUserIsAuthorizedAsync("updateRoles", "Roles"))
                                     {

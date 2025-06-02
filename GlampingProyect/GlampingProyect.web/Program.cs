@@ -1,96 +1,48 @@
-
-using  GlampingProyect.Web.Data;                 // DataContext
-using  GlampingProyect.Web.Data.Entities;        // User
-using  GlampingProyect.Web.Helpers;              // AddCustomConfiguration extension
-using  GlampingProyect.Web.Services;             // IUserService, etc.
-using AspNetCoreHero.ToastNotification;
-using AspNetCoreHero.ToastNotification.Extensions;
+using GlampingProyect.Data;
+using GlampingProyect.Web;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services; // IEmailSender
 using Microsoft.EntityFrameworkCore;
-using Serilog;
-using  GlampingProyect.Web.Data.Entities;
-using  GlampingProyect.Web.Services;
-using  GlampingProyect.Web;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// 1) DbContext ------------------------------------------------------------
-builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection")));
-
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<DataContext>()
-    .AddDefaultTokenProviders();
+using GlampingProyect.Web.Data.Entities; // Aseg�rate de importar esto
 
 
-// 2) Identity -------------------------------------------------------------
-// Si solo necesitas autenticación por cookies de Identity, 
-// AddDefaultIdentity es suficiente y registra el esquema una sola vez.
-/*builder.Services.AddDefaultIdentity<User>(options =>
-{
-    options.Password.RequireDigit = false;
-    options.Password.RequiredLength = 6;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequireUppercase = false;
-    options.Password.RequireLowercase = false;
-})
-.AddRoles<IdentityRole>()                   // ← mantén roles si los usas
-.AddEntityFrameworkStores<DataContext>()
-.AddDefaultTokenProviders();*/
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// 3) Cookie path settings --------------------------------------------------
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.LoginPath = "/Account/Login";
-    options.AccessDeniedPath = "/Account/NoAuthorized";
-});
-
-// 4) MVC & Razor views -----------------------------------------------------
+// Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// 5) Toast notifications ---------------------------------------------------
-builder.Services.AddNotyf(config =>
+//data context
+builder.Services.AddDbContext<DataContext>(options =>
 {
-    config.DurationInSeconds = 5;
-    config.IsDismissable = true;
-    config.Position = NotyfPosition.TopRight;
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MyConnection"));
 });
 
-// 6) AutoMapper ------------------------------------------------------------
-builder.Services.AddAutoMapper(typeof(Program));
 
-// 8) Email sender ----------------------------------------------------------
-builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
-
-// 9) Otras extensiones personalizadas -------------------------------------
 builder.AddCustomConfiguration();
 
-// 10) Serilog --------------------------------------------------------------
-builder.Host.UseSerilog();
+WebApplication app = builder.Build();
 
-var app = builder.Build();
-
-// ------------------- Middleware pipeline ----------------------------------
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseAuthentication();
 app.UseRouting();
-
-app.UseAuthentication();   // solo una vez
 app.UseAuthorization();
 
 app.UseStatusCodePagesWithReExecute("/Errors/{0}");
-app.UseNotyf();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.AddCustomWebApplicationConfiguration();
+
 
 app.Run();

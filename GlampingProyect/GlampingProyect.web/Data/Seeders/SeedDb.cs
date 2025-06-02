@@ -1,8 +1,9 @@
-﻿using  GlampingProyect.Web.Data.Seeders;
-using  GlampingProyect.Web.Services;
-using  GlampingProyect.Web.Services;
+﻿using GlampingProyect.Web.Data.Seeders;
+using GlampingProyect.Web.Data;
+using GlampingProyect.Web.Services;
+using GlampingProyect.Data;
 
-namespace  GlampingProyect.Web.Data.Seeders
+namespace GlampingProyect.Web.Data.Seeders
 {
     public class SeedDb
     {
@@ -17,10 +18,14 @@ namespace  GlampingProyect.Web.Data.Seeders
 
         public async Task SeedAsync()
         {
+            await new ClientSeeder(_context).SeedAsync();
+            await new SaleSeeder(_context).SeedAsync();
+            await new InvoiceSeeder(_context).SeedAsync();
+            await new ProductCategorySeeder(_context).SeedAsync();
+            await new ProductSeeder(_context).SeedAsync();
+            await new SaleDetailSeeder(_context).SeedAsync();
+            await new PermissionSeeder(_context).SeedAsync();
             await new UserRolesSeeder(_context, _usersService).SeedAsync();
-            await new PermissionsSeeder(_context).SeedAsync();
-            await new CategoriesSeeder(_context).SeedAsync();
-            await new GlampingsSeeder(_context).SeedAsync();
         }
     }
 }
