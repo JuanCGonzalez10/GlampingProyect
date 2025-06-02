@@ -1,58 +1,63 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using  GlampingProyect.Web.Core;
-using  GlampingProyect.Web.Core.Pagination;
-using  GlampingProyect.Web.Data;
-using  GlampingProyect.Web.Data.Entities;
-using  GlampingProyect.Web.DTOs;
-using  GlampingProyect.Web.Helpers;
-using Serilog;
-using ClaimsUser = System.Security.Claims.ClaimsPrincipal;
-using  GlampingProyect.Web.DTOs;
-using  GlampingProyect.Web.Data.Entities;
-using  GlampingProyect.Web.Core;
+using GlampingProyect.Data;
+using GlampingProyect.Web.Core.Pagination;
+using GlampingProyect.Web.Core;
+using GlampingProyect.Web.Data.Entities;
+using GlampingProyect.Web.DTOs;
+using GlampingProyect.Web.Helpers;
+using GlampingProyect.Web.Services;
 
-namespace  GlampingProyect.Web.Services
+using ClaimsUser = System.Security.Claims.ClaimsPrincipal;
+using Serilog;
+
+namespace GlampingProyect.Web.Services
 {
     public interface IUsersService
     {
-        public Task<IdentityResult> AddUserAsync(User user, string password);
+        public Task<IdentityResult> AddUserAsync(Users users, string password);
         public bool CurrentUserIsAuthenticated();
         public Task<bool> CurrentUserIsAuthorizedAsync(string permission, string module);
-        public Task<IdentityResult> ConfirmEmailAsync(User user, string token);
-        public Task<bool> CurrentUserIsSuperAdmin();
-        public Task<string> GenerateEmailConfirmationTokenAsync(User user);
-        public Task<User> GetUserAsync(string email);
+        public Task<IdentityResult> ConfirmEmailAsync(Users users, string token);
+        public Task<string> GenerateEmailConfirmationTokenAsync(Users users);
+        public Task<Users> GetUserAsync(string email);
         public Task<SignInResult> LoginAsync(LoginDTO dto);
         public Task LogoutAsync();
-        public Task<Response<PaginationResponse<UserDTO>>> GetPaginationAsync(PaginationRequest request);
-        public Task<Response<UserDTO>> CreateAsync(UserDTO dto);
-        public Task<User?> GetUserAsync(Guid id);
-        public Task<Response<UserDTO>> UpdateUserAsync(UserDTO dto);
+        public Task<Response<PaginationResponse<UsersDTO>>> GetPaginationAsync(PaginationRequest request);
+        public Task<Response<UsersDTO>> CreateAsync(UsersDTO dto);
+
+        public Task<Response<object>> DeleteAsync(string id);
+        public Task<Users?> GetUserAsync(Guid id);
+        public Task<Response<UsersDTO>> UpdateUserAsync(UsersDTO dto);
         public Task<int> UpdateUserAsync(AccountUserDTO dto);
-        public Task<bool> CheckPasswordAsync(User user, string currentPassword);
-        public Task<string> GeneratePasswordResetTokenAsync(User user);
-        public Task<IdentityResult> ResetPasswordAsync(User user, string resetToken, string newPassword);
-        Task SendPasswordResetEmailAsync(string? email, string? resetLink);
+        public Task<bool> CheckPasswordAsync(Users user, string currentPassword);
+        public Task<string> GeneratePasswordResetTokenAsync(Users user);
+        public Task<IdentityResult> ResetPasswordAsync(Users user, string resetToken, string newPassword);
+        public Task<int> CountByRoleAsync(string role);
+
+
     }
 
     public class UsersService : CustomQueryableOperations, IUsersService
     {
         private readonly DataContext _context;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<Users> _userManager;
+        private readonly SignInManager<Users> _signInManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
         private readonly IStorageService _localStorageService;
+        private readonly IStorageService _azureStorageService;
         private readonly string _container = "users";
+        private const string DefaultUserImageUrl = "https://localhost:7045/users/0fb1b2a9-992a-4992-b70e-ee409baf034a.jpg";
 
         public UsersService(DataContext context,
-                            UserManager<User> userManager,
-                            SignInManager<User> signInManager,
+                            UserManager<Users> userManager,
+                            SignInManager<Users> signInManager,
                             IHttpContextAccessor httpContextAccessor,
                             IMapper mapper,
-                            IStorageService localStorageService)
+                            [FromKeyedServices("local")] IStorageService localStorageService,
+                            [FromKeyedServices("azure")] IStorageService azureStorageService)
             : base(context, mapper)
         {
             _context = context;
@@ -61,40 +66,46 @@ namespace  GlampingProyect.Web.Services
             _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
             _localStorageService = localStorageService;
+            _azureStorageService = azureStorageService;
         }
 
-        public async Task<IdentityResult> AddUserAsync(User user, string password)
+        public async Task<IdentityResult> AddUserAsync(Users users, string password)
         {
-            return await _userManager.CreateAsync(user, password);
+            return await _userManager.CreateAsync(users, password);
         }
 
-        public async Task<bool> CheckPasswordAsync(User user, string currentPassword)
+        public async Task<bool> CheckPasswordAsync(Users user, string currentPassword)
         {
             return await _userManager.CheckPasswordAsync(user, currentPassword);
         }
 
-        public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)
+        public async Task<IdentityResult> ConfirmEmailAsync(Users users, string token)
         {
-            return await _userManager.ConfirmEmailAsync(user, token);
+            return await _userManager.ConfirmEmailAsync(users, token);
         }
 
-        public async Task<Response<UserDTO>> CreateAsync(UserDTO dto)
+        public async Task<int> CountByRoleAsync(string role)
+        {
+            return await _context.Users.CountAsync(u => u.PrivateURole.Name == role);
+        }
+
+        public async Task<Response<UsersDTO>> CreateAsync(UsersDTO dto)
         {
             try
             {
-                User user = _mapper.Map<User>(dto);
-                user.Id = Guid.NewGuid().ToString();
+                Users users = _mapper.Map<Users>(dto);
+                users.Id = Guid.NewGuid().ToString();
+                users.Photo = DefaultUserImageUrl;
 
-                IdentityResult result = await AddUserAsync(user, dto.Document);
+                IdentityResult result = await AddUserAsync(users, dto.Document);
+                string token = await GenerateEmailConfirmationTokenAsync(users);
+                await ConfirmEmailAsync(users, token);
 
-                string token = await GenerateEmailConfirmationTokenAsync(user);
-                await ConfirmEmailAsync(user, token);
-
-                return ResponseHelper<UserDTO>.MakeResponseSuccess(_mapper.Map<UserDTO>(user), "Usuario creado con éxito");
+                return ResponseHelper<UsersDTO>.MakeResponseSuccess(_mapper.Map<UsersDTO>(users), "Usuario creado con éxito");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return ResponseHelper<UserDTO>.MakeResponseFail(ex);
+                return ResponseHelper<UsersDTO>.MakeResponseFail(ex);
             }
         }
 
@@ -107,7 +118,7 @@ namespace  GlampingProyect.Web.Services
         public async Task<bool> CurrentUserIsAuthorizedAsync(string permission, string module)
         {
             ClaimsUser? claimsUser = _httpContextAccessor.HttpContext?.User;
-        
+
             // Valida si hay sesión
             if (claimsUser is null)
             {
@@ -116,59 +127,59 @@ namespace  GlampingProyect.Web.Services
 
             string? userName = claimsUser.Identity!.Name;
 
-            User? user = await GetUserAsync(userName);
+            Users? users = await GetUserAsync(userName);
 
-            if (user is null)
+            if (users is null)
             {
                 return false;
-            }    
-            
-            if (user.GlampingRole.Name == Env.SUPER_ADMIN_ROL_NAME)
+            }
+
+            if (users.PrivateURole.Name == Env.SUPER_ADMIN_ROLE_NAME)
             {
                 return true;
             }
 
             return await _context.Permissions.Include(p => p.RolePermissions)
                                              .AnyAsync(p => (p.Module == module && p.Name == permission)
-                                                            && p.RolePermissions.Any(rp => rp.RoleId == user.GlampingRoleId));
+                                                            && p.RolePermissions.Any(rp => rp.Roleid == users.PrivateURoleId));
         }
 
-        public async Task<bool> CurrentUserIsSuperAdmin()
+        public async Task<Response<object>> DeleteAsync(string id)
         {
-            ClaimsUser? claimsUser = _httpContextAccessor.HttpContext?.User;
-
-            // Valida si hay sesión
-            if (claimsUser is null)
+            Users? user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id.ToString());
+            if (user == null)
             {
-                return false;
+                return new Response<object>
+                {
+                    IsSuccess = false,
+                    Message = $"El usuario con id: {id} no existe"
+                };
             }
 
-            string userName = claimsUser.Identity!.Name!;
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
 
-            User? user = await GetUserAsync(userName);
-
-            if (user is null)
+            return new Response<object>
             {
-                return false;
-            }
-
-            return user.GlampingRole.Name == Env.SUPER_ADMIN_ROL_NAME;
+                IsSuccess = true,
+                Message = "Usuario eliminado con éxito"
+            };
         }
 
-        public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
+        public async Task<string> GenerateEmailConfirmationTokenAsync(Users users)
         {
-            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            return await _userManager.GenerateEmailConfirmationTokenAsync(users);
         }
 
-        public async Task<string> GeneratePasswordResetTokenAsync(User user)
+        public async Task<string> GeneratePasswordResetTokenAsync(Users user)
         {
             return await _userManager.GeneratePasswordResetTokenAsync(user);
         }
 
-        public async Task<Response<PaginationResponse<UserDTO>>> GetPaginationAsync(PaginationRequest request)
+        public async Task<Response<PaginationResponse<UsersDTO>>> GetPaginationAsync(PaginationRequest request)
         {
 
-            IQueryable<User> query = _context.Users.AsQueryable();
+            IQueryable<Users> query = _context.Users.AsQueryable();
 
             if (!string.IsNullOrEmpty(request.Filter))
             {
@@ -179,20 +190,22 @@ namespace  GlampingProyect.Web.Services
                                       || b.PhoneNumber.Contains(request.Filter));
             }
 
-            return await GetPaginationAsync<User, UserDTO>(request, query);
+            query = query.OrderBy(b => b.Id);
+
+            return await GetPaginationAsync<Users, UsersDTO>(request, query);
         }
 
-        public async Task<User> GetUserAsync(string email)
+        public async Task<Users> GetUserAsync(string email)
         {
-            User? user = await _context.Users.Include(u => u.GlampingRole)
+            Users? users = await _context.Users.Include(u => u.PrivateURole)
                                              .FirstOrDefaultAsync(u => u.Email == email);
 
-            return user;
+            return users;
         }
 
-        public async Task<User?> GetUserAsync(Guid id)
+        public async Task<Users?> GetUserAsync(Guid id)
         {
-            return await _context.Users.Include(u => u.GlampingRole)
+            return await _context.Users.Include(u => u.PrivateURole)
                                        .FirstOrDefaultAsync(u => u.Id == id.ToString());
         }
 
@@ -206,37 +219,34 @@ namespace  GlampingProyect.Web.Services
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<IdentityResult> ResetPasswordAsync(User user, string resetToken, string newPassword)
+        public async Task<IdentityResult> ResetPasswordAsync(Users user, string resetToken, string newPassword)
         {
             return await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
         }
 
-        public Task SendPasswordResetEmailAsync(string? email, string? resetLink)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Response<UserDTO>> UpdateUserAsync(UserDTO dto)
+        public async Task<Response<UsersDTO>> UpdateUserAsync(UsersDTO dto)
         {
             try
             {
-                Guid id = Guid.Parse(dto.Id!);
-                User user = await GetUserAsync(id);
-                user.PhoneNumber = dto.PhoneNumber;
-                user.Document = dto.Document;
-                user.FirstName = dto.FirstName;
-                user.LastName = dto.LastName;
-                user.GlampingRoleId = dto.GlampingRoleId;
+                //User user = _mapper.Map<User>(dto);
 
-                _context.Users.Update(user);
+                Guid id = Guid.Parse(dto.Id!);
+                Users users = await GetUserAsync(id);
+                users.PhoneNumber = dto.PhoneNumber;
+                users.Document = dto.Document;
+                users.FirstName = dto.FirstName;
+                users.LastName = dto.LastName;
+                users.PrivateURoleId = dto.PrivateURoleId;
+
+                _context.Users.Update(users);
 
                 await _context.SaveChangesAsync();
 
-                return ResponseHelper<UserDTO>.MakeResponseSuccess(dto, "Usuario actualizado con éxito");
+                return ResponseHelper<UsersDTO>.MakeResponseSuccess(dto, "Usuario actualizado con éxito");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return ResponseHelper<UserDTO>.MakeResponseFail(ex);
+                return ResponseHelper<UsersDTO>.MakeResponseFail(ex);
             }
         }
 
@@ -244,11 +254,11 @@ namespace  GlampingProyect.Web.Services
         {
             try
             {
-                User user = await GetUserAsync(dto.Id);
-                user.PhoneNumber = dto.PhoneNumber;
-                user.Document = dto.Document;
-                user.FirstName = dto.FirstName;
-                user.LastName = dto.LastName;
+                Users users = await GetUserAsync(dto.Id);
+                users.PhoneNumber = dto.PhoneNumber;
+                users.Document = dto.Document;
+                users.FirstName = dto.FirstName;
+                users.LastName = dto.LastName;
 
                 if (dto.Photo is not null)
                 {
@@ -257,16 +267,31 @@ namespace  GlampingProyect.Web.Services
                         await dto.Photo.CopyToAsync(ms);
                         byte[] content = ms.ToArray();
                         string extension = Path.GetExtension(dto.Photo.FileName);
-                        user.Photo = await _localStorageService.SaveFileAsync(content, extension, _container, dto.Photo.ContentType);
+
+                        string oldPhoto = users.Photo;
+
+                        // Guardar la nueva imagen
+                        string newPhotoUrl = await _localStorageService.SaveFileAsync(
+                            content,
+                            extension,
+                            _container,
+                            dto.Photo.ContentType
+                        );
+
+                        // Solo eliminar la imagen anterior si no es la default
+                        if (!string.IsNullOrEmpty(oldPhoto) && !oldPhoto.Equals(DefaultUserImageUrl, StringComparison.OrdinalIgnoreCase))
+                        {
+                            await _localStorageService.DeleteFileAsync(oldPhoto, _container);
+                        }
+
+                        users.Photo = newPhotoUrl;
                     }
                 }
 
-                _context.Users.Update(user);
-
+                _context.Users.Update(users);
                 return await _context.SaveChangesAsync();
-            } 
-            
-            catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Log.Error(ex.Message);
                 return 0;

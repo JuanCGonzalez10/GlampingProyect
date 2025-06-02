@@ -1,35 +1,32 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"] - PrivateBlog</title>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - GlampingProyect</title>
 
-        @await Html.PartialAsync("_Styles")
-        @await RenderSectionAsync("Styles", required: false)
+	@await Html.PartialAsync("_Styles")
+	@await RenderSectionAsync("Styles", required: false)
 
+</head>
+<body>
+	@await Html.PartialAsync("_Header")
 
-    </head>
+	@await Html.PartialAsync("_Sidebar")
 
+	<main id="main" class="main">
+		@RenderBody()
+	</main>
 
-    <body>
+	@await Html.PartialAsync("_Footer")
 
-        @await Html.PartialAsync("_Header")
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+	
+	@await Html.PartialAsync("_Scripts")
 
-        @await Html.PartialAsync("_Sidebar")
+	@await Component.InvokeAsync("Notyf")
 
-        <main id="main" class="main">
-            @RenderBody()
-        </main>
+	@await RenderSectionAsync("Scripts", required: false)
 
-        @await Html.PartialAsync("_Footer")
-
-        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-        @await Html.PartialAsync("_Scripts")
-
-        @await Component.InvokeAsync("Notyf")
-
-        @await RenderSectionAsync("Scripts", required: false)
-    </body>
+</body>
 </html>

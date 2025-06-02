@@ -4,14 +4,10 @@ namespace  GlampingProyect.Web.DTOs
 {
     public class SendEmailDTO
     {
-        [Required(ErrorMessage = "El campo {0} es requerido.")]
-        [EmailAddress(ErrorMessage = "Debe introducir un email válido.")]
-        public string Email { get; set; } = null!;
-
-        [Required(ErrorMessage = "El campo {0} es requerido.")]
-        public string Subject { get; set; } = null!;
-
-        [Required(ErrorMessage = "El campo {0} es requerido.")]
-        public string Content { get; set; } = null!;
+    public class ToggleRolDTO
+    {
+        public int SectionId { get; set; }
+        public bool Hide { get; set; }
+    }
     }
 }

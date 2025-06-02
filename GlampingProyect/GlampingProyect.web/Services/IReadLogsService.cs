@@ -1,7 +1,7 @@
-﻿using  GlampingProyect.Web.DTOs;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using GlampingProyect.Web.DTOs;
 
-namespace  GlampingProyect.Web.Services
+namespace GlampingProyect.Web.Services
 {
     public interface IReadLogsService
     {
@@ -10,7 +10,6 @@ namespace  GlampingProyect.Web.Services
 
     public class ReadPlainTextLogsService : IReadLogsService
     {
-
         private readonly string _logDirectory = "logs";
 
         public List<LogDTO> GetLogs(DateTime? date = null)

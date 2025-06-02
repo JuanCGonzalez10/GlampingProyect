@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GlampingProyect.Web.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using  GlampingProyect.Web.Services;
 
-namespace  GlampingProyect.Web.Core.Attributes
+
+namespace GlampingProyect.Web.Core.Attributes
 {
     public class CustomAuthorizeAttribute : TypeFilterAttribute
     {

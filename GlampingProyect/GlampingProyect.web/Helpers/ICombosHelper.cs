@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using GlampingProyect.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using  GlampingProyect.Web.Data;
 
-namespace  GlampingProyect.Web.Helpers
+namespace GlampingProyect.Web.Helpers
 {
     public interface ICombosHelper
     {
-        public Task<IEnumerable<SelectListItem>> GetComboCategories();
+        public Task<IEnumerable<SelectListItem>> GetComboCliente(int selectedId = 0);
+        public Task<IEnumerable<SelectListItem>> GetComboProductCategories(int selectedId = 0);
+        public Task<IEnumerable<SelectListItem>> GetComboProducts(int selectedId = 0);
         public Task<IEnumerable<SelectListItem>> GetComboRoles();
     }
 
@@ -19,25 +21,65 @@ namespace  GlampingProyect.Web.Helpers
             _context = context;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetComboCategories()
+        public async Task<IEnumerable<SelectListItem>> GetComboCliente(int selectedId = 0)
         {
-            List<SelectListItem> list = await _context.Categories.Select(c => new SelectListItem
+            List<SelectListItem> list = await _context.Clients
+                .Select(c => new SelectListItem
+                {
+                    Text = $"{c.FirstName} {c.LastName}",
+                    Value = c.Id.ToString(),
+                    Selected = c.Id == selectedId
+                }).ToListAsync();
+
+            list.Insert(0, new SelectListItem
             {
-                Text = c.Name,
-                Value = c.Id.ToString()
-            }).ToListAsync();
+                Text = "[Seleccione un cliente...]",
+                Value = ""
+            });
+            return list;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboProductCategories(int selectedId = 0)
+        {
+            List<SelectListItem> list = await _context.ProductCategories
+                .Select(pc => new SelectListItem
+                {
+                    Text = pc.ProductCategoryName,
+                    Value = pc.Id.ToString(),
+                    Selected = pc.Id == selectedId
+                }).ToListAsync();
 
             list.Insert(0, new SelectListItem
             {
                 Text = "[Seleccione una categoría...]",
-                Value = "0"
+                Value = ""
             });
 
             return list;
         }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboProducts(int selectedId = 0)
+        {
+            List<SelectListItem> list = await _context.Products
+                .Select(p => new SelectListItem
+                {
+                    Text = p.ProductName,
+                    Value = p.Id.ToString(),
+                    Selected = p.Id == selectedId
+                }).ToListAsync();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione un producto...]",
+                Value = ""
+            });
+
+            return list;
+        }
+
         public async Task<IEnumerable<SelectListItem>> GetComboRoles()
         {
-            List<SelectListItem> list = await _context.GlampingRoles.Select(s => new SelectListItem
+            List<SelectListItem> list = await _context.PrivateURoles.Select(s => new SelectListItem
             {
                 Text = s.Name,
                 Value = s.Id.ToString()
