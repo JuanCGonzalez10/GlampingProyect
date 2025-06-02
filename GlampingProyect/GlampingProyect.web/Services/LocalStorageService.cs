@@ -1,6 +1,5 @@
-﻿using GlampingProyect.Web.Services;
-
-namespace GlampingProyect.Web.Services
+﻿
+namespace  GlampingProyect.Web.Services
 {
     public class LocalStorageService : IStorageService
     {
@@ -12,6 +11,7 @@ namespace GlampingProyect.Web.Services
             _env = env;
             _httpContextAccessor = httpContextAccessor;
         }
+
 
         public async Task DeleteFileAsync(string path, string container)
         {

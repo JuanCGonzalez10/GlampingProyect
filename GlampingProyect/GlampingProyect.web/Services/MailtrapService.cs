@@ -1,10 +1,10 @@
-﻿using GlampingProyect.Web.Core;
-using GlampingProyect.Web.DTOs;
-using GlampingProyect.Web.Helpers;
-using GlampingProyect.Web.Requests.Mailtrap;
-using GlampingProyect.Web.Services;
+﻿using  GlampingProyect.Web.Core;
+using  GlampingProyect.Web.DTOs;
+using  GlampingProyect.Web.Helpers;
+using  GlampingProyect.Web.Requests.Mailtrap;
 
-namespace GlampingProyect.Web.Services
+
+namespace  GlampingProyect.Web.Services
 {
     public class MailtrapService : IEmailService
     {
@@ -27,36 +27,34 @@ namespace GlampingProyect.Web.Services
 
                 if (string.IsNullOrWhiteSpace(apiKey))
                 {
-                    throw new ApplicationException("No se ha configurado la clave de API de Mailtrap.");
+                    throw new ApplicationException("No está registrado el ApiLey de Mailtrap en el archivo de configuración");
                 }
 
                 SendEmailRequest request = new SendEmailRequest
                 {
                     from = new From
                     {
-                        name = "Glamping",
-                        email = "no-reply@glamping.com"
+                        name = "Equipo PrivateBlog",
+                        email = "no-reply@privateblog.com"
                     },
 
-                    to = new List<To>
-                    {
-                        new To
-                        {
-                            email = dto.Email
-                        }
-                    },
+                    to = 
+                    [                      
+                        new To { email = dto.Email },
+                    ],
 
                     subject = dto.Subject,
+
                     text = dto.Content,
                 };
 
-                string url = "https://sandbox.api.mailtrap.io/api/send/3715086";
-
-                List<HeaderItem> headers = [new HeaderItem { Name = "Authorization", Value = $"Bearer {apiKey}" }];
+                string url = "https://sandbox.api.mailtrap.io/api/send/2846072";
+                List<HeaderItem> headers = [ new HeaderItem { Name = "Authorization", Value = $"Bearer {apiKey}" } ];
 
                 return await _apiService.PostAsync<object>(url, request, headers);
+
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 return ResponseHelper<object>.MakeResponseFail(ex);
             }
@@ -73,14 +71,14 @@ namespace GlampingProyect.Web.Services
                            .Replace("{{Message}}", message)
                            .Replace("{{ResetTokenLink}}", resetTokenLink);
 
-                return await SendAsync(new SendEmailDTO
+                return await SendAsync(new SendEmailDTO 
                 {
                     Content = html,
                     Email = email,
                     Subject = "Restablecimiento de contraseña"
                 });
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 return ResponseHelper<object>.MakeResponseFail(ex);
             }

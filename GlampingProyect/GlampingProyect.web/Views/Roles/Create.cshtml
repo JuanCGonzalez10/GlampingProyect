@@ -1,4 +1,4 @@
-﻿@model PrivateURoleDTO
+﻿@model GlampingRoleDTO
 
 @{
     ViewData["Title"] = "Nuevo Rol";
@@ -32,7 +32,8 @@
         </div>
     </div>
 
-   
+    @* Secciones *@
+    <partial name="_Sections" />
 
     @* Permisos *@
     <partial name="_Permissions" />
@@ -68,7 +69,17 @@
 
                 $('#permissionIds').val(JSON.stringify(permissionIds));
 
-                
+                // Secciones
+                const sections = $('.section:checked');
+                let sectionIds = [];
+
+                sections.each(function () {
+
+                    const sectionId = $(this).data('section-id');
+                    sectionIds.push(sectionId);
+                });
+
+                $('#sectionIds').val(JSON.stringify(sectionIds));
 
             });
         });
