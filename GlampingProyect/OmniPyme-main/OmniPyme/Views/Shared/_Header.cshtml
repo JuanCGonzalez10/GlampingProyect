@@ -1,0 +1,92 @@
+﻿﻿@using GlampingProyect.Web.Data.Entities
+@inject GlampingProyect.Web.Services.IUsersService _usersService
+
+@{
+    Users? users;
+    try
+    {
+        users = await _usersService.GetUserAsync(User.Identity.Name);
+    }
+    catch
+    {
+        users = null;
+    }
+}
+
+<header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+        <a href="index.html" class="logo d-flex align-items-center">
+            <img src="~/assets/img/logo.png" alt="">
+            <span class="d-none d-lg-block">GlampingProyect</span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+        <form class="search-form d-flex align-items-center" method="POST" action="#">
+            <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+        </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+
+
+
+            <li class="nav-item dropdown pe-3">
+
+                @if (users is not null)
+                {
+                    string imageSrc = string.IsNullOrWhiteSpace(users.Photo) ? "/assets/img/profile-img.jpg" : users.Photo;
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img src="@imageSrc" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">@users.FirstName.Substring(0, 1). @users.LastName</span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6>@users.FullName</h6>
+                            <span>@users.PrivateURole.Name</span>
+                            <br />
+                            <span>@users.Email</span>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" asp-controller="Account" asp-action="UpdateUser">
+                                <i class="bi bi-person"></i>
+                                <span>Mi Perfil</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" asp-controller="Account" asp-action="Logout">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Cerrar Sesión</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                }
+                else
+                {
+                    <a class="nav-link dropdwon-toggle" asp-controller="Account" asp-action="Login">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Iniciar Sesión</span>
+                    </a>
+                }
+            </li>
+
+        </ul>
+    </nav><!-- End Icons Navigation -->
+
+</header>

@@ -1,0 +1,40 @@
+﻿@model ProductDTO
+@{
+    ViewData["Title"] = "Editar Glamping";
+}
+
+<div class="pagetitle">
+    <h1>Glampings</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
+            <li class="breadcrumb-item active"><a asp-action="Index">Productos</a></li>
+            <li class="breadcrumb-item active">Editar Glamping</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="section dashboard">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title text-primary">Editar Glamping</h5>
+            <form asp-action="Edit" method="POST" class="row g-3">
+
+                <input type="hidden" asp-for="Id" />
+
+               
+
+                <partial name="_ProductForm" for="@Model" />
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
