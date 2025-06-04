@@ -19,15 +19,15 @@ namespace GlampingProyect.Web.Data.Seeders
             {
                 new ProductCategory
                 {
-                    ProductCategoryName = "Electronica"
+                    ProductCategoryName = "Glamping pareja"
                 },
                 new ProductCategory
                 {
-                    ProductCategoryName = "Ropa"
+                    ProductCategoryName = "Glamping familiar"
                 },
                 new ProductCategory
                 {
-                    ProductCategoryName = "Hogar"
+                    ProductCategoryName ="Glamping amigos"
                 }
             };
             foreach (ProductCategory productCategory in productCategories)

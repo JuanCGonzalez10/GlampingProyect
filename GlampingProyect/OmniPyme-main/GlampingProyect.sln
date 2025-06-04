@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlampingProyect.Web", "OmniPyme\GlampingProyect.Web.csproj", "{D2FD7925-502B-42EA-9EC4-E34CA70F255A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlampingProyect.Test", "GlampingProyect.Test\GlampingProyect.Test.csproj", "{EE6DC64F-3C8E-460D-92A1-464B2D68D27D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D2FD7925-502B-42EA-9EC4-E34CA70F255A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2FD7925-502B-42EA-9EC4-E34CA70F255A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2FD7925-502B-42EA-9EC4-E34CA70F255A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE6DC64F-3C8E-460D-92A1-464B2D68D27D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE6DC64F-3C8E-460D-92A1-464B2D68D27D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE6DC64F-3C8E-460D-92A1-464B2D68D27D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE6DC64F-3C8E-460D-92A1-464B2D68D27D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

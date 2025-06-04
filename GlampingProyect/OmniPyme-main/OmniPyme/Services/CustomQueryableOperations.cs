@@ -7,6 +7,7 @@ using GlampingProyect.Web.Core.Pagination;
 using GlampingProyect.Web.Data.Entities;
 using GlampingProyect.Web.DTOs;
 using GlampingProyect.Web.Helpers;
+using GlampingProyect.Web.Data;
 
 namespace GlampingProyect.Web.Services
 {
@@ -14,6 +15,8 @@ namespace GlampingProyect.Web.Services
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        public DataContext context;
+        private IMapper mapper;
 
         public CustomQueryableOperations(DataContext context, IMapper mapper)
         {

@@ -15,44 +15,45 @@ namespace GlampingProyect.Web.Data.Seeders
 
         public async Task SeedAsync()
         {
-            //List<Product> products = new List<Product>
-            //{
-            //    new Product
-            //    {
-            //        ProductName = "Laptop",
-            //        ProductDescription = "Laptop de alta gama",
-            //        ProductPrice = 1500.00m,
-            //        ProductBarCode = "1234567890123",
-            //        ProductTax = 0.19,
-            //        IdProductCategory = 1,
-            //    },
-            //    new Product
-            //    {
-            //        ProductName = "Camisa",
-            //        ProductDescription = "Camisa de algodón",
-            //        ProductPrice = 25.00m,
-            //        ProductBarCode = "1234567890124",
-            //        ProductTax = 0.19,
-            //        IdProductCategory = 2,
-            //    },
-            //    new Product
-            //    {
-            //        ProductName = "Sofá",
-            //        ProductDescription = "Sofá de cuero",
-            //        ProductPrice = 800.00m,
-            //        ProductBarCode = "1234567890125",
-            //        ProductTax = 0.19,
-            //        IdProductCategory = 3,
-            //    }
-            //};
-            //foreach (Product product in products)
-            //{
-            //    bool exists = await _context.Products.AnyAsync(x => x.ProductBarCode == product.ProductBarCode);
-            //    if (!exists)
-            //    {
-            //        await _context.Products.AddAsync(product);
-            //    }
-            //}
+            List<Product> products = new List<Product>
+            {
+                new Product
+            {
+                ProductName = "Glamping pareja",
+                ProductDescription = "Alojamiento ecológico en una cabaña de madera con vista a las montañas.",
+                ProductPrice = 350.00m,
+                ProductBarCode = "9876543210001",
+                ProductTax = 0.19,
+                IdProductCategory = 1004
+            },
+            new Product
+            {
+                ProductName = "Glamping familiar",
+                ProductDescription = "Tienda de lujo frente al mar con acceso privado a la playa.",
+                ProductPrice = 450.00m,
+                ProductBarCode = "9876543210002",
+                ProductTax = 0.19,
+                IdProductCategory = 1005
+            },
+            new Product
+            {
+                ProductName = "Glamping amigos",
+                ProductDescription = "Domos geodésicos con calefacción y observación de estrellas en el bosque.",
+                ProductPrice = 400.00m,
+                ProductBarCode = "9876543210003",
+                ProductTax = 0.19,
+                IdProductCategory = 1006
+            }
+
+            };
+            foreach (Product product in products)
+            {
+                bool exists = await _context.Products.AnyAsync(x => x.ProductBarCode == product.ProductBarCode);
+                if (!exists)
+                {
+                    await _context.Products.AddAsync(product);
+                }
+            }
             await _context.SaveChangesAsync();
         }
     }

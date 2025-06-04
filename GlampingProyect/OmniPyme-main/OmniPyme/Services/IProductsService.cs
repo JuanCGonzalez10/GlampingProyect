@@ -34,8 +34,26 @@ namespace GlampingProyect.Web.Services
 
         public async Task<Response<ProductDTO>> CreateAsync(ProductDTO dto)
         {
-            return await CreateAsync<Product, ProductDTO>(dto);
+            try
+            {
+                var entity = _mapper.Map<Product>(dto);
+                await _context.Products.AddAsync(entity);
+                await _context.SaveChangesAsync();
+
+                var responseDto = _mapper.Map<ProductDTO>(entity);
+                return ResponseHelper<ProductDTO>.MakeResponseSuccess(responseDto, "Producto creado con éxito");
+            }
+            catch (DbUpdateException dbEx)
+            {
+                var innerMessage = dbEx.InnerException?.Message ?? dbEx.Message;
+                return ResponseHelper<ProductDTO>.MakeResponseFail($"Error al guardar en la base de datos: {innerMessage}");
+            }
+            catch (Exception ex)
+            {
+                return ResponseHelper<ProductDTO>.MakeResponseFail($"Error inesperado: {ex.Message}");
+            }
         }
+
 
         public async Task<Response<ProductDTO>> EditAsync(ProductDTO dto)
         {

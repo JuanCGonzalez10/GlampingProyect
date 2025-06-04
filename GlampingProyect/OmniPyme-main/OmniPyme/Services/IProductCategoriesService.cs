@@ -19,8 +19,9 @@ namespace GlampingProyect.Web.Services
     }
     public class ProductCategoriesService : CustomQueryableOperations, IProductCategoriesService
     {
-        private readonly DataContext _context;
+        
         private readonly IMapper _mapper;
+        public readonly DataContext _context;
 
         public ProductCategoriesService(DataContext context, IMapper mapper) : base(context, mapper)
         {

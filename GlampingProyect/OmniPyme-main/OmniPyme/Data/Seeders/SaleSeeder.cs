@@ -24,7 +24,7 @@ namespace GlampingProyect.Web.Data.Seeders
                     SalePaymentMethod = "Tarjeta",
                     SaleTotal = 4500.00m,
                     SaleCode = "V001",
-                    IdClient = 1
+                    IdClient = 1009
                 },
                 new Sale
                 {
@@ -32,7 +32,7 @@ namespace GlampingProyect.Web.Data.Seeders
                     SalePaymentMethod = "Efectivo",
                     SaleTotal = 15000.00m,
                     SaleCode = "V002",
-                    IdClient = 2
+                    IdClient = 1013
                 },
                 new Sale
                 {
@@ -40,7 +40,7 @@ namespace GlampingProyect.Web.Data.Seeders
                     SalePaymentMethod = "Transferencia",
                     SaleTotal = 2000.00m,
                     SaleCode = "V003",
-                    IdClient = 1
+                    IdClient = 1014
                 },
                 new Sale
                 {
@@ -48,7 +48,7 @@ namespace GlampingProyect.Web.Data.Seeders
                     SalePaymentMethod = "Cheque",
                     SaleTotal = 2500.00m,
                     SaleCode = "V004",
-                    IdClient = 3
+                    IdClient = 1009
                 },
                 new Sale
                 {
@@ -56,7 +56,7 @@ namespace GlampingProyect.Web.Data.Seeders
                     SalePaymentMethod = "Tarjeta",
                     SaleTotal = 20000.00m,
                     SaleCode = "V005",
-                    IdClient = 4
+                    IdClient = 1010
                 },
                 new Sale
                 {
@@ -64,7 +64,7 @@ namespace GlampingProyect.Web.Data.Seeders
                     SalePaymentMethod = "Efectivo",
                     SaleTotal = 1000.00m,
                     SaleCode = "V006",
-                    IdClient = 2
+                    IdClient = 1014
                 },
                 new Sale
                 {
@@ -72,7 +72,7 @@ namespace GlampingProyect.Web.Data.Seeders
                     SalePaymentMethod = "Tarjeta",
                     SaleTotal = 5000.00m,
                     SaleCode = "V007",
-                    IdClient = 5
+                    IdClient = 1010
                 },
                 new Sale
                 {
@@ -80,7 +80,7 @@ namespace GlampingProyect.Web.Data.Seeders
                     SalePaymentMethod = "Transferencia",
                     SaleTotal = 15000.00m,
                     SaleCode = "V008",
-                    IdClient = 3
+                    IdClient = 1013
                 },
                 new Sale
                 {
@@ -88,7 +88,7 @@ namespace GlampingProyect.Web.Data.Seeders
                     SalePaymentMethod = "Cheque",
                     SaleTotal = 2000.00m,
                     SaleCode = "V009",
-                    IdClient = 1
+                    IdClient = 1012
                 },
                 new Sale
                 {
@@ -96,7 +96,7 @@ namespace GlampingProyect.Web.Data.Seeders
                     SalePaymentMethod = "Tarjeta",
                     SaleTotal = 24500.00m,
                     SaleCode = "V010",
-                    IdClient = 4
+                    IdClient = 1010
                 }
             };
 

@@ -4,7 +4,9 @@ using GlampingProyect.Data;
 using GlampingProyect.Web;
 using GlampingProyect.Web.Data.Entities;
 using GlampingProyect.Web.Data.Seeders;
-using GlampingProyect.Web.Services; // Asegúrate de importar esto
+using GlampingProyect.Web.Services;
+using System.Net;
+using Microsoft.AspNetCore.Builder; // Asegúrate de importar esto
 
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -44,9 +46,25 @@ app.UseAuthorization();
 
 app.UseStatusCodePagesWithReExecute("/Errors/{0}");
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoints => 
+{
+    endpoints.MapControllers();
+
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    endpoints.MapGet("/api/minimal",() =>
+    {
+        return "minimal endpoints";
+    });
+
+
+});
 
 app.AddCustomWebApplicationConfiguration();
 

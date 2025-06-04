@@ -36,8 +36,12 @@ namespace GlampingProyect.Web.Services
 
         public async Task<Response<PrivateURoleDTO>> CreateAsync(PrivateURoleDTO dto)
         {
-            using IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync();
+            var strategy = _context.Database.CreateExecutionStrategy();
+
+            return await strategy.ExecuteAsync(async () =>
             {
+                await using var transaction = await _context.Database.BeginTransactionAsync();
+
                 try
                 {
                     PrivateURole role = _mapper.Map<PrivateURole>(dto);
@@ -68,8 +72,9 @@ namespace GlampingProyect.Web.Services
                     await transaction.RollbackAsync();
                     return ResponseHelper<PrivateURoleDTO>.MakeResponseFail(ex);
                 }
-            }
+            });
         }
+
 
         public async Task<Response<PrivateURoleDTO>> EditAsync(PrivateURoleDTO dto)
         {
@@ -175,31 +180,40 @@ namespace GlampingProyect.Web.Services
 
         public async Task<Response<object>> DeleteAsync(int id)
         {
-            using IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync();
-            try
+            var strategy = _context.Database.CreateExecutionStrategy();
+
+            return await strategy.ExecuteAsync(async () =>
             {
-                PrivateURole role = await _context.PrivateURoles.FirstOrDefaultAsync(r => r.Id == id);
-                if (role == null)
-                    return ResponseHelper<object>.MakeResponseFail($"El rol con id '{id}' no existe.");
+                await using var transaction = await _context.Database.BeginTransactionAsync();
 
-                if (role.Name == Env.SUPER_ADMIN_ROLE_NAME)
-                    return ResponseHelper<object>.MakeResponseFail($"El rol '{Env.SUPER_ADMIN_ROLE_NAME}' no puede ser eliminado.");
+                try
+                {
+                    PrivateURole role = await _context.PrivateURoles.FirstOrDefaultAsync(r => r.Id == id);
+                    if (role == null)
+                        return ResponseHelper<object>.MakeResponseFail($"El rol con id '{id}' no existe.");
 
-                List<RolePermission> rolePermissions = await _context.RolePermissions.Where(rp => rp.Roleid == id).ToListAsync();
-                _context.RolePermissions.RemoveRange(rolePermissions);
+                    if (role.Name == Env.SUPER_ADMIN_ROLE_NAME)
+                        return ResponseHelper<object>.MakeResponseFail($"El rol '{Env.SUPER_ADMIN_ROLE_NAME}' no puede ser eliminado.");
 
-                _context.PrivateURoles.Remove(role);
+                    List<RolePermission> rolePermissions = await _context.RolePermissions
+                        .Where(rp => rp.Roleid == id).ToListAsync();
+                    _context.RolePermissions.RemoveRange(rolePermissions);
 
-                await _context.SaveChangesAsync();
-                await transaction.CommitAsync();
+                    _context.PrivateURoles.Remove(role);
 
-                return ResponseHelper<object>.MakeResponseSuccess(null, "Rol eliminado con éxito");
-            }
-            catch (Exception ex)
-            {
-                await transaction.RollbackAsync();
-                return ResponseHelper<object>.MakeResponseFail(ex);
-            }
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+
+                    return ResponseHelper<object>.MakeResponseSuccess(null, "Rol eliminado con éxito");
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    return ResponseHelper<object>.MakeResponseFail(ex);
+                }
+            });
         }
+
+
     }
 }

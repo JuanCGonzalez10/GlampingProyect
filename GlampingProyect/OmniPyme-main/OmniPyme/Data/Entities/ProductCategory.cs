@@ -5,6 +5,8 @@ namespace GlampingProyect.Web.Data.Entities
 {
     public class ProductCategory : IId
     {
+        public string Name;
+
         [Key]
         public int Id { get; set; }
 
