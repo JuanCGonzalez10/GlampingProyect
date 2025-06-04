@@ -96,12 +96,12 @@ namespace GlampingProyect.Web.Data.Seeders
 
                 users = new Users
                 {
-                    Email = "vendedor@yopmail.com",
+                    Email = "vendedor@gmail.com",
                     FirstName = "Vendedor",
                     LastName = "Vendedor",
                     PhoneNumber = "345465347",
-                    UserName = "vendedor@yopmail.com",
-                    Document = "176723467565657",
+                    UserName = "vendedor@gmail.com",
+                    Document = "1767234",
                     Photo = "https://localhost:7045/users/0fb1b2a9-992a-4992-b70e-ee409baf034a.jpg",
                     PrivateURole = vendedorRole
                 };
@@ -118,12 +118,12 @@ namespace GlampingProyect.Web.Data.Seeders
 
                 users = new Users
                 {
-                    Email = "inventario@yopmail.com",
+                    Email = "inventario@gmail.com",
                     FirstName = "Gestor",
                     LastName = "Inventario",
                     PhoneNumber = "345462345347",
-                    UserName = "inventario@yopmail.com",
-                    Document = "176723467345565657",
+                    UserName = "inventario@gmail.com",
+                    Document = "17672",
                     Photo = "https://localhost:7045/users/0fb1b2a9-992a-4992-b70e-ee409baf034a.jpg",
                     PrivateURole = inventarioRole
                 };

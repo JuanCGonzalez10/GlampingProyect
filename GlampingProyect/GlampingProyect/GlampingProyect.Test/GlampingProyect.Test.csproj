@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OmniPyme\GlampingProyect.Web.csproj" />
+    <ProjectReference Include="..\GlampingProyect\GlampingProyect.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>

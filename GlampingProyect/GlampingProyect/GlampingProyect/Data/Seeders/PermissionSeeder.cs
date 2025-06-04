@@ -53,10 +53,10 @@ namespace GlampingProyect.Web.Data.Seeders
 
             return new List<Permission>
                 {
-                    new Permission { Name = "ShowProductCategory", Description = "Ver categorías de productos", Module = "ProductCategory" },
-                    new Permission { Name = "CreateProductCategory", Description = "Crear categorías de productos", Module = "ProductCategory" },
-                    new Permission { Name = "UpdateProductCategory", Description = "Editar categorías de productos", Module = "ProductCategory" },
-                    new Permission { Name = "DeleteProductCategory", Description = "Eliminar categorías de productos", Module = "ProductCategory" },
+                    new Permission { Name = "ShowProductCategory", Description = "Ver categorías de Glampings", Module = "ProductCategory" },
+                    new Permission { Name = "CreateProductCategory", Description = "Crear categorías de Glampings", Module = "ProductCategory" },
+                    new Permission { Name = "UpdateProductCategory", Description = "Editar categorías de Glampings", Module = "ProductCategory" },
+                    new Permission { Name = "DeleteProductCategory", Description = "Eliminar categorías de Glampings", Module = "ProductCategory" },
 
 
                 };
@@ -68,10 +68,10 @@ namespace GlampingProyect.Web.Data.Seeders
 
             return new List<Permission>
                 {
-                    new Permission { Name = "ShowProduct", Description = "Ver productos", Module = "Product" },
-                    new Permission { Name = "CreateProduct", Description = "Crear productos", Module = "Product" },
-                    new Permission { Name = "UpdateProduct", Description = "Editar productos", Module = "Product" },
-                    new Permission { Name = "DeleteProduct", Description = "Eliminar productos", Module = "Product" },
+                    new Permission { Name = "ShowProduct", Description = "Ver Glampings", Module = "Product" },
+                    new Permission { Name = "CreateProduct", Description = "Crear Glampings", Module = "Product" },
+                    new Permission { Name = "UpdateProduct", Description = "Editar Glampings", Module = "Product" },
+                    new Permission { Name = "DeleteProduct", Description = "Eliminar Glampings", Module = "Product" },
 
 
                 };
@@ -83,10 +83,10 @@ namespace GlampingProyect.Web.Data.Seeders
 
             return new List<Permission>
                 {
-                    new Permission { Name = "ShowSale", Description = "Ver ventas", Module = "Sale" },
-                    new Permission { Name = "CreateSale", Description = "Crear ventas", Module = "Sale" },
-                    new Permission { Name = "ViewSale", Description = "Ver ventas", Module = "Sale" },
-                    new Permission { Name = "DeleteSale", Description = "Eliminar ventas", Module = "Sale" },
+                    new Permission { Name = "ShowSale", Description = "Ver Glampings", Module = "Sale" },
+                    new Permission { Name = "CreateSale", Description = "Crear Glampings", Module = "Sale" },
+                    new Permission { Name = "ViewSale", Description = "Ver Glampings", Module = "Sale" },
+                    new Permission { Name = "DeleteSale", Description = "Eliminar Glampings", Module = "Sale" },
 
 
                 };

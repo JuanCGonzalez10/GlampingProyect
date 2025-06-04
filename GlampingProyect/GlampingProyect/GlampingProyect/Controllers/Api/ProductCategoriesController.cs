@@ -25,7 +25,6 @@ namespace GlampingProyect.Web.Controllers.Api
         }
 
         [HttpPost]
-
         public async Task<IActionResult> CreateCategory([FromBody] ProductCategoryDTO dto)
         {
             if (!ModelState.IsValid)
